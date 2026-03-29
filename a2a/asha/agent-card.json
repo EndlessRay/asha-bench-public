@@ -1,6 +1,6 @@
 {
     "name": "Asha",
-    "description": "Principal-Agent Fiduciary Medical Intelligence. Evidence-grounded clinical answers from 121M vectors across 530 knowledge collections including PubMed, StatPearls, FDA drug labels, ICD-10, and clinical guidelines.",
+    "description": "Fiduciary medical intelligence agent. Evidence-grounded clinical Q&A from 87M+ medical knowledge vectors across PubMed, StatPearls, FDA drug labels, and clinical guidelines. Patent-protected (US 19/290,471). Founded by board-certified physicians.",
     "version": "2.0.0",
     "supportedInterfaces": [
         {
@@ -18,14 +18,8 @@
         "pushNotifications": false,
         "extendedAgentCard": false
     },
-    "defaultInputModes": [
-        "text/plain",
-        "application/json"
-    ],
-    "defaultOutputModes": [
-        "text/plain",
-        "application/json"
-    ],
+    "defaultInputModes": ["text/plain", "application/json"],
+    "defaultOutputModes": ["text/plain", "application/json"],
     "securitySchemes": {
         "bearer": {
             "httpAuthSecurityScheme": {
@@ -34,22 +28,13 @@
             }
         }
     },
-    "securityRequirements": [
-        {
-            "bearer": []
-        }
-    ],
+    "securityRequirements": [{"bearer": []}],
     "skills": [
         {
             "id": "medical-qa",
             "name": "Medical Question Answering",
-            "description": "Evidence-based medical Q&A grounded in PubMed, StatPearls, FDA drug labels, and clinical guidelines. 121M vectors of medical knowledge.",
-            "tags": [
-                "medical",
-                "clinical",
-                "evidence-based",
-                "health"
-            ],
+            "description": "Evidence-based medical Q&A grounded in PubMed, StatPearls, FDA drug labels, and clinical guidelines.",
+            "tags": ["medical", "clinical", "evidence-based", "health"],
             "examples": [
                 "What are the latest treatment guidelines for type 2 diabetes?",
                 "Compare SSRIs vs SNRIs for treatment-resistant depression",
@@ -60,11 +45,7 @@
             "id": "drug-interaction-check",
             "name": "Drug Interaction Check",
             "description": "Check for clinically significant drug-drug interactions, contraindications, and pharmacokinetic conflicts using DailyMed and FDA label data.",
-            "tags": [
-                "pharmacology",
-                "drug-interaction",
-                "safety"
-            ],
+            "tags": ["pharmacology", "drug-interaction", "safety"],
             "examples": [
                 "Are there interactions between metformin and lisinopril?",
                 "Can a patient on warfarin safely take ibuprofen?",
@@ -75,11 +56,7 @@
             "id": "clinical-guidelines",
             "name": "Clinical Guideline Lookup",
             "description": "Retrieve and summarize current clinical practice guidelines from AHA, ADA, USPSTF, WHO, and specialty societies.",
-            "tags": [
-                "guidelines",
-                "clinical",
-                "standards-of-care"
-            ],
+            "tags": ["guidelines", "clinical", "standards-of-care"],
             "examples": [
                 "What are the AHA 2025 hypertension management guidelines?",
                 "USPSTF screening recommendations for colorectal cancer"
@@ -88,12 +65,8 @@
         {
             "id": "evidence-synthesis",
             "name": "Evidence Synthesis",
-            "description": "Synthesize evidence across multiple sources \u2014 PubMed abstracts, OpenAlex citations, PMC full-text, and StatPearls \u2014 into a coherent clinical summary with citation support.",
-            "tags": [
-                "evidence",
-                "synthesis",
-                "research"
-            ],
+            "description": "Synthesize evidence across multiple sources into a coherent clinical summary with citation support.",
+            "tags": ["evidence", "synthesis", "research"],
             "examples": [
                 "Summarize the evidence for ketamine in treatment-resistant depression",
                 "What does the literature say about GLP-1 agonists and cardiovascular outcomes?",
@@ -115,19 +88,15 @@
                 "clinical_guidelines",
                 "pkg2_abstracts",
                 "medical_codes",
-                "medical_icd10",
-                "healthbench_rubrics"
+                "medical_icd10"
             ],
-            "lastAudited": "2026-03-28",
-            "mode": "all"
+            "lastAudited": "2026-03-28"
         },
         "falsificationAvailable": true,
-        "falsificationEndpoint": "/api/feng/falsify",
         "temporalQuerySupport": true,
         "provenanceInResponses": true,
-        "fiduciaryContractHash": "2060c8d4f4d15454",
-        "authorityLevel": 0.95,
+        "fiduciaryContract": true,
         "evidenceGrounding": "retrieval-augmented",
-        "hallucinationMitigation": "pre-generation (CIVERA) + post-generation (entity verification)"
+        "hallucinationMitigation": "pre-generation suppression + post-generation verification"
     }
 }
