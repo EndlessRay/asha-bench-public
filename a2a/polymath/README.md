@@ -33,6 +33,10 @@ curl -X POST https://api.askasha.org/a2a/v1/message:send \
   -d '{"message":{"role":"user","parts":[{"text":"Prove that the square root of 2 is irrational"}]},"metadata":{"agent_id":"polymath"}}'
 ```
 
+## Connect to Google Gemini Enterprise
+
+Polymath registers as a "Custom agent via A2A" inside any Google Gemini Enterprise app. Paste this repo's [`agent-card.json`](agent-card.json) into **Gemini Enterprise → your app → Agents → Add Agents → Custom agent via A2A** and click through. The card carries both the A2A v1.0 `supportedInterfaces[]` shape AND top-level `url` / `protocolVersion` / `iconUrl` / `documentationUrl` for maximum parser compatibility. Full step-by-step in [asha-a2a → Connect to Google Gemini Enterprise](https://github.com/EndlessRay/asha-a2a#connect-to-google-gemini-enterprise).
+
 ## A2A Surface
 
 Bearer-auth A2A v1.0 endpoints, identical across all DNAi agents — only the `agent_id` changes:
