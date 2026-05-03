@@ -1,1 +1,149 @@
-{"name":"Harley","description":"AI Fitness Coaching Intelligence. Named after a pitbull: loyal, strong, never quits. Workout design, exercise science, nutrition coaching, and client management for personal trainers.","version":"2.0.0","supportedInterfaces":[{"url":"https://api.askasha.org/a2a/v1","protocolBinding":"HTTP+JSON","protocolVersion":"1.0"}],"provider":{"organization":"DNAi Systems","url":"https://dnai.systems"},"capabilities":{"streaming":false,"pushNotifications":false,"extendedAgentCard":false},"defaultInputModes":["text/plain","application/json"],"defaultOutputModes":["text/plain","application/json"],"securitySchemes":{"bearer":{"httpAuthSecurityScheme":{"scheme":"Bearer","bearerFormat":"API-Key"}}},"securityRequirements":[{"bearer":[]}],"skills":[{"id":"workout-design","name":"Workout Design","description":"Design periodized workout programs tailored to client goals, training history, and available equipment. Backed by exercise science research.","tags":["fitness","workout","programming"],"examples":["Design a 4-day upper/lower split for an intermediate lifter","Create a 6-week hypertrophy program for a client with knee issues","Build a deload week for someone finishing a strength block"]},{"id":"exercise-lookup","name":"Exercise Lookup","description":"Search a curated exercise library with muscle targeting, equipment requirements, difficulty levels, and video references.","tags":["exercise","training","library"],"examples":["What are the best compound exercises for posterior chain?","Show me cable exercises that target the rear delts"]},{"id":"nutrition-coaching","name":"Nutrition Coaching","description":"Macro calculation, meal planning guidance, and food logging analysis using USDA FoodData Central.","tags":["nutrition","diet","macros"],"examples":["Calculate macros for a 180lb male aiming for body recomposition","Analyze my food log and suggest improvements for protein intake"]},{"id":"client-assessment","name":"Client Assessment","description":"Analyze client progress data — body stats, workout logs, personal records — and generate actionable coaching insights.","tags":["coaching","assessment","progress"],"examples":["Review this client's last 8 weeks of training data and identify trends","What adjustments should I make based on this client's stalled squat progress?"]},{"id":"program-builder","name":"Program Builder","description":"Build multi-week training programs with progressive overload, periodization, and exercise substitution logic.","tags":["program","periodization","training"],"examples":["Create a 12-week linear periodization program for a beginner","Design a conjugate-style program for an advanced powerlifter"]}],"epistemicCapabilities":{"knowledgeCorpus":{"totalVectors":52000000,"collections":["wger_exercise_library","fitness_exercise_science","pkg2_abstracts","statpearls_clinical","pubmed_recent_2024_2026","openfda_adverse_events","clinical_guidelines_v3","openfoodfacts_nutrition","usda_fooddata","dailymed_drug_labels","medlineplus_health","openstax_anatomy_physiology","clinical_trials_recent"],"lastAudited":"2026-05-01","scopedCollections":"trainer_{uuid} per-trainer knowledge bases"},"falsificationAvailable":true,"falsificationEndpoint":"/api/feng/falsify","temporalQuerySupport":true,"provenanceInResponses":true,"fiduciaryContractHash":"7c543cd90234ae9c","authorityLevel":0.85,"evidenceGrounding":"retrieval-augmented","hallucinationMitigation":"pre-generation (CIVERA) + post-generation (entity verification)"}}
+{
+  "name": "Harley",
+  "description": "AI Fitness Coaching Intelligence. Named after a pitbull: loyal, strong, never quits. Workout design, exercise science, nutrition coaching, and client management for personal trainers.",
+  "version": "2.0.0",
+  "supportedInterfaces": [
+    {
+      "url": "https://api.askasha.org/a2a/v1",
+      "protocolBinding": "HTTP+JSON",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "url": "https://api.askasha.org/a2a/v1",
+  "protocolVersion": "1.0",
+  "provider": {
+    "organization": "DNAi Systems",
+    "url": "https://dnai.systems"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "extendedAgentCard": false
+  },
+  "defaultInputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "defaultOutputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "securitySchemes": {
+    "bearer": {
+      "httpAuthSecurityScheme": {
+        "scheme": "Bearer",
+        "bearerFormat": "API-Key"
+      }
+    }
+  },
+  "securityRequirements": [
+    {
+      "bearer": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "workout-design",
+      "name": "Workout Design",
+      "description": "Design periodized workout programs tailored to client goals, training history, and available equipment. Backed by exercise science research.",
+      "tags": [
+        "fitness",
+        "workout",
+        "programming"
+      ],
+      "examples": [
+        "Design a 4-day upper/lower split for an intermediate lifter",
+        "Create a 6-week hypertrophy program for a client with knee issues",
+        "Build a deload week for someone finishing a strength block"
+      ]
+    },
+    {
+      "id": "exercise-lookup",
+      "name": "Exercise Lookup",
+      "description": "Search a curated exercise library with muscle targeting, equipment requirements, difficulty levels, and video references.",
+      "tags": [
+        "exercise",
+        "training",
+        "library"
+      ],
+      "examples": [
+        "What are the best compound exercises for posterior chain?",
+        "Show me cable exercises that target the rear delts"
+      ]
+    },
+    {
+      "id": "nutrition-coaching",
+      "name": "Nutrition Coaching",
+      "description": "Macro calculation, meal planning guidance, and food logging analysis using USDA FoodData Central.",
+      "tags": [
+        "nutrition",
+        "diet",
+        "macros"
+      ],
+      "examples": [
+        "Calculate macros for a 180lb male aiming for body recomposition",
+        "Analyze my food log and suggest improvements for protein intake"
+      ]
+    },
+    {
+      "id": "client-assessment",
+      "name": "Client Assessment",
+      "description": "Analyze client progress data — body stats, workout logs, personal records — and generate actionable coaching insights.",
+      "tags": [
+        "coaching",
+        "assessment",
+        "progress"
+      ],
+      "examples": [
+        "Review this client's last 8 weeks of training data and identify trends",
+        "What adjustments should I make based on this client's stalled squat progress?"
+      ]
+    },
+    {
+      "id": "program-builder",
+      "name": "Program Builder",
+      "description": "Build multi-week training programs with progressive overload, periodization, and exercise substitution logic.",
+      "tags": [
+        "program",
+        "periodization",
+        "training"
+      ],
+      "examples": [
+        "Create a 12-week linear periodization program for a beginner",
+        "Design a conjugate-style program for an advanced powerlifter"
+      ]
+    }
+  ],
+  "iconUrl": "https://dnai.systems/harley-logo.svg",
+  "documentationUrl": "https://github.com/EndlessRay/harley-a2a",
+  "epistemicCapabilities": {
+    "knowledgeCorpus": {
+      "totalVectors": 52000000,
+      "collections": [
+        "wger_exercise_library",
+        "fitness_exercise_science",
+        "pkg2_abstracts",
+        "statpearls_clinical",
+        "pubmed_recent_2024_2026",
+        "openfda_adverse_events",
+        "clinical_guidelines_v3",
+        "openfoodfacts_nutrition",
+        "usda_fooddata",
+        "dailymed_drug_labels",
+        "medlineplus_health",
+        "openstax_anatomy_physiology",
+        "clinical_trials_recent"
+      ],
+      "lastAudited": "2026-04-04",
+      "scopedCollections": "trainer_{uuid} per-trainer knowledge bases"
+    },
+    "falsificationAvailable": true,
+    "falsificationEndpoint": "/api/feng/falsify",
+    "temporalQuerySupport": true,
+    "provenanceInResponses": true,
+    "fiduciaryContractHash": "7c543cd90234ae9c",
+    "authorityLevel": 0.85,
+    "evidenceGrounding": "CIU-grounded (retrieval + CIVERA verification + Merkle audit)",
+    "hallucinationMitigation": "pre-generation (CIVERA) + post-generation (entity verification)"
+  }
+}

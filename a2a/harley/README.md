@@ -46,6 +46,10 @@ Bearer-auth A2A v1.0 endpoints, identical across all DNAi agents — only the `a
 | `POST /api/a2a/upgrade` / `GET /api/a2a/portal` | Stripe upgrade and self-service billing |
 | `POST /api/a2a/rotate-key` | Rotate your API key |
 
+## Connect to Google Gemini Enterprise
+
+Harley registers as a "Custom agent via A2A" inside any Google Gemini Enterprise app. Paste this repo's [`agent-card.json`](agent-card.json) into **Gemini Enterprise → your app → Agents → Add Agents → Custom agent via A2A** and click through. The card is shaped to be maximally compatible: it carries both the A2A v1.0 `supportedInterfaces[]` shape AND top-level `url` / `protocolVersion` / `iconUrl` / `documentationUrl` for the Gemini Enterprise console parser. Full step-by-step (with `curl` automation example) lives in [asha-a2a → Connect to Google Gemini Enterprise](https://github.com/EndlessRay/asha-a2a#connect-to-google-gemini-enterprise) — every DNAi agent uses the identical registration flow.
+
 ## Evaluating Harley against your current fitness AI
 
 The same A/B protocol used to evaluate Asha applies to Harley — same auth, same A2A surface, same provenance fields. Pull the harness from the Asha repo and change `agent_id` from `"asha"` to `"harley"`:
