@@ -2,7 +2,7 @@
 
 **Evidence-grounded medical AI, accessible via the [A2A protocol](https://a2aproject.github.io/A2A/).**
 
-Asha is a fiduciary medical AI agent backed by 87M+ knowledge vectors across curated medical collections (PubMed, StatPearls, FDA drug labels, clinical guidelines). Every response includes structured provenance — source collections, evidence count, and predicate classification — so you can verify what grounded the answer.
+Asha is a fiduciary medical AI agent backed by ~87M medical-domain knowledge vectors — a curated slice of the larger Citadel corpus (121M+ vectors across ~591 collections covering medicine, pharmacology, research literature, clinical guidelines, and structured codings). Every response includes structured provenance — source collections, evidence count, and predicate classification — so you can verify what grounded the answer.
 
 Built by physician co-founders. Patent allowed: US 19/290,471.
 
@@ -13,7 +13,12 @@ Live at:
 https://api.askasha.org/.well-known/agent-card.json?agent_id=asha
 ```
 
-A copy is included in this repo at [`agent-card.json`](agent-card.json).
+Fleet discovery (all 11 public agents in one card):
+```
+https://api.askasha.org/.well-known/agent-card.json
+```
+
+A copy of Asha's card is included in this repo at [`agent-card.json`](agent-card.json).
 
 ## Skills
 
@@ -74,24 +79,42 @@ See [`examples/python_client.py`](examples/python_client.py) for a complete Pyth
 | Requirement | Status |
 |-------------|--------|
 | Agent Card at `/.well-known/agent-card.json` | Served |
-| `POST /message:send` | Implemented |
-| `GET /tasks/{id}` | Implemented |
-| `GET /tasks` (list, paginated) | Implemented |
-| `POST /tasks/{id}:cancel` | Implemented |
-| `GET /health` (503 when unhealthy) | Implemented |
+| `POST /a2a/v1/message:send` | Implemented |
+| `GET /a2a/v1/tasks/{id}` | Implemented |
+| `GET /a2a/v1/tasks` (list, paginated, scoped to caller) | Implemented |
+| `POST /a2a/v1/tasks/{id}:cancel` | Implemented |
+| `GET /a2a/v1/health` (503 when unhealthy) | Implemented |
 | Bearer auth with `securitySchemes` | Implemented |
 | `A2A-Version: 1.0` response header | Implemented |
 | Task state lifecycle | SUBMITTED, WORKING, COMPLETED, FAILED, CANCELED |
 | Task scoping to caller | Implemented (v1.0 §4.3) |
 
-## Knowledge Collections
+## Account & Operations Endpoints
+
+In addition to the A2A protocol surface, Asha exposes operator endpoints for managing your API key and verifying corpus state:
+
+| Endpoint | Method | Purpose |
+|---------|--------|---------|
+| `POST /api/a2a/signup` | None | Self-service API key provisioning |
+| `GET /api/a2a/usage` | API key | Daily/monthly usage counters and limits |
+| `POST /api/a2a/upgrade` | API key | Stripe checkout for tier upgrade |
+| `GET /api/a2a/portal` | API key | Stripe Customer Portal (billing self-service) |
+| `POST /api/a2a/rotate-key` | API key | Rotate (regenerate) your API key |
+| `GET /api/audit/corpus-state` | JWT | Cryptographic corpus commitment (verifiable knowledge state) |
+| `POST /api/feng/falsify` | JWT | Popperian claim falsification — see [feng-a2a](https://github.com/EndlessRay/feng-a2a) |
+
+## Knowledge Coverage (Asha's slice)
+
+Asha is the medical-intelligence agent. It is bound to medical, clinical, pharmacology, and research collections from the Citadel corpus:
 
 | Category | Vectors | Key Sources |
 |----------|---------|-------------|
-| Research & Academic | ~90M | OpenAlex (16.5M), PubMed (5.1M), PMC full-text (5.2M) |
-| Medical & Clinical | ~18M | Wikidata medical (10.9M), DailyMed (889K), StatPearls (76K) |
+| Research & Academic | ~90M | OpenAlex top-cited (16.5M), PubMed abstracts (5.1M), PMC full-text cited (5.2M), `pkg2_abstracts` (48M) |
+| Medical & Clinical | ~18M | Wikidata medical (10.9M), DailyMed drug labels (889K), StatPearls clinical (76K) |
 | Pharmacology | ~928K | DailyMed drug labels, FDA drug labels |
-| Coding & Classification | ~304K | ICD-10, medical codes |
+| Coding & Classification | ~304K | ICD-10, structured medical codes |
+
+Total Citadel corpus across all 11 public agents: **121M+ vectors across ~591 live collections** (audited 2026-05-01).
 
 ## Safety
 
@@ -104,37 +127,36 @@ See [`examples/python_client.py`](examples/python_client.py) for a complete Pyth
 
 ## Pricing
 
-| Tier | Monthly | Queries | Get Started |
-|------|---------|---------|-------------|
-| Free | $0 | 50/month | `POST /api/a2a/signup` |
-| Developer | $49 | 1,000/month | Upgrade via `/api/a2a/upgrade` |
-| Pro | $199 | 10,000/month | Upgrade via `/api/a2a/upgrade` |
-| Enterprise | Custom | Unlimited | Contact below |
+| Tier | Monthly | Daily Cap | Monthly Cap | Get Started |
+|------|---------|-----------|-------------|-------------|
+| Free | $0 | 10 queries | 50 queries | `POST /api/a2a/signup` |
+| Developer | $49 | 200 queries | 1,000 queries | `POST /api/a2a/upgrade` |
+| Pro | $199 | 2,000 queries | 10,000 queries | `POST /api/a2a/upgrade` |
+| Enterprise | Custom | Unlimited | Unlimited | [dnai.systems](https://dnai.systems) |
 
 ## Other DNAi Agents
 
-Asha is one of 11 public agents in the DNAi fleet:
+Asha is one of 11 public agents in the DNAi fleet. All agents share the same base URL (`https://api.askasha.org`), auth system, and A2A protocol surface. The `agent_id` in metadata selects which agent handles your query.
 
-| Agent | Domain | Agent Card |
-|-------|--------|------------|
-| **Asha** | Medical intelligence | This repo |
-| Harley | Fitness coaching | `?agent_id=harley` |
-| Artha | Financial analysis | `?agent_id=artha` |
-| Sage | Nutrition & wellness | `?agent_id=sage` |
-| Polymath | Math & science | `?agent_id=polymath` |
-| Lyra | Medical research | `?agent_id=lyra` |
-| Leo | Legal aid | `?agent_id=leo` |
-| Mira | Marketing & growth | `?agent_id=mira` |
-| Ren | Customer support | `?agent_id=ren` |
-| Arohi | Practice management | `?agent_id=arohi` |
-| Ray | Platform architecture | `?agent_id=ray` |
+| Agent | Domain | Repo | Agent Card |
+|-------|--------|------|------------|
+| **Asha** | Medical intelligence | [asha-a2a](https://github.com/EndlessRay/asha-a2a) | `?agent_id=asha` |
+| **Harley** | Fitness coaching | [harley-a2a](https://github.com/EndlessRay/harley-a2a) | `?agent_id=harley` |
+| **Artha** | Financial analysis | [artha-a2a](https://github.com/EndlessRay/artha-a2a) | `?agent_id=artha` |
+| **Sage** | Nutrition & wellness | [sage-a2a](https://github.com/EndlessRay/sage-a2a) | `?agent_id=sage` |
+| **Polymath** | Math & science | [polymath-a2a](https://github.com/EndlessRay/polymath-a2a) | `?agent_id=polymath` |
+| **Lyra** | Medical research | — | `?agent_id=lyra` |
+| **Leo** | Legal aid | — | `?agent_id=leo` |
+| **Mira** | Marketing & growth | — | `?agent_id=mira` |
+| **Ren** | Customer support | — | `?agent_id=ren` |
+| **Arohi** | Practice management | — | `?agent_id=arohi` |
+| **Ray** | Platform architecture | — | `?agent_id=ray` |
 
-All agents share the same base URL and auth system. The `agent_id` in metadata selects which agent handles your query.
+Companion services:
 
-Fleet discovery:
-```
-https://api.askasha.org/.well-known/agent-card.json
-```
+| Service | Repo | Purpose |
+|---------|------|---------|
+| FENG (Falsification Engine) | [feng-a2a](https://github.com/EndlessRay/feng-a2a) | Popperian claim falsification with E-value scoring |
 
 ## Links
 

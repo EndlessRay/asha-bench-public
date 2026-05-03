@@ -90,12 +90,16 @@
                 "medical_codes",
                 "medical_icd10"
             ],
-            "lastAudited": "2026-03-28"
+            "lastAudited": "2026-05-01",
+            "fleetTotalVectors": 121000000,
+            "fleetTotalCollections": 591
         },
         "falsificationAvailable": true,
+        "falsificationEndpoint": "/api/feng/falsify",
         "temporalQuerySupport": true,
         "provenanceInResponses": true,
         "fiduciaryContract": true,
+        "authorityLevel": 0.95,
         "evidenceGrounding": "retrieval-augmented",
         "hallucinationMitigation": "pre-generation suppression + post-generation verification"
     }
