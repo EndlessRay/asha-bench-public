@@ -1,1 +1,139 @@
-{"name":"Sage","description":"AI Nutrition, Wellness, and Wisdom Intelligence. Named for both the wise elder and the healing herb (Salvia officinalis). Nutrition science, gut-brain axis, therapeutic presence, and ancestral wellness.","version":"1.0.0","supportedInterfaces":[{"url":"https://api.askasha.org/a2a/v1","protocolBinding":"HTTP+JSON","protocolVersion":"1.0"}],"provider":{"organization":"DNAi Systems","url":"https://dnai.systems"},"capabilities":{"streaming":false,"pushNotifications":false,"extendedAgentCard":false},"defaultInputModes":["text/plain","application/json"],"defaultOutputModes":["text/plain","application/json"],"securitySchemes":{"bearer":{"httpAuthSecurityScheme":{"scheme":"Bearer","bearerFormat":"API-Key"}}},"securityRequirements":[{"bearer":[]}],"skills":[{"id":"nutrition-analysis","name":"Nutrition Analysis","description":"Deep nutritional analysis using USDA FoodData Central, OpenFoodFacts (3.1M products), and micronutrient databases.","tags":["nutrition","food","micronutrients"],"examples":["Analyze the micronutrient profile of a Mediterranean diet","What foods are highest in magnesium glycinate bioavailability?","Compare the nutritional density of kale vs spinach vs collard greens"]},{"id":"food-interaction","name":"Food-Drug Interaction","description":"Identify food-drug interactions, nutrient depletions from medications, and dietary modifications for clinical conditions.","tags":["food-drug","interaction","clinical-nutrition"],"examples":["What foods should be avoided while taking MAOIs?","Which nutrients are depleted by long-term metformin use?"]},{"id":"wellness-assessment","name":"Wellness Assessment","description":"Holistic wellness evaluation integrating nutrition, sleep, stress, and lifestyle factors with evidence-based recommendations.","tags":["wellness","holistic","lifestyle"],"examples":["Create a wellness protocol for someone with chronic fatigue","What evidence supports adaptogenic herbs for stress management?"]},{"id":"gut-health","name":"Gut-Brain Axis Analysis","description":"Gut microbiome impact on mental health, immune function, and systemic inflammation — evidence-based prebiotic and probiotic recommendations.","tags":["gut-brain","microbiome","therapeutic"],"examples":["What is the evidence for probiotics in IBS management?","How does gut microbiome composition affect anxiety and depression?"]}],"epistemicCapabilities":{"knowledgeCorpus":{"totalVectors":51310000,"collections":["openfoodfacts_nutrition","usda_fooddata","nutrition_usda_sr","nutrition_indb_indian","nutrition_fdc_foundation","nutrition_openfoodfacts_global","nutrition_foodb_compounds","nutrition_fao_infoods","statpearls_clinical","wisdom_canon","philosophy_ethics_textbook","cultural_intelligence","science_technology_canon","psychology_textbook","pkg2_abstracts","herbal_pharmacopoeia","traditional_wellness","indian_pharmacopoeia"],"lastAudited":"2026-05-01"},"falsificationAvailable":true,"falsificationEndpoint":"/api/feng/falsify","temporalQuerySupport":true,"provenanceInResponses":true,"fiduciaryContractHash":"d4e7fcd9fd090eff","authorityLevel":0.85,"evidenceGrounding":"retrieval-augmented","hallucinationMitigation":"pre-generation (CIVERA) + post-generation (entity verification)"}}
+{
+  "name": "Sage",
+  "description": "AI Nutrition, Wellness, and Wisdom Intelligence. Named for both the wise elder and the healing herb (Salvia officinalis). Nutrition science, gut-brain axis, therapeutic presence, and ancestral wellness.",
+  "version": "1.0.0",
+  "supportedInterfaces": [
+    {
+      "url": "https://api.askasha.org/a2a/v1",
+      "protocolBinding": "HTTP+JSON",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "url": "https://api.askasha.org/a2a/v1",
+  "protocolVersion": "1.0",
+  "provider": {
+    "organization": "DNAi Systems",
+    "url": "https://dnai.systems"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "extendedAgentCard": false
+  },
+  "defaultInputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "defaultOutputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "securitySchemes": {
+    "bearer": {
+      "httpAuthSecurityScheme": {
+        "scheme": "Bearer",
+        "bearerFormat": "API-Key"
+      }
+    }
+  },
+  "securityRequirements": [
+    {
+      "bearer": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "nutrition-analysis",
+      "name": "Nutrition Analysis",
+      "description": "Deep nutritional analysis using USDA FoodData Central, OpenFoodFacts (3.1M products), and micronutrient databases.",
+      "tags": [
+        "nutrition",
+        "food",
+        "micronutrients"
+      ],
+      "examples": [
+        "Analyze the micronutrient profile of a Mediterranean diet",
+        "What foods are highest in magnesium glycinate bioavailability?",
+        "Compare the nutritional density of kale vs spinach vs collard greens"
+      ]
+    },
+    {
+      "id": "food-interaction",
+      "name": "Food-Drug Interaction",
+      "description": "Identify food-drug interactions, nutrient depletions from medications, and dietary modifications for clinical conditions.",
+      "tags": [
+        "food-drug",
+        "interaction",
+        "clinical-nutrition"
+      ],
+      "examples": [
+        "What foods should be avoided while taking MAOIs?",
+        "Which nutrients are depleted by long-term metformin use?"
+      ]
+    },
+    {
+      "id": "wellness-assessment",
+      "name": "Wellness Assessment",
+      "description": "Holistic wellness evaluation integrating nutrition, sleep, stress, and lifestyle factors with evidence-based recommendations.",
+      "tags": [
+        "wellness",
+        "holistic",
+        "lifestyle"
+      ],
+      "examples": [
+        "Create a wellness protocol for someone with chronic fatigue",
+        "What evidence supports adaptogenic herbs for stress management?"
+      ]
+    },
+    {
+      "id": "gut-health",
+      "name": "Gut-Brain Axis Analysis",
+      "description": "Gut microbiome impact on mental health, immune function, and systemic inflammation — evidence-based prebiotic and probiotic recommendations.",
+      "tags": [
+        "gut-brain",
+        "microbiome",
+        "therapeutic"
+      ],
+      "examples": [
+        "What is the evidence for probiotics in IBS management?",
+        "How does gut microbiome composition affect anxiety and depression?"
+      ]
+    }
+  ],
+  "iconUrl": "https://dnai.systems/dnai-logo.svg",
+  "documentationUrl": "https://github.com/EndlessRay/sage-a2a",
+  "epistemicCapabilities": {
+    "knowledgeCorpus": {
+      "totalVectors": 51310000,
+      "collections": [
+        "openfoodfacts_nutrition",
+        "usda_fooddata",
+        "nutrition_usda_sr",
+        "nutrition_indb_indian",
+        "nutrition_fdc_foundation",
+        "nutrition_openfoodfacts_global",
+        "nutrition_foodb_compounds",
+        "nutrition_fao_infoods",
+        "statpearls_clinical",
+        "wisdom_canon",
+        "philosophy_ethics_textbook",
+        "cultural_intelligence",
+        "science_technology_canon",
+        "psychology_textbook",
+        "pkg2_abstracts",
+        "herbal_pharmacopoeia",
+        "traditional_wellness",
+        "indian_pharmacopoeia"
+      ],
+      "lastAudited": "2026-04-04"
+    },
+    "falsificationAvailable": true,
+    "falsificationEndpoint": "/api/feng/falsify",
+    "temporalQuerySupport": true,
+    "provenanceInResponses": true,
+    "fiduciaryContractHash": "d4e7fcd9fd090eff",
+    "authorityLevel": 0.85,
+    "evidenceGrounding": "CIU-grounded (retrieval + CIVERA verification + Merkle audit)",
+    "hallucinationMitigation": "pre-generation (CIVERA) + post-generation (entity verification)"
+  }
+}
