@@ -89,6 +89,69 @@ See [`examples/python_client.py`](examples/python_client.py) for a complete Pyth
 | Task state lifecycle | SUBMITTED, WORKING, COMPLETED, FAILED, CANCELED |
 | Task scoping to caller | Implemented (v1.0 §4.3) |
 
+## Evaluating Asha against your current medical AI
+
+Already on UpToDate, OpenEvidence, Glass, an OpenAI-compatible internal stack, or anything else? Here is a 30-minute, no-credit-card, side-by-side test.
+
+### What makes this different from a typical LLM bake-off
+
+Asha returns **structured provenance** with every response. That means you can compare not just the prose, but the actual epistemic substrate behind it. Most general-purpose APIs do not let you see this.
+
+| Dimension | Asha returns | Typical chat API returns |
+|-----------|--------------|--------------------------|
+| Source collections that grounded the answer | Yes (`provenance.sources`) | No |
+| Count of evidence items used | Yes (`provenance.evidence_count`) | No |
+| Predicate scope (medical_general, drug, guideline, etc.) | Yes (`provenance.predicate_scope`) | No |
+| Verifiable fiduciary contract hash | Yes (`provenance.contract_hash`) | No |
+| Independent claim falsification | Yes (`POST /api/feng/falsify`, see [feng-a2a](https://github.com/EndlessRay/feng-a2a)) | No |
+
+### The 5-step protocol
+
+1. **Get a free key (no credit card, 50 queries / month).**
+   ```bash
+   curl -X POST https://api.askasha.org/api/a2a/signup \
+     -H "Content-Type: application/json" \
+     -d '{"email":"you@example.com","name":"Your Name","tier":"free"}'
+   ```
+
+2. **Pick a representative evaluation set.** 20–50 questions from your real query log. Mix easy (drug MoA, guideline lookup), medium (clinical guidelines, contraindication chains), and hard (multi-system differentials, edge-case interactions). Include questions you have seen your current provider hallucinate on. A starter is at [`examples/eval_set.txt`](examples/eval_set.txt).
+
+3. **Run the parallel harness** at [`examples/evaluation.py`](examples/evaluation.py). Edit `query_other_api()` to match your current provider's auth + body format (most are OpenAI-compatible chat completions; if so, set `OTHER_API_BASE` and `OTHER_API_KEY` and you're done).
+   ```bash
+   ASHA_API_KEY=ak_...        \
+   OTHER_API_BASE=https://your-current-api  \
+   OTHER_API_KEY=...          \
+   EVAL_SET=examples/eval_set.txt \
+     python examples/evaluation.py
+   ```
+   Output: `ab_results_<timestamp>.json` with both providers side-by-side per question, plus latency p50/p95 and Asha evidence-count distribution.
+
+4. **Score the dimensions that matter.** Most teams care about some subset of:
+
+   | Dimension | How to score |
+   |-----------|--------------|
+   | Factual accuracy | Manual review against an authoritative reference (UpToDate, primary literature) |
+   | Citation quality | Asha returns `sources` and `evidence_count` directly. For other providers, parse cited references and verify they exist (some APIs hallucinate citations). |
+   | Hallucination rate | Per response, count fabricated drug names, dosing claims, made-up guidelines. Asha's pre-generation suppression + post-generation verification is designed to drive this to zero on grounded queries. |
+   | Latency p50 / p95 | Auto-collected by the harness |
+   | Cost at expected volume | Asha is flat-rate metered ($0 / $49 / $199 / Custom — see Pricing). Compare against per-call or per-token billing on your current provider. |
+   | Auditability | Can you re-derive *what knowledge grounded the answer*, weeks later, after the model has updated? Asha: yes (contract hash + sources are stable per response). Most: no. |
+
+5. **Stress-test any specific claim with FENG.** If either provider says something high-stakes (e.g. "Drug X is contraindicated with Drug Y"), run that exact claim through the [FENG](https://github.com/EndlessRay/feng-a2a) endpoint. You'll get a verdict — `FALSIFIED`, `WEAKENED`, `CONDITIONAL`, or `UNFALSIFIED` — with E-value, evidence-for, evidence-against, and the collections searched. This is the deepest single audit step available across any medical AI vendor today.
+
+### What we tell evaluators honestly
+
+- **Asha is strong on:** drug pharmacology, drug-drug interactions, clinical guidelines, evidence synthesis, anything where citation fidelity matters more than chatty bedside manner.
+- **Asha is intentionally conservative on:** definitive diagnosis, medication dosing, anything that requires a licensed clinician's judgment. The fiduciary medical contract refuses to fabricate any of those rather than guess. If your current provider gives confident definitive diagnoses on demand, that is a difference, not a defect — measure hallucination rate before treating it as a feature.
+- **Latency:** retrieval-augmented generation across 87M+ medical vectors is not free. Expect a few seconds end-to-end. The harness will surface exact p50/p95 numbers for your set so you can weigh the trade-off explicitly.
+
+### Migration path if you decide to switch
+
+- The A2A surface is bearer-auth + JSON. Most teams swap the URL and Authorization header and ship.
+- Run a 2-week shadow window: route real production queries to both, log both responses, review divergences. The harness's output JSON is shaped for exactly this.
+- Keep your current API as a fallback; rotate Asha keys with `POST /api/a2a/rotate-key` if a key is ever leaked.
+- For high-volume production deployments, contact us via [dnai.systems](https://dnai.systems) for an Enterprise tier with custom limits and SLAs.
+
 ## Account & Operations Endpoints
 
 In addition to the A2A protocol surface, Asha exposes operator endpoints for managing your API key and verifying corpus state:

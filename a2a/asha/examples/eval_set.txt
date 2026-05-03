@@ -1,0 +1,26 @@
+# Sample evaluation set for the Asha A/B harness.
+# Replace these with your own real query log for a meaningful evaluation.
+# Lines starting with # are ignored. Blank lines are ignored.
+
+# --- Easy: drug pharmacology ---
+What is the mechanism of action of metformin?
+What is the half-life of apixaban in patients with normal renal function?
+Which P450 enzymes metabolize clopidogrel?
+
+# --- Medium: clinical guidelines ---
+What are the current ADA guidelines for first-line therapy in type 2 diabetes with established ASCVD?
+USPSTF screening recommendations for colorectal cancer in average-risk adults?
+What is the AHA/ACC recommended target LDL for secondary prevention in established CAD?
+
+# --- Hard: differentials and multi-system reasoning ---
+Differential diagnosis for new-onset atrial fibrillation in a 32-year-old female with weight loss and palpitations?
+A 68-year-old on warfarin for AFib starts amiodarone for rate control. What INR monitoring strategy is appropriate and why?
+Patient on lithium develops nephrogenic diabetes insipidus. What are the management options and which is first-line if lithium cannot be discontinued?
+
+# --- Drug interactions: high-stakes ---
+Are there clinically significant interactions when combining sertraline, trazodone, and bupropion in a patient with treatment-resistant depression?
+What food-drug interactions should a patient on warfarin be counseled about?
+
+# --- Mechanism + evidence synthesis ---
+What is the evidence base for SGLT2 inhibitors in heart failure with preserved ejection fraction?
+Summarize the evidence for psilocybin in treatment-resistant depression — phase, effect size, durability.
