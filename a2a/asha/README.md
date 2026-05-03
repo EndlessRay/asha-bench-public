@@ -152,6 +152,61 @@ Asha returns **structured provenance** with every response. That means you can c
 - Keep your current API as a fallback; rotate Asha keys with `POST /api/a2a/rotate-key` if a key is ever leaked.
 - For high-volume production deployments, contact us via [dnai.systems](https://dnai.systems) for an Enterprise tier with custom limits and SLAs.
 
+## Connect to Google Gemini Enterprise
+
+Asha (and any of the 11 DNAi agents) registers as a "Custom agent via A2A" inside a Google Gemini Enterprise app. Once registered, the agent shows up to your end users in the Gemini Enterprise web app and Gemini composer surfaces.
+
+The agent card in this repo (`agent-card.json`) is shaped to be **maximally compatible** with the Gemini Enterprise registration parser: it carries both the A2A v1.0 `supportedInterfaces[]` shape AND the flatter top-level `url` + `protocolVersion` fields used by the Gemini Enterprise console example, plus `iconUrl` and `documentationUrl`.
+
+### Console (recommended)
+
+1. In the Google Cloud console, open **Gemini Enterprise** → click your app → **Agents** → **Add Agents**.
+2. In **Choose an agent type**, pick **Add → Custom agent via A2A**.
+3. Paste the contents of [`agent-card.json`](agent-card.json) into the **Agent card JSON** field.
+4. Click **Preview agent details → Next**.
+5. If your users will need Asha to access Google Cloud resources on their behalf (Drive, Docs, BigQuery, etc.), add the OAuth client credentials. Otherwise click **Skip & Finish**. Asha itself does not require Google OAuth — it authenticates with its own DNAi-issued API key (Bearer auth, declared in `securitySchemes`).
+
+### REST
+
+If you'd rather automate it:
+
+```bash
+PROJECT_ID=your-gcp-project
+LOCATION=global       # or us, eu
+APP_ID=your-gemini-enterprise-app-id
+ENDPOINT=${LOCATION}-discoveryengine.googleapis.com
+
+curl -X POST \
+  -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+  -H "Content-Type: application/json" \
+  "https://${ENDPOINT}/v1alpha/projects/${PROJECT_ID}/locations/${LOCATION}/collections/default_collection/engines/${APP_ID}/assistants/default_assistant/agents" \
+  -d @- <<EOF
+{
+  "name": "asha-dnai",
+  "displayName": "Asha (DNAi)",
+  "description": "Fiduciary medical intelligence with verifiable provenance.",
+  "a2aAgentDefinition": {
+    "jsonAgentCard": $(cat agent-card.json | jq -c . | jq -R .)
+  }
+}
+EOF
+```
+
+That single command embeds Asha's agent card into the Gemini Enterprise registration request. Replace `asha` in the agent-card URL / `agent_id` metadata to register any of the other DNAi agents (Harley, Artha, Sage, Polymath, Lyra, Leo, Mira, Ren, Arohi, Ray).
+
+### What Gemini Enterprise users will see
+
+- Asha appears in their Gemini Enterprise app's agent list with the icon at `https://dnai.systems/asha-logo.svg`.
+- Queries route through Gemini's UI to `https://api.askasha.org/a2a/v1/message:send` over the A2A v1.0 protocol.
+- Responses include the same structured provenance (sources, evidence count, contract hash) Gemini Enterprise users would see calling Asha directly.
+- Authentication: Asha's own Bearer API key (per the `securitySchemes.bearer` declaration). Each registering org provisions its own key via `POST /api/a2a/signup`.
+
+### Security notes (per Google's docs)
+
+- Gemini Enterprise's Model Armor settings in the Cloud console **do not** automatically protect A2A agents. If you want Model Armor on top of Asha's existing fiduciary medical contract, add it via the Model Armor REST API in your registering app.
+- Asha already enforces a fiduciary medical contract (no prescribing, no definitive diagnoses, jailbreak detection, contract hash on every response) at the API boundary, independent of Gemini Enterprise.
+- API keys live in your environment, never in the registered agent card. Rotate any time with `POST /api/a2a/rotate-key`.
+
 ## Account & Operations Endpoints
 
 In addition to the A2A protocol surface, Asha exposes operator endpoints for managing your API key and verifying corpus state:
