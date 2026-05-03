@@ -1,1 +1,134 @@
-{"name":"Artha","description":"AI Financial Intelligence. Sanskrit for wealth and purpose — one of the four aims of human life. Company analysis, SEC filings, financial metrics, and economic indicators.","version":"1.0.0","supportedInterfaces":[{"url":"https://api.askasha.org/a2a/v1","protocolBinding":"HTTP+JSON","protocolVersion":"1.0"}],"provider":{"organization":"DNAi Systems","url":"https://dnai.systems"},"capabilities":{"streaming":false,"pushNotifications":false,"extendedAgentCard":false},"defaultInputModes":["text/plain","application/json"],"defaultOutputModes":["text/plain","application/json"],"securitySchemes":{"bearer":{"httpAuthSecurityScheme":{"scheme":"Bearer","bearerFormat":"API-Key"}}},"securityRequirements":[{"bearer":[]}],"skills":[{"id":"company-analysis","name":"Company Analysis","description":"Comprehensive company analysis using fundamental data, SEC filings, and financial statements.","tags":["financial","company","analysis"],"examples":["Give me a fundamental analysis of NVIDIA's last 4 quarters","Compare Apple and Microsoft's capital allocation strategies"]},{"id":"sec-filing-search","name":"SEC Filing Search","description":"Search and analyze SEC EDGAR filings — 10-Ks, 10-Qs, 8-Ks, proxy statements — with XBRL data extraction.","tags":["SEC","EDGAR","filings","XBRL"],"examples":["Find Tesla's latest 10-K risk factors section","What did Alphabet disclose in their most recent 8-K?","Extract revenue segments from Amazon's latest 10-Q"]},{"id":"financial-metrics","name":"Financial Metrics","description":"Calculate and compare financial ratios, valuation multiples, and performance metrics across companies and sectors.","tags":["metrics","valuation","ratios"],"examples":["Calculate EV/EBITDA for the top 5 semiconductor companies","What is the Altman Z-score for Boeing?"]},{"id":"market-research","name":"Market Research","description":"Sector analysis, economic indicator tracking, and macro trend identification using financial data.","tags":["market","economics","research"],"examples":["How has the AI infrastructure sector performed relative to S&P 500 YTD?","What do current treasury yield curves suggest about recession risk?"]}],"epistemicCapabilities":{"knowledgeCorpus":{"totalVectors":16700000,"collections":["artha_sec_filings","artha_company_fundamentals","artha_economic_indicators","artha_company_profiles","artha_financial_statements","artha_financial_news","artha_treasury_yields","finance_economics_textbook","openalex_finance_mgmt","repec_economics","openalex_top_cited","arxiv_multidomain"],"lastAudited":"2026-05-01"},"falsificationAvailable":true,"falsificationEndpoint":"/api/feng/falsify","temporalQuerySupport":true,"provenanceInResponses":true,"fiduciaryContractHash":"2463019018e61094","authorityLevel":0.9,"evidenceGrounding":"retrieval-augmented","hallucinationMitigation":"pre-generation (CIVERA) + post-generation (entity verification)"}}
+{
+  "name": "Artha",
+  "description": "AI Financial Intelligence. Sanskrit for wealth and purpose — one of the four aims of human life. Company analysis, SEC filings, financial metrics, and economic indicators.",
+  "version": "1.0.0",
+  "supportedInterfaces": [
+    {
+      "url": "https://api.askasha.org/a2a/v1",
+      "protocolBinding": "HTTP+JSON",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "url": "https://api.askasha.org/a2a/v1",
+  "protocolVersion": "1.0",
+  "provider": {
+    "organization": "DNAi Systems",
+    "url": "https://dnai.systems"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "extendedAgentCard": false
+  },
+  "defaultInputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "defaultOutputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "securitySchemes": {
+    "bearer": {
+      "httpAuthSecurityScheme": {
+        "scheme": "Bearer",
+        "bearerFormat": "API-Key"
+      }
+    }
+  },
+  "securityRequirements": [
+    {
+      "bearer": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "company-analysis",
+      "name": "Company Analysis",
+      "description": "Comprehensive company analysis using fundamental data, SEC filings, and financial statements.",
+      "tags": [
+        "financial",
+        "company",
+        "analysis"
+      ],
+      "examples": [
+        "Give me a fundamental analysis of NVIDIA's last 4 quarters",
+        "Compare Apple and Microsoft's capital allocation strategies"
+      ]
+    },
+    {
+      "id": "sec-filing-search",
+      "name": "SEC Filing Search",
+      "description": "Search and analyze SEC EDGAR filings — 10-Ks, 10-Qs, 8-Ks, proxy statements — with XBRL data extraction.",
+      "tags": [
+        "SEC",
+        "EDGAR",
+        "filings",
+        "XBRL"
+      ],
+      "examples": [
+        "Find Tesla's latest 10-K risk factors section",
+        "What did Alphabet disclose in their most recent 8-K?",
+        "Extract revenue segments from Amazon's latest 10-Q"
+      ]
+    },
+    {
+      "id": "financial-metrics",
+      "name": "Financial Metrics",
+      "description": "Calculate and compare financial ratios, valuation multiples, and performance metrics across companies and sectors.",
+      "tags": [
+        "metrics",
+        "valuation",
+        "ratios"
+      ],
+      "examples": [
+        "Calculate EV/EBITDA for the top 5 semiconductor companies",
+        "What is the Altman Z-score for Boeing?"
+      ]
+    },
+    {
+      "id": "market-research",
+      "name": "Market Research",
+      "description": "Sector analysis, economic indicator tracking, and macro trend identification using financial data.",
+      "tags": [
+        "market",
+        "economics",
+        "research"
+      ],
+      "examples": [
+        "How has the AI infrastructure sector performed relative to S&P 500 YTD?",
+        "What do current treasury yield curves suggest about recession risk?"
+      ]
+    }
+  ],
+  "iconUrl": "https://dnai.systems/dnai-logo.svg",
+  "documentationUrl": "https://github.com/EndlessRay/artha-a2a",
+  "epistemicCapabilities": {
+    "knowledgeCorpus": {
+      "totalVectors": 16700000,
+      "collections": [
+        "artha_sec_filings",
+        "artha_company_fundamentals",
+        "artha_economic_indicators",
+        "artha_company_profiles",
+        "artha_financial_statements",
+        "artha_financial_news",
+        "artha_treasury_yields",
+        "finance_economics_textbook",
+        "openalex_finance_mgmt",
+        "repec_economics",
+        "openalex_top_cited",
+        "arxiv_multidomain"
+      ],
+      "lastAudited": "2026-04-04"
+    },
+    "falsificationAvailable": true,
+    "falsificationEndpoint": "/api/feng/falsify",
+    "temporalQuerySupport": true,
+    "provenanceInResponses": true,
+    "fiduciaryContractHash": "2463019018e61094",
+    "authorityLevel": 0.9,
+    "evidenceGrounding": "CIU-grounded (retrieval + CIVERA verification + Merkle audit)",
+    "hallucinationMitigation": "pre-generation (CIVERA) + post-generation (entity verification)"
+  }
+}
