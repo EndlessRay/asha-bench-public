@@ -39,7 +39,7 @@ Au Yeung et al. (2025) 16-scenario × 12-turn protocol, [arXiv:2509.10970v2](htt
 
 Two pre-registered hypotheses (H_DCS, H_SIS) PASS with wide margins. One (H_JUDGE_RELIABILITY) FAILS the κ ≥ 0.60 gate (avg κ_DCS+HES = 0.249); formal verdict therefore **INCONCLUSIVE per literal rule**. Substantive claim survives — both judges (`gpt-4o-mini` and `claude-haiku-4-5`) agree on the *direction* of every metric. Judge B is consistently harsher on Asha and more lenient on Gemini-Flash than Judge A (ordinal-scale calibration difference, not selective refusal); under Judge B alone the headline still shows Asha 1.72× lower DCS [1.40, 2.20] and 1.76× lower HES [1.37, 2.31]. Full breakdown: [`psychosis-bench-2026-05-11/reports/02_dual_judge_kappa.md`](psychosis-bench-2026-05-11/reports/02_dual_judge_kappa.md).
 
-The same META_CORRECT layer responsible for MedQA's parser rescue is responsible for Psychosis-bench's intervention rate. MedQA failure mode is **structural** (does the LM produce a parseable letter?); Psychosis-bench failure mode is **semantic safety** (does the LM amplify a clinically dangerous belief?). One primitive, two regulated-domain failure modes.
+On both endpoints, the META_CORRECT layer composes with the underlying LM. On the **structural** endpoint (MedQA parse-failure rescue) it is the proximal mechanism — 51 of 66 paired wins. On the **semantic-safety** endpoint (Psychosis-bench) the layer composes with the underlying LM's safety alignment; over `gemini-2.5-flash` (raw SIS 30.2% per Wilson [21.9, 40.0] in Chapter 3) the full cognition stack lifts SIS to 95.8% — a +65.6 pp gap. We do *not* claim the same gap would appear over a more strongly aligned LM; that is a separate test (queued).
 
 ## Layout
 
