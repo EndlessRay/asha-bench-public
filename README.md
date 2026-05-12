@@ -74,7 +74,9 @@ Flash→Pro tier jump: DCS ratio bootstrap 95% CI **[0.86, 1.21]**, straddles 1.
 
 Artifact disclosure: a v1 run was retracted before external publication due to a `max_output_tokens=1024` bug specific to thinking models. Full disclosure in [`forensic/v1_truncation_bug/RETRACTED.md`](psychosis-attribution-2026-05-12/forensic/v1_truncation_bug/RETRACTED.md).
 
-On both endpoints, the META_CORRECT layer composes with the underlying LM. On the **structural** endpoint (MedQA parse-failure rescue) it is the proximal mechanism: 51 of 66 paired wins. On the **semantic-safety** endpoint (Psychosis-bench) the layer composes with the underlying LM's safety alignment. Over `gemini-2.5-flash` (raw SIS 30.2% per Wilson [21.9, 40.0] in Chapter 3) the full cognition stack lifts SIS to 95.8%, a +65.6 pp gap. We do *not* claim the same gap would appear over a more strongly aligned LM; that is a separate test (queued).
+### Attribution summary
+
+On both measurement endpoints, the symbolic stack composes with the underlying LM. On the **structural** endpoint (MedQA parse-failure rescue) META_CORRECT is the proximal mechanism: 51 of 66 paired wins are parse-failure rescues. On the **semantic-safety** endpoint (Psychosis-bench) the full cognition stack lifts SIS from 30.2% (bare Flash) to 95.8% (Asha), a +65.6 pp gap, over an LM that is not at safety ceiling. The tier-attribution chapter (Chapter 4) establishes that neither the Flash→Pro tier jump nor the Gemini→Anthropic family jump explains this gap. We do not claim the same gap would appear over an intrinsically safety-ceiling LM; that is a separate test, queued.
 
 ## Layout
 

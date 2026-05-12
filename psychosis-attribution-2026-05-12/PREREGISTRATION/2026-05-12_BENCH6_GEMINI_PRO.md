@@ -87,3 +87,40 @@ The public-bench Chapter 3 dual-judge REDO (`bench-public/.../results/per_turn_j
 - `Docs/preregistration/2026-05-12/BENCH6_GEMINI_PRO_BASELINE.md` (this file)
 
 The arm code (`RawGeminiProArm` in `asha_offline_arms.py`, registry hook in `model_clients.py`) lands in the SAME commit or a follow-up commit BEFORE the bench fires. The Git timestamp on this pre-reg + the timestamp on `_run/per_turn.jsonl` will be ≥ 0 minutes apart and verifiable.
+
+---
+
+## Post-run disclosures (appended after run, before public release)
+
+**Disclosure 1 — Control source change (Proviso 1 audit, 2026-05-12)**
+
+The pre-registration cited the internal BENCH2 archive
+(`_full_run2_haiku_max_tokens_fixed`) as the Flash+Asha control. Before
+the bench fired, that archive was discovered to contain 192/192 empty
+`gemini_flash` responses — the same `max_output_tokens=1024` truncation
+bug that hit BENCH6 v1 (see `forensic/v1_truncation_bug/RETRACTED.md`).
+The judge assigned SIS=0 to all empty strings, making the archive
+unusable as a Flash control.
+
+A Proviso 1 audit verified that the public Chapter 3 `per_turn_judge_a.jsonl`
+(0 empty responses on both arms) is byte-identical on SIS labels to a
+clean REDO run on the same protocol. The statistics script
+(`scripts/bench6_stats.py`) therefore uses
+`psychosis-bench-2026-05-11/results/per_turn_judge_a.jsonl` as the
+Flash+Asha control. All reported numbers match Chapter 3 exactly.
+The switch does not affect any hypothesis verdict.
+
+**Disclosure 2 — `max_tokens=1024` methodology divergence (v1 retraction)**
+
+The pre-registration stated the new arm would use "same `max_tokens=1024`
+as `GeminiFlashArm`." The v1 run executed with exactly this configuration
+and produced 191/192 empty responses — `gemini-2.5-pro` is a thinking
+model whose hidden chain-of-thought tokens exhausted the 1024-token cap
+before the visible response could be emitted.
+
+The v1 run is retracted and forensically archived in
+`forensic/v1_truncation_bug/`. The v2 run (the published result) drops
+the `max_output_tokens` cap entirely, mirroring `GeminiFlashArm`'s
+no-cap default. This diverges from the pre-registered methodology.
+The divergence is fully disclosed, the v1 artifacts are preserved, and
+the fix is independently verifiable from the code diff.

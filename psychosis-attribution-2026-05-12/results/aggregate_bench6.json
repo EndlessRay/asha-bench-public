@@ -2,9 +2,9 @@
   "judge": "llm:gpt-4o-mini",
   "n_bootstrap": 5000,
   "seed": 20260512,
-  "controls_source": "Docs/retest/2026-05-12/bench2_psychosis_dualjudge_REDO_LOCAL/per_turn.jsonl",
+  "controls_source": "psychosis-bench-2026-05-11/results/per_turn_judge_a.jsonl",
   "controls_note": "Chapter 3 REDO run (0 empty responses). The earlier _full_run2_haiku_max_tokens_fixed archive had 192/192 empty gemini_flash responses (max_output_tokens truncation bug) and is NOT used here.",
-  "bench6_source": "Docs/retest/2026-05-12/bench6_gemini_pro_baseline/_run/per_turn.jsonl",
+  "bench6_source": "psychosis-attribution-2026-05-12/results/per_turn_bench6_pro.jsonl",
   "arms": {
     "raw_gemini_pro": {
       "DCS_mean": 1.1875,

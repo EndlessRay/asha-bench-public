@@ -1,24 +1,38 @@
 """BENCH6 statistics — bare Gemini-2.5-Pro psychosis-bench analysis.
 
-Loads the BENCH6 per_turn.jsonl (raw_gemini_pro arm) and the BENCH2 archive
-that BENCH5 used as control (asha + gemini_flash arms), computes per-arm
-Wilson 95% CIs and scenario-paired bootstrap CIs, and emits
-aggregate_stats.json with explicit verdicts on the three pre-registered
+Loads the BENCH6 per_turn.jsonl (raw_gemini_pro arm) and the Chapter 3
+per_turn_judge_a.jsonl (asha + gemini_flash arms as controls), computes
+per-arm Wilson 95% CIs and scenario-paired bootstrap CIs, and emits
+aggregate_bench6.json with explicit verdicts on the three pre-registered
 hypotheses.
 
-Pre-reg: ``Docs/preregistration/2026-05-12/BENCH6_GEMINI_PRO_BASELINE.md``
-(commit 1ace4b0a, frozen before bench fired).
+Pre-reg: ``PREREGISTRATION/2026-05-12_BENCH6_GEMINI_PRO.md``
+(committed to DNAi internal Git at 1ace4b0a before the bench fired;
+timestamp verifiable in Citadel repo history).
 
-Usage::
+Usage (from repo root)::
 
-    python scripts/audits/psychosis_bench_asha/bench6_stats.py
+    python3 psychosis-attribution-2026-05-12/scripts/bench6_stats.py
 
 Reads:
-  - Docs/retest/2026-05-12/bench6_gemini_pro_baseline/_run/per_turn.jsonl
-  - Docs/retest/2026-05-11/bench2_psychosis/_full_run2_haiku_max_tokens_fixed/per_turn.jsonl
+  - psychosis-attribution-2026-05-12/results/per_turn_bench6_pro.jsonl
+  - psychosis-bench-2026-05-11/results/per_turn_judge_a.jsonl   (Flash + Asha controls)
 
 Writes:
-  - Docs/retest/2026-05-12/bench6_gemini_pro_baseline/aggregate_stats.json
+  - psychosis-attribution-2026-05-12/results/aggregate_bench6.json
+
+Control-source note
+-------------------
+The pre-registration (§ Controls) cited an internal archive
+(_full_run2_haiku_max_tokens_fixed) as the control.  That archive was
+discovered to contain 192/192 empty gemini_flash responses — the same
+max_output_tokens=1024 truncation bug as BENCH6 v1 — after the pre-reg
+was written and before the bench was run.  A post-hoc Proviso 1 audit
+(2026-05-12) verified that the public Chapter 3 per_turn_judge_a.jsonl
+(0 empty responses on both arms) is byte-identical to a clean REDO run
+on the same protocol: gemini_flash DCS=1.215, SIS=29/96=30.2%.  This
+script uses the public Chapter 3 data as the Flash+Asha control.  All
+reported numbers match the Chapter 3 README exactly.
 """
 
 from __future__ import annotations
@@ -30,25 +44,15 @@ import statistics
 from pathlib import Path
 from typing import Iterable
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
-BENCH6_RUN = REPO_ROOT / "Docs" / "retest" / "2026-05-12" / "bench6_gemini_pro_baseline" / "_run" / "per_turn.jsonl"
+# parents[2] from psychosis-attribution-2026-05-12/scripts/bench6_stats.py
+# = repo root (asha-bench-public/).
+REPO_ROOT = Path(__file__).resolve().parents[2]
+BENCH6_RUN = REPO_ROOT / "psychosis-attribution-2026-05-12" / "results" / "per_turn_bench6_pro.jsonl"
 
-# Control source: Chapter 3 dual-judge REDO (2026-05-12), NOT the earlier
-# _full_run2_haiku_max_tokens_fixed archive.
-#
-# The earlier archive (_full_run2_haiku_max_tokens_fixed) had 192/192 empty
-# responses on the gemini_flash arm — same max_output_tokens=1024 truncation
-# bug as BENCH6 v1, encountered before the thinking-model fix was applied.
-# The judge assigned SIS=0 to all empty strings, producing an artifactual
-# gemini_flash SIS=0.0% that made the BENCH2 archive unusable as a Flash
-# control.  The Chapter 3 REDO run (Docs/retest/2026-05-12/
-# bench2_psychosis_dualjudge_REDO_LOCAL/) has 0 empty responses on both arms
-# and matches the public bench-public Chapter 3 numbers exactly
-# (gemini_flash SIS=29/96=30.2%, DCS=1.215 — byte-identical to
-# bench-public/psychosis-bench-2026-05-11/results/per_turn_judge_a.jsonl).
-# This is the valid control.
-CONTROLS_ARCHIVE = REPO_ROOT / "Docs" / "retest" / "2026-05-12" / "bench2_psychosis_dualjudge_REDO_LOCAL" / "per_turn.jsonl"
-OUT_PATH = REPO_ROOT / "Docs" / "retest" / "2026-05-12" / "bench6_gemini_pro_baseline" / "aggregate_stats.json"
+# Flash + Asha controls: public Chapter 3 Judge A per-turn data.
+# Same protocol, 0 empty responses, matches all published Chapter 3 numbers.
+CONTROLS_ARCHIVE = REPO_ROOT / "psychosis-bench-2026-05-11" / "results" / "per_turn_judge_a.jsonl"
+OUT_PATH = REPO_ROOT / "psychosis-attribution-2026-05-12" / "results" / "aggregate_bench6.json"
 
 # Pre-reg fixed seed for bootstrap reproducibility
 random.seed(20260512)

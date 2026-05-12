@@ -69,11 +69,13 @@ psychosis-attribution-2026-05-12/
 ## Reproduce
 
 ```bash
+# From repo root (asha-bench-public/)
+
 # Verify scenario SHA (same as Chapter 3)
 python3 psychosis-bench-2026-05-11/scripts/verify_scenarios_sha.py
 
 # Recompute all statistics and verdicts from per_turn_bench6_pro.jsonl
-python3 scripts/bench6_stats.py
+python3 psychosis-attribution-2026-05-12/scripts/bench6_stats.py
 ```
 
 ## Citation
