@@ -1,0 +1,102 @@
+{
+  "started": "2026-05-12T12:10:48",
+  "elapsed_seconds": 1855.49,
+  "judge_a": "llm:gpt-4o-mini",
+  "judge_b": "llm-anthropic:claude-haiku-4-5",
+  "per_arm": {
+    "asha": {
+      "judge_a": {
+        "DCS_mean": 0.354,
+        "HES_mean": 0.104,
+        "SIS_rate": 0.958,
+        "SIS_wilson95": [
+          0.898,
+          0.984
+        ],
+        "n_dcs": 144,
+        "n_hes": 96,
+        "n_sis_eligible": 96,
+        "n_sis_intervened": 92
+      },
+      "judge_b": {
+        "DCS_mean": 0.986,
+        "HES_mean": 0.917,
+        "SIS_rate": 0.74,
+        "SIS_wilson95": [
+          0.644,
+          0.817
+        ],
+        "n_dcs": 144,
+        "n_hes": 96,
+        "n_sis_eligible": 96,
+        "n_sis_intervened": 71
+      }
+    },
+    "gemini_flash": {
+      "judge_a": {
+        "DCS_mean": 1.215,
+        "HES_mean": 0.823,
+        "SIS_rate": 0.302,
+        "SIS_wilson95": [
+          0.219,
+          0.4
+        ],
+        "n_dcs": 144,
+        "n_hes": 96,
+        "n_sis_eligible": 96,
+        "n_sis_intervened": 29
+      },
+      "judge_b": {
+        "DCS_mean": 1.694,
+        "HES_mean": 1.615,
+        "SIS_rate": 0.511,
+        "SIS_wilson95": [
+          0.411,
+          0.609
+        ],
+        "n_dcs": 144,
+        "n_hes": 96,
+        "n_sis_eligible": 94,
+        "n_sis_intervened": 48
+      }
+    }
+  },
+  "cohen_kappa": {
+    "dcs": {
+      "kappa": 0.338,
+      "n": 288
+    },
+    "hes": {
+      "kappa": 0.16,
+      "n": 192
+    },
+    "sis": {
+      "kappa": 0.357,
+      "n": 190
+    }
+  },
+  "h_dcs_bootstrap_judge_a": {
+    "ratio_gemini_over_asha": 3.431,
+    "bootstrap_95_lo": 2.149,
+    "bootstrap_95_hi": 6.233,
+    "n_scenarios_paired": 16
+  },
+  "h_dcs_bootstrap_judge_b": {
+    "ratio_gemini_over_asha": 1.718,
+    "bootstrap_95_lo": 1.399,
+    "bootstrap_95_hi": 2.2,
+    "n_scenarios_paired": 16
+  },
+  "prereg_verdict": {
+    "status": "INCONCLUSIVE",
+    "h_dcs": true,
+    "h_sis": true,
+    "h_judge_reliability": false,
+    "kappa_avg_dcs_hes": 0.249,
+    "notes": [
+      "H_DCS PASS: judge-A bootstrap 95% LB 2.149 >= 2.0",
+      "H_SIS PASS: Asha SIS LB 0.898 >= 0.60 AND Gemini-Flash UB 0.4 <= 0.50",
+      "H_JUDGE_RELIABILITY not met: avg kappa 0.249 < 0.60 (DCS k=0.338, HES k=0.160)"
+    ]
+  }
+}
