@@ -17,6 +17,7 @@ Patent: **US 19/290,471 (allowed)**. The benchmarks in this repo are the public 
 
 - **Same backbone LM, different output behavior.** On Psychosis-bench (Chapter 3) bare `gemini-2.5-flash` posts 30.2% SIS. Asha's full stack on the same Gemini-Flash-majority routing posts 95.8%. The +65.6 pp gap is attributable to the cognition stack.
 - **Same backbone LM, no parse failures.** On MedQA (Chapter 1) bare Gemini 3.1 Pro Preview parse-fails on 5.58% of questions. Asha parse-fails on 0/1,273. META_CORRECT accounts for 51 of 66 paired McNemar wins.
+- **Tier jump doesn't close the gap.** Chapter 4 tests bare Gemini-2.5-Pro vs bare Gemini-2.5-Flash on the same 16 psychosis-bench scenarios. The Flash→Pro tier jump produces zero measurable safety lift (DCS ratio bootstrap 95% CI [0.86, 1.21]). Asha still leads bare Pro by 3.35× lower DCS (bootstrap 95% CI [2.10, 6.17]).
 
 Three claims this section is NOT making. (1) That the LLM is bypassed; it still produces language. (2) That Asha reasons independently of the LLM; we publicly retracted the wrong-letter independence claim in [`medqa-2026-05-04/reports/03_wrong_letter_test.md`](medqa-2026-05-04/reports/03_wrong_letter_test.md). (3) That Asha is fully symbolic; the neural component carries language production while the symbolic components carry memory, evidence integration, competition, belief updating, and post-emission correction.
 
@@ -57,17 +58,35 @@ Au Yeung et al. (2025) 16-scenario × 12-turn protocol, [arXiv:2509.10970v2](htt
 
 Two pre-registered hypotheses (H_DCS, H_SIS) PASS with wide margins. One (H_JUDGE_RELIABILITY) FAILS the κ ≥ 0.60 gate (avg κ_DCS+HES = 0.249); formal verdict therefore **INCONCLUSIVE per literal rule**. The substantive claim survives. Both judges (`gpt-4o-mini` and `claude-haiku-4-5`) agree on the *direction* of every metric. Judge B is consistently harsher on Asha and more lenient on Gemini-Flash than Judge A, an ordinal-scale calibration difference. Under Judge B alone the headline still shows Asha 1.72× lower DCS [1.40, 2.20] and 1.76× lower HES [1.37, 2.31]. Full breakdown: [`psychosis-bench-2026-05-11/reports/02_dual_judge_kappa.md`](psychosis-bench-2026-05-11/reports/02_dual_judge_kappa.md).
 
+### Chapter 4: Architectural Attribution (2026-05-12)
+
+→ [`psychosis-attribution-2026-05-12/`](psychosis-attribution-2026-05-12/)
+
+Pre-registered follow-on bench testing the "tier-jump" alternative explanation for Chapter 3's safety gap. Bare Gemini-2.5-Pro vs bare Gemini-2.5-Flash on the same 16 scenarios, same judge, same eligibility windows.
+
+| Arm | DCS mean | HES mean | SIS rate |
+|---|---:|---:|---|
+| Bare `gemini-2.5-pro` | 1.188 | 0.896 | 25/96 = **26.0%** [0.183, 0.356] |
+| Bare `gemini-2.5-flash` (Chapter 3 control) | 1.215 | 0.823 | 29/96 = **30.2%** [0.219, 0.400] |
+| **Asha** (Chapter 3 control) | **0.354** | **0.104** | 92/96 = **95.8%** [0.898, 0.984] |
+
+Flash→Pro tier jump: DCS ratio bootstrap 95% CI **[0.86, 1.21]**, straddles 1.0. Pre-registered verdict: **H_PRO_OVER_FLASH FAIL** (informative — closes the tier-jump confound). Asha vs bare Pro: 3.35× lower DCS (CI [2.10, 6.17]), non-overlapping SIS CIs.
+
+Artifact disclosure: a v1 run was retracted before external publication due to a `max_output_tokens=1024` bug specific to thinking models. Full disclosure in [`forensic/v1_truncation_bug/RETRACTED.md`](psychosis-attribution-2026-05-12/forensic/v1_truncation_bug/RETRACTED.md).
+
 On both endpoints, the META_CORRECT layer composes with the underlying LM. On the **structural** endpoint (MedQA parse-failure rescue) it is the proximal mechanism: 51 of 66 paired wins. On the **semantic-safety** endpoint (Psychosis-bench) the layer composes with the underlying LM's safety alignment. Over `gemini-2.5-flash` (raw SIS 30.2% per Wilson [21.9, 40.0] in Chapter 3) the full cognition stack lifts SIS to 95.8%, a +65.6 pp gap. We do *not* claim the same gap would appear over a more strongly aligned LM; that is a separate test (queued).
 
 ## Layout
 
 ```
-bench-public/
+asha-bench-public/
 ├── README.md                              this file
 ├── LICENSE                                Apache 2.0 (analysis scripts + computed reports)
-├── medqa-2026-05-04/                      Chapter 1
-├── meta-correct/                          Chapter 2 (public summary; spec held by counsel)
-├── psychosis-bench-2026-05-11/            Chapter 3
+├── medqa-2026-05-04/                      Chapter 1: MedQA structural hallucination
+├── meta-correct/                          Chapter 2: META_CORRECT primitive
+├── psychosis-bench-2026-05-11/            Chapter 3: Asha vs bare Gemini-Flash
+├── psychosis-attribution-2026-05-12/      Chapter 4: tier-attribution (Pro vs Flash vs Asha)
+├── figures/                               reproducible figure scripts + PNGs
 └── PREREGISTRATION/                       commit-locked hypotheses
 ```
 
@@ -93,6 +112,12 @@ python3 medqa-2026-05-04/scripts/wrong_letter_independence.py
 # Psychosis-bench: verify scenario SHA-256, recompute every reported number
 python3 psychosis-bench-2026-05-11/scripts/verify_scenarios_sha.py
 python3 psychosis-bench-2026-05-11/scripts/compute_stats.py
+
+# Chapter 4 (tier-attribution): recompute all statistics and verdicts
+python3 psychosis-attribution-2026-05-12/scripts/bench6_stats.py
+
+# Figures: regenerate all figures from raw data
+cd figures && python3 generate_figures.py
 ```
 
 ## Contact
