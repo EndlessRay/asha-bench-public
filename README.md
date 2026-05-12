@@ -2,6 +2,24 @@
 
 Bit-exact reproducible artifacts for every public benchmarking claim DNAi makes about its medical AI agent **Asha** (live at [askasha.org](https://askasha.org)). Every input dataset is SHA-256 locked; every analysis script is self-contained; every overturned claim is documented in the same Git history.
 
+## Architecture — neurosymbolic, not a wrapper
+
+Asha is a **neurosymbolic** system. The LLM (Gemini family in production; Sonnet 4.5 in research swap-tests) is the **verbalization layer**, not the system. Surrounding it are four symbolic components, persistent across LLM swaps:
+
+| Component | Role |
+|---|---|
+| Qdrant CIU memory | 591 collections, 121M+ vectors of Competitive Informational Units — medical, pharmacological, research, clinical, structured codings |
+| KIL (Knowledge Integration Layer) | symbolic evidence retrieval before each LLM call; evidence stamps survive in every published per-turn JSONL |
+| Epistemic Arena | symbolic competition between candidate CIUs; promotion / demotion; `arena_start` / `arena_complete` SSE events |
+| META_CORRECT | deterministic post-emission corrector for structured outputs in regulated domains (US Provisional 397222-7002P1, filed 2026-05-01) |
+
+Patent: **US 19/290,471 (allowed)**. The benchmarks in this repo *are* the public falsifiability surface for the architecture. Two structural signatures already live here:
+
+- **Same backbone LM, different output behavior.** On Psychosis-bench (Chapter 3) bare `gemini-2.5-flash` posts 30.2% SIS; Asha's full stack on the same Gemini-Flash-majority routing posts 95.8% — a +65.6 pp gap attributable to the cognition stack, not the LM.
+- **Same backbone LM, no parse failures.** On MedQA (Chapter 1) bare Gemini 3.1 Pro Preview parse-fails on 5.58% of questions; Asha parse-fails on 0/1,273. META_CORRECT accounts for 51 of 66 paired McNemar wins.
+
+What this section does **not** claim: that the LLM is bypassed (it still produces language); that the system reasons independently of the LLM (we publicly retracted the "wrong-letter independence" claim in [`medqa-2026-05-04/reports/03_wrong_letter_test.md`](medqa-2026-05-04/reports/03_wrong_letter_test.md)); or that Asha is fully symbolic. The neural component carries language production; the symbolic components carry memory, evidence integration, competition, belief updating, and post-emission correction.
+
 ## The arc — MedQA → META_CORRECT → Psychosis-bench
 
 Three artifacts, one story.
