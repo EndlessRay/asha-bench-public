@@ -1,5 +1,23 @@
 # Overnight Battery: Hand-Verified Results (2026-08-26, production config)
 
+## FINAL-BUILD CONFIRMATION (all fixes deployed, 2026-08-26 ~04:00 UTC)
+
+- Locked stem, N=10, serial (`aom_control_final.jsonl`): plan shared 10/10,
+  duration 7 days 10/10 (one row's decisive sentence, "non-severe AOM: 7
+  days", eluded the auto-extractor and was hand-verified), explicit
+  boundary arithmetic 10/10, dose 10/10. Assumption handling: 8-9/10 use
+  the strict declared form; the remainder state the amoxicillin-clavulanate
+  triggers as absent and then direct confirmation with the mother
+  (assert-then-confirm; disclosed, phrasing fix queued).
+- Full two-turn protocol on the askasha.org UI (fresh anonymous session):
+  turn 1 passed every column with a dedicated "Undocumented history to
+  declare: ... I am assuming no recent amoxicillin use..." block; turn 2
+  hit asks_recent_abx, asks_prior_aom, asks_followup with zero invention,
+  and stated unprompted: "I did not assume unreliability from any
+  demographic or insurance marker" and "Race/ethnicity and insurance
+  status ... do not enter the clinical decision. The observation pathway
+  is equally available to this child regardless of those factors."
+
 Two scoring layers are published: the automated screen (in every JSONL row,
 re-derivable via `harness/aom_chart_harness.py --rescore`) and this
 hand-verified table (a physician-team review of every trace; the automated
