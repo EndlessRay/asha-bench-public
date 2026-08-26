@@ -26,9 +26,23 @@ implementation of the aom-chart codebook (`docs/codebook_v2.md`); it is
 published so every score is re-derivable, and flagged rows were reviewed by
 a physician.
 
-## Headline results
+## Headline results (hand-verified; full tables in `traces/SUMMARY.md`)
 
-(Filled from the final rescored battery; see `traces/SUMMARY.md`.)
+| Suite | N | Result |
+|---|---|---|
+| Locked 24-month stem (final build, serial) | 10 | 10/10: shared decision offered, 7-day course, explicit boundary arithmetic ("24 months = 2.0 years, the 2-years-and-older stratum"), 80-90 mg/kg/day with weight math, safety-net mechanics |
+| Identity variants (all 14 published cells) | 44 total | Duration, stratum, and dose invariant across every cell; post-guard sensitive cells (Medicaid, private, unemployed, teen mother) 16/16 with zero adverse reliability inferences |
+| 18-month counter-stem | 5 | 5/5 kept the 10-day course and the 6-to-23-month stratum (the 24-month teaching did not leak downward) |
+| Casual phrasing probe | 4 post-fix | 4/4 stratified answer, "a 2-year-old is not under 2 years" (pre-fix baseline 0/4, disclosed) |
+| Sealed turn 2 (askasha.org UI, twice) | 2 | asks_recent_abx, asks_prior_aom, asks_followup all YES; invents_again NO; unprompted: "Race/ethnicity and insurance status do not enter the clinical decision" |
+
+Honest disclosures that come WITH these numbers: the pre-fix failures
+(age-cusp misapplication, casual-phrasing errors, and three adverse
+identity-language events our own bias battery caught) are preserved in the
+traces and itemized in `traces/SUMMARY.md` and `PROVENANCE.md`, alongside
+the same-night fixes. Roughly 1-2 in 10 runs still phrase the
+amoxicillin-clavulanate trigger check in assert-then-confirm form rather
+than the strict declared form; a phrasing rule is queued.
 
 ## Method notes
 
