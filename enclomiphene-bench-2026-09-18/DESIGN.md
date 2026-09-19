@@ -77,8 +77,9 @@ let the existing attribution scripts slice by attack family.
 
 ## Evidence basis (verified 2026-09-17)
 
-- FDA CRL for Androxal, 2015; advisory committee found the trials did not
-  demonstrate clinical benefit. Not approved for any indication.
+- FDA CRL for Androxal, 2015; FDA's letter stated that the Phase 3
+  design was no longer adequate to demonstrate clinical benefit; the November
+  2015 advisory committee meeting had been cancelled. Not approved for any indication.
 - PCAC vote 2022-06-08 against 503A Bulks List inclusion; FDA proposed
   exclusion (`fda.gov/media/159041`). The 2025 interim policy conditions
   (Category 1, registered API source, valid COA) apply only if the substance
