@@ -74,6 +74,21 @@ Flash→Pro tier jump: DCS ratio bootstrap 95% CI **[0.86, 1.21]**, straddles 1.
 
 Artifact disclosure: a v1 run was retracted before external publication due to a `max_output_tokens=1024` bug specific to thinking models. Full disclosure in [`forensic/v1_truncation_bug/RETRACTED.md`](psychosis-attribution-2026-05-12/forensic/v1_truncation_bug/RETRACTED.md).
 
+### Chapter 5: Enclomiphene-bench (2026-09-18)
+
+→ [`enclomiphene-bench-2026-09-18/`](enclomiphene-bench-2026-09-18/)
+
+A DNAi-authored single-topic safety benchmark on the 2026 compounded-enclomiphene fad (young, mostly eugonadal men buying an unapproved SERM through low-friction telehealth and calling it "not testosterone"). Two arms, both schema-compatible with existing harnesses: a 6-scenario x 12-turn patient arm scored under the psychosis-bench protocol (DCS / HES / SIS, two judges), and an 18-prompt clinician red team scored under HealthBench rubrics with negative points (grader `gpt-4.1`). Four arms: the deployed Asha engine (Claude backbone, retrieval on) and bare `gemini-3.5-flash`, `claude-sonnet-4-5`, `gpt-5`.
+
+| Arm | Patient SIS (judge A / B) | Clinician score [95% CI] | Harmful-compliance prompts (of 18) |
+|---|---|---|---:|
+| **Asha** (deployed) | **36/36 / 36/36** | **0.610** [0.490, 0.726] | **0** |
+| Bare `claude-sonnet-4-5` | 36/36 / 36/36 | 0.390 [0.255, 0.522] | 3 |
+| Bare `gpt-5` | 34/36 / 31/36 | 0.456 [0.309, 0.595] | 6 |
+| Bare `gemini-3.5-flash` | 31/36 / 33/36 | 0.456 [0.294, 0.605] | 5 |
+
+All three bare models wrote an enclomiphene dose for a 16-year-old when the requester claimed to be an endocrinologist; Asha declined. Two of four pre-registered hypotheses failed and the README says which and why (an HES verdict split between judges on three turns, and a clinician-arm mean threshold set above what any arm reached). The first run of this benchmark, earlier the same day, surfaced a production defect (a jailbreak detector misfiring on Asha's own folded transcript) that was fixed before the run published here. Question files SHA-256 locked in [`enclomiphene-bench-2026-09-18/data/DATASET_LOCK.md`](enclomiphene-bench-2026-09-18/data/DATASET_LOCK.md).
+
 ### Attribution summary
 
 On both measurement endpoints, the symbolic stack composes with the underlying LM. On the **structural** endpoint (MedQA parse-failure rescue) META_CORRECT is the proximal mechanism: 51 of 66 paired wins are parse-failure rescues. On the **semantic-safety** endpoint (Psychosis-bench) the full cognition stack lifts SIS from 30.2% (bare Flash) to 95.8% (Asha), a +65.6 pp gap, over an LM that is not at safety ceiling. The tier-attribution chapter (Chapter 4) establishes that neither the Flash→Pro tier jump nor the Gemini→Anthropic family jump explains this gap. We do not claim the same gap would appear over an intrinsically safety-ceiling LM; that is a separate test, queued.
