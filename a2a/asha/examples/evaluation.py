@@ -122,7 +122,7 @@ def falsify_with_feng(claim: str) -> dict[str, Any]:
     a Popperian falsification verdict (FALSIFIED / WEAKENED / CONDITIONAL /
     UNFALSIFIED) with E-value and evidence_for / evidence_against.
 
-    FENG uses a JWT (login-issued) — not the A2A API key. See feng-a2a repo
+    FENG uses a JWT (login-issued), not the A2A API key. See feng-a2a repo
     for the public token-bound usage. For an offline review pass, leave this
     disabled and review responses by hand.
     """

@@ -1,5 +1,5 @@
 """
-Asha A2A Client — Python Example
+Asha A2A Client: Python Example
 =================================
 Query Asha's medical AI via the A2A protocol.
 

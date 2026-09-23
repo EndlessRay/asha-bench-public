@@ -1,5 +1,5 @@
 #!/bin/bash
-# Asha A2A — curl Examples
+# Asha A2A: curl Examples
 # Get a free API key first:
 #   curl -X POST https://api.askasha.org/api/a2a/signup \
 #     -H "Content-Type: application/json" \

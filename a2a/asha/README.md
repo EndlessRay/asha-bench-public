@@ -1,14 +1,14 @@
-# Asha — Medical Intelligence by DNAi Systems
+# Asha: Medical Intelligence by DNAi Systems
 
 **Evidence-grounded medical AI, accessible via the [A2A protocol](https://a2aproject.github.io/A2A/).**
 
-Asha is a fiduciary medical AI agent backed by a curated slice of the larger Citadel corpus (125M+ vectors across 759 Qdrant collections covering medicine, pharmacology, research literature, clinical guidelines, and structured codings). Every response includes structured provenance (source collections, evidence count, and predicate classification) so you can verify what grounded the answer.
+Asha is a fiduciary medical AI agent backed by a curated slice of the larger Citadel corpus (144M+ vectors across ~1,071 Qdrant collections, ~314 of them knowledge-source, covering medicine, pharmacology, research literature, clinical guidelines, and structured codings; live-verified 2026-07-13). Every response includes structured provenance (source collections, evidence count, and predicate classification) so you can verify what grounded the answer.
 
-Built by physician co-founders. Patent allowed: **US 19/290,471**. META_CORRECT: US Provisional 397222-7002P1 (filed 2026-05-01).
+Built by physician co-founders. Patent: **US 12,555,008 B1**, granted 2026-02-17 (application 19/290,471). META_CORRECT: US Provisional 397222-7002P1 (filed 2026-05-01).
 
-## Architecture (neurosymbolic stack, audited 2026-05-12)
+## Architecture (neurosymbolic stack)
 
-Asha is a neurosymbolic system. The LLM (Gemini family in production, Sonnet 4.5 in research swap-tests) operates as the verbalization layer. Four symbolic components surround it and persist across LLM swaps:
+Asha is a neurosymbolic system. The LLM operates as the verbalization layer; the composer model has been swapped across the Gemini, Claude, and GPT families over the project's life. Four symbolic components surround it and persist across LLM swaps. The table is the 2026-05-12 audit snapshot; current corpus and board figures live at [dnai.systems/benchmarks](https://dnai.systems/benchmarks).
 
 | Component | Live state |
 |---|---|
@@ -57,7 +57,7 @@ curl -X POST https://api.askasha.org/api/a2a/signup \
   -d '{"email": "you@example.com", "name": "Your Name", "tier": "free"}'
 ```
 
-The response includes your API key (shown once — save it).
+The response includes your API key (shown once; save it).
 
 ### 2. Send a Query
 
@@ -78,9 +78,9 @@ curl -X POST https://api.askasha.org/a2a/v1/message:send \
 
 Every response returns a Task with two artifacts:
 
-**Response artifact** — the clinical answer with citations.
+**Response artifact**: the clinical answer with citations.
 
-**Provenance artifact** — structured metadata:
+**Provenance artifact**: structured metadata:
 ```json
 {
   "sources": ["pubmed_abstracts", "dailymed_drug_labels", "clinical_guidelines"],
@@ -152,15 +152,15 @@ Asha returns **structured provenance** with every response. That means you can c
    | Citation quality | Asha returns `sources` and `evidence_count` directly. For other providers, parse cited references and verify they exist (some APIs hallucinate citations). |
    | Hallucination rate | Per response, count fabricated drug names, dosing claims, made-up guidelines. Asha's pre-generation suppression + post-generation verification is designed to drive this to zero on grounded queries. |
    | Latency p50 / p95 | Auto-collected by the harness |
-   | Cost at expected volume | Asha is flat-rate metered ($0 / $49 / $199 / Custom — see Pricing). Compare against per-call or per-token billing on your current provider. |
+   | Cost at expected volume | Asha is flat-rate metered ($0 / $49 / $199 / Custom; see Pricing). Compare against per-call or per-token billing on your current provider. |
    | Auditability | Can you re-derive *what knowledge grounded the answer*, weeks later, after the model has updated? Asha: yes (contract hash + sources are stable per response). Most: no. |
 
-5. **Stress-test any specific claim with FENG.** If either provider says something high-stakes (e.g. "Drug X is contraindicated with Drug Y"), run that exact claim through the [FENG](https://github.com/EndlessRay/feng-a2a) endpoint. You'll get a verdict — `FALSIFIED`, `WEAKENED`, `CONDITIONAL`, or `UNFALSIFIED` — with E-value, evidence-for, evidence-against, and the collections searched. This is the deepest single audit step available across any medical AI vendor today.
+5. **Stress-test any specific claim with FENG.** If either provider says something high-stakes (e.g. "Drug X is contraindicated with Drug Y"), run that exact claim through the [FENG](https://github.com/EndlessRay/feng-a2a) endpoint. You'll get a verdict (`FALSIFIED`, `WEAKENED`, `CONDITIONAL`, or `UNFALSIFIED`) with E-value, evidence-for, evidence-against, and the collections searched. This is the deepest single audit step available across any medical AI vendor today.
 
 ### What we tell evaluators honestly
 
 - **Asha is strong on:** drug pharmacology, drug-drug interactions, clinical guidelines, evidence synthesis, anything where citation fidelity matters more than chatty bedside manner.
-- **Asha is intentionally conservative on:** definitive diagnosis, medication dosing, anything that requires a licensed clinician's judgment. The fiduciary medical contract refuses to fabricate any of those rather than guess. If your current provider gives confident definitive diagnoses on demand, that is a difference, not a defect — measure hallucination rate before treating it as a feature.
+- **Asha is intentionally conservative on:** definitive diagnosis, medication dosing, anything that requires a licensed clinician's judgment. The fiduciary medical contract refuses to fabricate any of those rather than guess. If your current provider gives confident definitive diagnoses on demand, that is a difference to measure, not a defect to assume: check hallucination rate before treating it as a feature.
 - **Latency:** retrieval-augmented generation across 87M+ medical vectors is not free. Expect a few seconds end-to-end. The harness will surface exact p50/p95 numbers for your set so you can weigh the trade-off explicitly.
 
 ### Migration path if you decide to switch
@@ -182,7 +182,7 @@ The agent card in this repo (`agent-card.json`) is shaped to be **maximally comp
 2. In **Choose an agent type**, pick **Add → Custom agent via A2A**.
 3. Paste the contents of [`agent-card.json`](agent-card.json) into the **Agent card JSON** field.
 4. Click **Preview agent details → Next**.
-5. If your users will need Asha to access Google Cloud resources on their behalf (Drive, Docs, BigQuery, etc.), add the OAuth client credentials. Otherwise click **Skip & Finish**. Asha itself does not require Google OAuth — it authenticates with its own DNAi-issued API key (Bearer auth, declared in `securitySchemes`).
+5. If your users will need Asha to access Google Cloud resources on their behalf (Drive, Docs, BigQuery, etc.), add the OAuth client credentials. Otherwise click **Skip & Finish**. Asha itself does not require Google OAuth; it authenticates with its own DNAi-issued API key (Bearer auth, declared in `securitySchemes`).
 
 ### REST
 
@@ -237,7 +237,7 @@ In addition to the A2A protocol surface, Asha exposes operator endpoints for man
 | `GET /api/a2a/portal` | API key | Stripe Customer Portal (billing self-service) |
 | `POST /api/a2a/rotate-key` | API key | Rotate (regenerate) your API key |
 | `GET /api/audit/corpus-state` | JWT | Cryptographic corpus commitment (verifiable knowledge state) |
-| `POST /api/feng/falsify` | JWT | Popperian claim falsification — see [feng-a2a](https://github.com/EndlessRay/feng-a2a) |
+| `POST /api/feng/falsify` | JWT | Popperian claim falsification; see [feng-a2a](https://github.com/EndlessRay/feng-a2a) |
 
 ## Knowledge Coverage (Asha's slice)
 
@@ -250,7 +250,7 @@ Asha is the medical-intelligence agent. It is bound to medical, clinical, pharma
 | Pharmacology | ~928K | DailyMed drug labels, FDA drug labels |
 | Coding & Classification | ~304K | ICD-10, structured medical codes |
 
-Total Citadel corpus across all 11 public agents: **125.44M vectors across 759 live collections** (audited 2026-05-12).
+Total Citadel corpus across all 11 public agents: **144M+ vectors across ~1,071 live collections** (~314 knowledge-source; live-verified 2026-07-13). Per-domain rows above are the 2026-05-12 audit.
 
 ## Safety
 
@@ -281,12 +281,12 @@ Asha is one of 11 public agents in the DNAi fleet. All agents share the same bas
 | **Artha** | Financial analysis | [artha-a2a](https://github.com/EndlessRay/artha-a2a) | `?agent_id=artha` |
 | **Sage** | Nutrition & wellness | [sage-a2a](https://github.com/EndlessRay/sage-a2a) | `?agent_id=sage` |
 | **Polymath** | Math & science | [polymath-a2a](https://github.com/EndlessRay/polymath-a2a) | `?agent_id=polymath` |
-| **Lyra** | Medical research | — | `?agent_id=lyra` |
-| **Leo** | Legal aid | — | `?agent_id=leo` |
-| **Mira** | Marketing & growth | — | `?agent_id=mira` |
-| **Ren** | Customer support | — | `?agent_id=ren` |
-| **Arohi** | Practice management | — | `?agent_id=arohi` |
-| **Ray** | Platform architecture | — | `?agent_id=ray` |
+| **Lyra** | Medical research | card only | `?agent_id=lyra` |
+| **Leo** | Legal aid | card only | `?agent_id=leo` |
+| **Mira** | Marketing & growth | card only | `?agent_id=mira` |
+| **Ren** | Customer support | card only | `?agent_id=ren` |
+| **Arohi** | Practice management | card only | `?agent_id=arohi` |
+| **Ray** | Platform architecture | card only | `?agent_id=ray` |
 
 Companion services:
 

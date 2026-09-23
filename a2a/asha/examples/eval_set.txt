@@ -23,4 +23,4 @@ What food-drug interactions should a patient on warfarin be counseled about?
 
 # --- Mechanism + evidence synthesis ---
 What is the evidence base for SGLT2 inhibitors in heart failure with preserved ejection fraction?
-Summarize the evidence for psilocybin in treatment-resistant depression — phase, effect size, durability.
+Summarize the evidence for psilocybin in treatment-resistant depression: phase, effect size, durability.
