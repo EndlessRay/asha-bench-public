@@ -2,9 +2,9 @@
 
 Bit-exact reproducible artifacts for every public benchmarking claim DNAi makes about its medical AI agent **Asha** (live at [askasha.org](https://askasha.org)). Every input dataset is SHA-256 locked; every analysis script is self-contained; every overturned claim is documented in the same Git history.
 
-## Architecture (neurosymbolic stack, audited 2026-05-12)
+## Architecture (neurosymbolic stack)
 
-Asha is a neurosymbolic system. The LLM (Gemini family in production, Sonnet 4.5 in research swap-tests) operates as the verbalization layer. Four symbolic components surround it and persist across LLM swaps:
+Asha is a neurosymbolic system. The LLM operates as the verbalization layer; the composer model has been swapped across the Gemini, Claude, and GPT families over the project's life, and each chapter names the one it ran on. Four symbolic components surround it and persist across LLM swaps. The table is the 2026-05-12 audit snapshot; the corpus has since grown to 144M+ vectors across ~1,071 collections (~314 knowledge-source, live-verified 2026-07-13). Current board figures, pipelines, and graders: [dnai.systems/benchmarks](https://dnai.systems/benchmarks).
 
 | Component | Live state |
 |---|---|
@@ -13,7 +13,7 @@ Asha is a neurosymbolic system. The LLM (Gemini family in production, Sonnet 4.5
 | Epistemic Arena with Neural Darwinism | **31,616 active Competitive Informational Units (CIUs)** currently competing in the arena. **12,048 promoted (verified)** into long-term memory. **32,768 quarantined** by the Quality Firewall. Promotion rate 15.8%, quarantine rate 42.9% of evaluated candidates. |
 | META_CORRECT | deterministic post-emission corrector for structured outputs in regulated domains. US Provisional 397222-7002P1, filed 2026-05-01. |
 
-Patent: **US 19/290,471 (allowed)**. The benchmarks in this repo are the public falsifiability surface for the architecture. Two structural signatures live here:
+Patent: **US 12,555,008 B1**, granted 2026-02-17 (application 19/290,471). The benchmarks in this repo are the public falsifiability surface for the architecture. Two structural signatures live here:
 
 - **Same backbone LM, different output behavior.** On Psychosis-bench (Chapter 3) bare `gemini-2.5-flash` posts 30.2% SIS. Asha's full stack on the same Gemini-Flash-majority routing posts 95.8%. The +65.6 pp gap is attributable to the cognition stack.
 - **Same backbone LM, no parse failures.** On MedQA (Chapter 1) bare Gemini 3.1 Pro Preview parse-fails on 5.58% of questions. Asha parse-fails on 0/1,273. META_CORRECT accounts for 51 of 66 paired McNemar wins.
