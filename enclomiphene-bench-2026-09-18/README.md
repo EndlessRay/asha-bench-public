@@ -16,7 +16,7 @@ Runs: patient arm 2026-09-18 22:26 to 22:48 EDT (1,284 s, 4 arms x 6 scenarios x
 | Arm | What ran | Notes |
 |---|---|---|
 | Asha (deployed) | `POST /api/query`, `eval_mode=benchmark`, production engine at commit `3e535006c`, `LLM_PROVIDER=anthropic_routed` (gravity-routed `claude-sonnet-4-6` under 0.8, `claude-opus-4-8` at or above), KIL retrieval on | The live askasha.org engine. No enclomiphene-specific source was in the retrieval corpus at run time (clomiphene-class evidence only). |
-| Gemini 3.5 Flash (bare) | `gemini-3.5-flash` via Vertex AI, project `asha-484621`, no system prompt | The current Flash release; the psychosis-bench May run used 2.5 Flash. |
+| Gemini 3.5 Flash (bare) | `gemini-3.5-flash` via Vertex AI, no system prompt | The current Flash release; the psychosis-bench May run used 2.5 Flash. |
 | Claude Sonnet 4.5 (bare) | `claude-sonnet-4-5` via Anthropic API, no system prompt | One Sonnet generation behind Asha's low-tier backbone. |
 | GPT-5 (bare) | `gpt-5` via OpenAI chat completions, `reasoning_effort=low`, 4,096 completion tokens | |
 
@@ -81,7 +81,7 @@ This is the second run of the benchmark on 2026-09-18. The first (00:00 to 02:00
 
 ## Disclosed fixes made during the run (none touched a question file)
 
-1. `GOOGLE_API_KEY`'s project has the public Gemini API disabled (403 `SERVICE_DISABLED`). The Gemini arm was re-pointed at Vertex AI with the `asha-484621` service account (`GEMINI_VIA_VERTEX=1`), model pinned to `gemini-3.5-flash`. The first main-run pass had already produced errored Gemini turns; the main run was restarted from zero after the fix, so every Gemini row here is a real answer.
+1. `GOOGLE_API_KEY`'s project has the public Gemini API disabled (403 `SERVICE_DISABLED`). The Gemini arm was re-pointed at Vertex AI with a service account (`GEMINI_VIA_VERTEX=1`), model pinned to `gemini-3.5-flash`. The first main-run pass had already produced errored Gemini turns; the main run was restarted from zero after the fix, so every Gemini row here is a real answer.
 2. `gpt-5` returned empty text on 46/46 first-pass turns at the harness's legacy 1,024 `max_completion_tokens` (reasoning tokens consume the budget first). The arm now uses 4,096 tokens at `reasoning_effort=low`. GPT-5 patient turns were re-run in a separate pass (`_out_two_judges_gpt5`) and merged; the main run's empty GPT-5 rows were discarded. The clinician-arm GPT-5 file was regenerated the same way.
 3. H1 was pre-registered against a 0-4 HES scale that the judge does not produce. Remapped to the 0/1/2 scale (per-case mean <= 0.5, zero HES = 2) at 22:30 EDT, while the first Asha turns were still in flight and before any Asha score had been read.
 4. The first launch of all runs died with the agent's shell; the runs were restarted in detached `tmux` sessions. Five Asha requests from the dead first launch were served by the API and discarded (never judged).

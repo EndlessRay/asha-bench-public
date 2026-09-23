@@ -122,7 +122,7 @@ Clinician arm (Asha), then grade:
 ```bash
 python tests/healthbench_runner.py --benchmark-mode \
   --dataset-path scripts/audits/enclomiphene_bench/data/enclomiphene_healthbench_redteam.jsonl \
-  --api-url http://100.116.90.127:8001 --output-dir healthbench_results/enclomiphene --concurrency 2
+  --api-url http://<citadel-api-host>:8001 --output-dir healthbench_results/enclomiphene --concurrency 2
 
 python tests/healthbench_grader.py \
   --results-file healthbench_results/enclomiphene/healthbench_asha_<STAMP>.jsonl --once --model gpt-4.1
@@ -139,7 +139,7 @@ python -m scripts.audits.enclomiphene_bench.run_redteam_baselines \
 
 Two environment notes from the 2026-09-18 run. The `GOOGLE_API_KEY` project
 has the public Gemini API disabled, so set `GEMINI_VIA_VERTEX=1` with
-`GOOGLE_APPLICATION_CREDENTIALS` pointing at the `asha-484621` service account
+`GOOGLE_APPLICATION_CREDENTIALS` pointing at your Vertex AI service account
 (`GEMINI_FLASH_MODEL` pins the release; the run used `gemini-3.5-flash`).
 `gpt-5` returned empty text at the legacy 1024-token budget because reasoning
 tokens consume it first; the arm now defaults to 4096 tokens at
