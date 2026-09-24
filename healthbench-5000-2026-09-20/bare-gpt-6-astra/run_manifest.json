@@ -1,0 +1,17 @@
+{
+ "label_internal": "bare_hb5000_astra",
+ "completions": 5000,
+ "graded": {
+  "gpt_4_1": 5000,
+  "gpt_5_4": 5000,
+  "claude_opus_4_8": 5000
+ },
+ "config": {
+  "label": "hb5000_astra",
+  "provider": "openai",
+  "model": "gpt-6-astra",
+  "dataset_sha256": "e99dd3c6372c10d6fcc5e385c5fae69d0dd40392dae56836ef9493ae324ecd2f",
+  "conditions": "no tools from us, no system prompt, highest effort; vendor systems run as shipped",
+  "started_utc": "2026-09-19T19:06:03Z"
+ }
+}

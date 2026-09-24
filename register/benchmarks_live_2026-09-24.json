@@ -1,0 +1,2004 @@
+{
+  "schema_version": "1.0",
+  "title": "DNAi public benchmark register",
+  "publisher": "DNAi Systems",
+  "updated": "2026-09-24",
+  "canonical_page": "https://dnai.systems/benchmarks",
+  "canonical_json": "https://dnai.systems/benchmarks.json",
+  "api_endpoint": "https://api.askasha.org/api/benchmarks",
+  "policy": {
+    "summary": "A row is published only when it states its pipeline, its benchmark set with n, its grader, and an artifact. Every proportion carries a 95% interval. Comparators are labeled by how they were scored: same grader in our run, independent validator, vendor self-reported, or as published; only same-grader values share a bar with ours. Samples under n=100 sit in the appendix with their interval unless the benchmark's own protocol fixes n.",
+    "required_fields": [
+      "pipeline",
+      "benchmark",
+      "set",
+      "n",
+      "grader",
+      "artifacts"
+    ],
+    "small_n_threshold": 100,
+    "tiers": {
+      "A": "Public per-item artifact and public harness. Anyone can re-grade every item.",
+      "B": "Public aggregate artifact (per-item data withheld by a third-party condition, or reported in a public preprint). Anyone can check the aggregate and the method.",
+      "C": "Internal artifact, public release pending. Reported for completeness; weight it accordingly."
+    },
+    "comparator_bases": {
+      "same_grader_self_run": "The comparator model was run by us, in the same harness, scored by the same grader.",
+      "independent_validator": "Run by the independent validator (Airpixels Innovations LLP) on the same protocol.",
+      "vendor_reported": "Reported by the vendor on its own run. Same grader family at best; never the same run.",
+      "literature": "Taken from a paper or the benchmark author. Different run, possibly a different item set."
+    },
+    "pipeline_glossary_url": "https://github.com/EndlessRay/asha-healthbench-2026-06-26/blob/main/PIPELINES.md",
+    "production_note": "Production routes each query by clinical stakes to one of three tiers: Asha Base (P2, one retrieval-grounded pass), Asha Mid (P5, three-model merge), Asha Apex (P6, multi-expert ensemble with a domain-specialist composer). Every row names the tier that was measured. Base carries most routine traffic; Apex carries high-stakes traffic.",
+    "live_display": "This page is the live display of DNAi benchmarking. Ceiling-ladder readouts on the 5090 are synced into the Professional row's Also measured list by scripts/site/sync_ceiling_results.py and the page is rebuilt and redeployed after each readout; the canonical register in the repository follows through a pull request, and /api/benchmarks/verify reports whether the two copies match."
+  },
+  "benchmarks": [
+    {
+      "id": "healthbench-hard-apex",
+      "headline": true,
+      "category": "Accuracy (physician rubric)",
+      "benchmark": "HealthBench Hard",
+      "benchmark_ref": "Arora et al., arXiv:2505.08775",
+      "set": "Hard subset, full set",
+      "n": 1000,
+      "pipeline": "Apex-J",
+      "configuration": "Asha Apex-J, frozen 20 Sep 2026 (GPT-6 Astra composer, concise style, FENG on, KIL on)",
+      "deployed_tier": "Apex tier of the production cascade (APEX_TIER_PIPELINE=apex_j)",
+      "kil": true,
+      "metric": "Rubric score",
+      "score": 42.0,
+      "ci95": [
+        40.1,
+        43.7
+      ],
+      "ci_method": "bootstrap",
+      "grader": "gpt-4.1 (the official HealthBench grader)",
+      "run_date": "2026-09-21",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "GPT-6 Astra (bare, retrieval off)",
+          "score": 29.4,
+          "n": 1000,
+          "basis": "same_grader_self_run",
+          "source": "same harness, same items, same grader; the composer backbone of Apex-J without the Asha layer; run 19 Sep 2026"
+        },
+        {
+          "system": "Asha Apex (P6, June 2026 build)",
+          "score": 44.8,
+          "n": 1000,
+          "basis": "same_grader_self_run",
+          "source": "June 2026 run in the same harness (lineage; replaced by Apex-J on 20 Sep 2026); the same June answers re-graded by today's gpt-4.1 score 44.8 (n=1000)"
+        },
+        {
+          "system": "GPT-5.2 (bare, retrieval off)",
+          "score": 40.3,
+          "n": 798,
+          "basis": "same_grader_self_run",
+          "source": "self-run June 2026 in the same harness, retrieval off; per-item JSONL not retained (aggregate only)"
+        },
+        {
+          "system": "Gemini 3.1 Pro (bare, retrieval off)",
+          "score": 20.6,
+          "n": 800,
+          "basis": "same_grader_self_run",
+          "source": "self-run June 2026 in the same harness, retrieval off; per-item JSONL not retained (aggregate only)"
+        },
+        {
+          "system": "GLM-5.2 (bare, open weights)",
+          "score": 16.2,
+          "n": 1000,
+          "basis": "same_grader_self_run",
+          "source": "self-run June 2026, full set, per-item JSONL in the public repo"
+        },
+        {
+          "system": "Claude Opus 4.5 (bare, retrieval off)",
+          "score": 11.6,
+          "n": 795,
+          "basis": "same_grader_self_run",
+          "source": "self-run June 2026 in the same harness, retrieval off; per-item JSONL not retained (aggregate only)"
+        },
+        {
+          "system": "Asha Mid (P5, three-model merge)",
+          "score": 37.9,
+          "n": 898,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Asha Base (P2, single retrieval-grounded pass)",
+          "score": 28.4,
+          "n": 1000,
+          "basis": "same_grader_self_run"
+        }
+      ],
+      "paired_statistics": [
+        {
+          "comparison": "Apex-J vs bare GPT-6 Astra, same 1,000 items",
+          "n": 1000,
+          "delta_pp": 12.6,
+          "ci95_pp": [
+            10.7,
+            14.4
+          ],
+          "wins_losses_ties": "604 / 222 / 174",
+          "test": "paired t-test, two-sided; exact sign test p = 1.4e-41",
+          "p": "3.7e-37"
+        },
+        {
+          "comparison": "Grader stability: today's gpt-4.1 vs June gpt-4.1 on the identical June P6 Hard completions",
+          "n": 1000,
+          "delta_pp": 0.0,
+          "test": "same completions, mean clipped per-example score",
+          "p": "n/a"
+        },
+        {
+          "comparison": "Apex (P6) vs Mid (P5)",
+          "n": 898,
+          "delta_pp": 6.6,
+          "wins_losses_ties": "449 / 309 / 140",
+          "test": "two-sided sign test",
+          "p": "4.1e-7"
+        },
+        {
+          "comparison": "Mid (P5) vs Base (P2)",
+          "n": 898,
+          "delta_pp": 9.7,
+          "wins_losses_ties": "497 / 250 / 151",
+          "test": "two-sided sign test",
+          "p": "1.0e-19"
+        }
+      ],
+      "notes": "The served configuration (frozen Apex-J) on the full Hard 1,000, restricted from the same 5,000-item run (Hard is an exact subset of Standard), graded by gpt-4.1. Harm proxy 34.0%, 0 empty answers. Bare GPT-6 Astra is the composer backbone without the Asha layer on the same items, retrieval off. June 2026 bare frontier baselines and the June P6 build stay as lineage under the same grader; the June-vs-today grader-stability entry says how much of any P6-to-Apex-J difference is the grader. Scores independently recomputed from the June graded artifacts by Airpixels Innovations LLP (September 2026): Apex 44.82, Mid 37.94, Base 28.35. Pre-registered harm test: negative-point criteria met 34.0% vs 32.4% for bare Astra (+1.6 points, within the +2.0 bound).",
+      "artifacts": [
+        {
+          "label": "Per-item completions and graded JSONLs on the bench host (public mirror pending)",
+          "url": "https://dnai.systems/benchmarks"
+        }
+      ],
+      "lay_summary": "HealthBench is a set of realistic health conversations, each graded against a checklist written by physicians of what a good answer must include and must avoid. Hard is the 1,000 toughest cases, where most systems score under half. Higher is better; the bare frontier models on the same items are the yardstick.",
+      "harm_proxy_pct": 34.0,
+      "refusals": 0,
+      "median_chars": 2725.0,
+      "breakdown": {
+        "axis:accuracy": {
+          "score": 50.5,
+          "n": 776,
+          "bare_astra": 39.8
+        },
+        "axis:communication_quality": {
+          "score": 55.8,
+          "n": 357,
+          "bare_astra": 70.3
+        },
+        "axis:completeness": {
+          "score": 33.5,
+          "n": 852,
+          "bare_astra": 15.0
+        },
+        "axis:context_awareness": {
+          "score": 43.1,
+          "n": 704,
+          "bare_astra": 31.4
+        },
+        "axis:instruction_following": {
+          "score": 55.0,
+          "n": 199,
+          "bare_astra": 55.9
+        },
+        "physician_agreed_category:any-reducible-uncertainty": {
+          "score": 51.7,
+          "n": 53,
+          "bare_astra": 36.7
+        },
+        "physician_agreed_category:conditionally-emergent": {
+          "score": 51.6,
+          "n": 32,
+          "bare_astra": 38.6
+        },
+        "physician_agreed_category:context-does-not-matter": {
+          "score": 33.8,
+          "n": 22,
+          "bare_astra": 24.4
+        },
+        "physician_agreed_category:context-matters-but-unclear": {
+          "score": 44.6,
+          "n": 70,
+          "bare_astra": 28.9
+        },
+        "physician_agreed_category:context-matters-is-clear": {
+          "score": 30.3,
+          "n": 37,
+          "bare_astra": 26.3
+        },
+        "physician_agreed_category:detailed": {
+          "score": 40.6,
+          "n": 45,
+          "bare_astra": 34.2
+        },
+        "physician_agreed_category:emergent": {
+          "score": 50.3,
+          "n": 16,
+          "bare_astra": 43.4
+        },
+        "physician_agreed_category:enough-context": {
+          "score": 36.4,
+          "n": 28,
+          "bare_astra": 19.1
+        },
+        "physician_agreed_category:enough-info-to-complete-task": {
+          "score": 38.4,
+          "n": 26,
+          "bare_astra": 26.9
+        },
+        "physician_agreed_category:health-professional": {
+          "score": 42.1,
+          "n": 40,
+          "bare_astra": 35.4
+        },
+        "physician_agreed_category:no-uncertainty": {
+          "score": 43.5,
+          "n": 16,
+          "bare_astra": 34.1
+        },
+        "physician_agreed_category:non-emergent": {
+          "score": 40.5,
+          "n": 8,
+          "bare_astra": 36.6
+        },
+        "physician_agreed_category:not-enough-context": {
+          "score": 56.3,
+          "n": 76,
+          "bare_astra": 37.6
+        },
+        "physician_agreed_category:not-enough-info-to-complete-task": {
+          "score": 51.4,
+          "n": 58,
+          "bare_astra": 40.9
+        },
+        "physician_agreed_category:not-health-professional": {
+          "score": 40.3,
+          "n": 23,
+          "bare_astra": 29.2
+        },
+        "physician_agreed_category:only-irreducible-uncertainty": {
+          "score": 49.1,
+          "n": 11,
+          "bare_astra": 47.0
+        },
+        "physician_agreed_category:simple": {
+          "score": 33.7,
+          "n": 25,
+          "bare_astra": 35.7
+        },
+        "theme:communication": {
+          "score": 35.6,
+          "n": 111,
+          "bare_astra": 31.0
+        },
+        "theme:complex_responses": {
+          "score": 39.9,
+          "n": 82,
+          "bare_astra": 32.8
+        },
+        "theme:context_seeking": {
+          "score": 44.9,
+          "n": 179,
+          "bare_astra": 28.4
+        },
+        "theme:emergency_referrals": {
+          "score": 47.3,
+          "n": 66,
+          "bare_astra": 38.2
+        },
+        "theme:global_health": {
+          "score": 38.3,
+          "n": 280,
+          "bare_astra": 21.9
+        },
+        "theme:health_data_tasks": {
+          "score": 46.1,
+          "n": 115,
+          "bare_astra": 37.1
+        },
+        "theme:hedging": {
+          "score": 45.3,
+          "n": 167,
+          "bare_astra": 31.6
+        }
+      },
+      "harm_gate": {
+        "rule": "pre-registered (CEILING_5000_GATE.md, A3): harm proxy vs bare Astra within +2.0 points on the 5,000",
+        "delta_pts": 1.6,
+        "bound_pts": 2.0,
+        "passed": true
+      },
+      "secondary_results": [
+        {
+          "metric": "Apex-J, GPT-5.4 grader (Hard 1,000)",
+          "score": 37.3,
+          "n": 1000,
+          "note": "Sensitivity grader; official HealthBench grading is gpt-4.1. Harm proxy 25.9%. Paired vs bare Astra +12.4 pp.",
+          "source_artifact": "official_readout_hb5000_hard.json",
+          "comparator_score": 24.9
+        }
+      ]
+    },
+    {
+      "id": "healthbench-professional-apex",
+      "headline": true,
+      "category": "Accuracy (physician rubric)",
+      "benchmark": "HealthBench Professional",
+      "benchmark_ref": "Arora et al., arXiv:2505.08775; clinician-facing set; official metric is length-adjusted",
+      "set": "Professional, full set, September 2026 board; every arm through one harness and one grader set",
+      "n": 525,
+      "pipeline": "P6-J",
+      "configuration": "Asha Apex-J, Claude Fable 5.1 composer @4096 (best Asha configuration measured; two trials)",
+      "deployed_tier": "Apex tier candidate; not the configuration serving live traffic in September",
+      "kil": true,
+      "metric": "Length-adjusted rubric score (the benchmark's official metric), pooled over two trials",
+      "score": 65.1,
+      "ci_method": "none_reported",
+      "grader": "Claude Opus 4.8 (every arm on the board also graded by GPT-5.4 low and gpt-4.1)",
+      "run_date": "2026-09-14",
+      "tier": "C",
+      "secondary_results": [
+        {
+          "metric": "full L9 concise (full set, 525 items, GPT-5.4 grader)",
+          "score": 68.8,
+          "comparator_score": 44.6,
+          "n": 525,
+          "note": "vs bare gemini31pro on the same items: +24.2 length-adjusted (GPT-5.4, p = 0.00), +25.5 (Opus 4.8). Harm rate 17.7% vs 39.4%. Opus 4.8 grader: 72.7 vs 47.2. adopted as incumbent under the pre-registered rule. Pin cfa13318; 3 trials pooled; read out 2026-09-21.",
+          "source_artifact": "ceiling_readout_full_L9_concise_vs_bare_gemini31pro.json"
+        },
+        {
+          "metric": "slice freeze concise identity (300-item slice, GPT-5.4 grader)",
+          "score": 67.4,
+          "comparator_score": 69.0,
+          "n": 300,
+          "note": "vs Ladder L9: concise composer style on the same items: -1.6 length-adjusted (GPT-5.4, p = 0.21), -0.8 (Opus 4.8). Harm rate 20.8% vs 19.6%. Opus 4.8 grader: 71.2 vs 72.0. not adopted: inside the 3-point band, gates pass. Pin 1c489dac; one trial; read out 2026-09-20.",
+          "source_artifact": "ceiling_readout_slice_freeze_concise_identity_vs_slice_L9_concise.json"
+        },
+        {
+          "metric": "bare freeze base identity (300-item slice, GPT-5.4 grader)",
+          "score": 51.6,
+          "comparator_score": 51.8,
+          "n": 300,
+          "note": "vs Asha Base on the 17 Sep code (Base identity) on the same items: -0.2 length-adjusted (GPT-5.4, p = 0.93), -1.5 (Opus 4.8). Harm rate 25.0% vs 30.0%. Opus 4.8 grader: 55.0 vs 56.5. adopted as incumbent under the pre-registered rule. Pin n/a; one trial; read out 2026-09-20.",
+          "source_artifact": "ceiling_readout_bare_freeze_base_identity_vs_bare_base_lane_identity.json"
+        },
+        {
+          "metric": "full L7 guarded (full set, 525 items, GPT-5.4 grader)",
+          "score": 66.2,
+          "comparator_score": 68.8,
+          "n": 525,
+          "note": "vs full L9 concise on the same items: -2.6 length-adjusted (GPT-5.4, p = 0.01), -3.1 (Opus 4.8). Harm rate 16.7% vs 17.7%. Opus 4.8 grader: 69.6 vs 72.6. not adopted: inside the 3-point band, gates pass. Pin cfa13318; 2 trials pooled; read out 2026-09-20.",
+          "source_artifact": "ceiling_readout_full_L7_guarded_vs_full_L9_concise.json"
+        },
+        {
+          "metric": "full L7 guarded (225-item holdout, GPT-5.4 grader)",
+          "score": 64.7,
+          "comparator_score": 65.7,
+          "n": 225,
+          "note": "vs bare GPT-6 Astra on the same items: -1.0 length-adjusted (GPT-5.4, p = 0.64), +0.6 (Opus 4.8). Harm rate 17.2% vs 14.0%. Opus 4.8 grader: 68.6 vs 67.9. rejected: a gate failed or the score fell 3 points or more. Pin cfa13318; 2 trials pooled; read out 2026-09-20.",
+          "source_artifact": "ceiling_readout_hold_full_L7_guarded_vs_bare_gpt6astra.json"
+        },
+        {
+          "metric": "full L7 guarded (full set, 525 items, GPT-5.4 grader)",
+          "score": 66.2,
+          "comparator_score": 64.8,
+          "n": 525,
+          "note": "vs bare GPT-6 Astra on the same items: +1.4 length-adjusted (GPT-5.4, p = 0.29), +2.4 (Opus 4.8). Harm rate 16.7% vs 16.0%. Opus 4.8 grader: 69.5 vs 67.1. not adopted: inside the 3-point band, gates pass. Pin cfa13318; 2 trials pooled; read out 2026-09-20.",
+          "source_artifact": "ceiling_readout_full_L7_guarded_vs_bare_gpt6astra.json"
+        },
+        {
+          "metric": "Ladder L9: concise composer style (300-item slice, GPT-5.4 grader)",
+          "score": 69.0,
+          "comparator_score": 64.2,
+          "n": 300,
+          "note": "vs bare GPT-6 Astra on the same items: +4.8 length-adjusted (GPT-5.4, p = 0.00), +4.8 (Opus 4.8). Harm rate 19.6% vs 17.5%. Opus 4.8 grader: 71.4 vs 66.6. rejected: a gate failed or the score fell 3 points or more. Pin cfa13318; 2 trials pooled; read out 2026-09-19.",
+          "source_artifact": "ceiling_readout_slice_L9_concise_vs_bare_gpt6astra.json"
+        },
+        {
+          "metric": "Ladder L7: guarded composer style (four harm classes) (300-item slice, GPT-5.4 grader)",
+          "score": 68.2,
+          "comparator_score": 64.2,
+          "n": 300,
+          "note": "vs bare GPT-6 Astra on the same items: +4.0 length-adjusted (GPT-5.4, p = 0.03), +3.5 (Opus 4.8). Harm rate 15.0% vs 17.5%. Opus 4.8 grader: 70.0 vs 66.5. adopted as incumbent under the pre-registered rule. Pin cfa13318; one trial; read out 2026-09-19.",
+          "source_artifact": "ceiling_readout_slice_L7_guarded_vs_bare_gpt6astra.json"
+        },
+        {
+          "metric": "full L9 concise (225-item holdout, GPT-5.4 grader)",
+          "score": 67.9,
+          "comparator_score": 65.7,
+          "n": 225,
+          "note": "vs bare GPT-6 Astra on the same items: +2.2 length-adjusted (GPT-5.4, p = 0.23), +4.6 (Opus 4.8). Harm rate 16.5% vs 14.0%. Opus 4.8 grader: 72.6 vs 67.9. rejected: a gate failed or the score fell 3 points or more. Pin cfa13318; 3 trials pooled; read out 2026-09-19.",
+          "source_artifact": "ceiling_readout_hold_full_L9_concise_vs_bare_gpt6astra_K3.json"
+        },
+        {
+          "metric": "full L9 concise (full set, 525 items, GPT-5.4 grader)",
+          "score": 68.8,
+          "comparator_score": 64.8,
+          "n": 525,
+          "note": "vs bare GPT-6 Astra on the same items: +4.0 length-adjusted (GPT-5.4, p = 0.00), +5.4 (Opus 4.8). Harm rate 17.7% vs 16.0%. Opus 4.8 grader: 72.7 vs 67.3. adopted as incumbent under the pre-registered rule. Pin cfa13318; 3 trials pooled; read out 2026-09-19.",
+          "source_artifact": "ceiling_readout_full_L9_concise_vs_bare_gpt6astra_K3.json"
+        },
+        {
+          "metric": "full L9 concise (225-item holdout, GPT-5.4 grader)",
+          "score": 68.6,
+          "comparator_score": 66.6,
+          "n": 225,
+          "note": "vs bare GPT-6 Astra on the same items: +2.0 length-adjusted (GPT-5.4, p = 0.30), +5.2 (Opus 4.8). Harm rate 15.6% vs 12.9%. Opus 4.8 grader: 73.3 vs 68.1. rejected: a gate failed or the score fell 3 points or more. Pin cfa13318; 2 trials pooled; read out 2026-09-19.",
+          "source_artifact": "ceiling_readout_hold_full_L9_concise_vs_bare_gpt6astra.json"
+        },
+        {
+          "metric": "full L9 concise (full set, 525 items, GPT-5.4 grader)",
+          "score": 69.3,
+          "comparator_score": 64.9,
+          "n": 525,
+          "note": "vs bare GPT-6 Astra on the same items: +4.4 length-adjusted (GPT-5.4, p = 0.00), +6.4 (Opus 4.8). Harm rate 16.9% vs 15.7%. Opus 4.8 grader: 73.3 vs 67.0. adopted as incumbent under the pre-registered rule. Pin cfa13318; 2 trials pooled; read out 2026-09-19.",
+          "source_artifact": "ceiling_readout_full_L9_concise_vs_bare_gpt6astra.json"
+        },
+        {
+          "metric": "Ladder L9: concise composer style (300-item slice, GPT-5.4 grader)",
+          "score": 69.0,
+          "comparator_score": 62.6,
+          "n": 300,
+          "note": "vs Apex-J, Fable 5.1 composer (E1 baseline, 16 Sep) on the same items: +6.4 length-adjusted (GPT-5.4, p = 0.01), +4.8 (Opus 4.8). Harm rate 19.6% vs 28.3%. Opus 4.8 grader: 71.7 vs 67.0. adopted as incumbent under the pre-registered rule. Pin cfa13318; 2 trials pooled; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_slice_L9_concise_vs_slice_apexj_fable51_newpin.json"
+        },
+        {
+          "metric": "Ladder L6: Claude Opus 5 composer (300-item slice, GPT-5.4 grader)",
+          "score": 55.3,
+          "comparator_score": 69.4,
+          "n": 300,
+          "note": "vs Ladder L9: concise composer style on the same items: -14.1 length-adjusted (GPT-5.4, p = 0.00), -11.0 (Opus 4.8). Harm rate 30.0% vs 19.2%. Opus 4.8 grader: 60.6 vs 71.7. rejected: a gate failed or the score fell 3 points or more. Pin cfa13318; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_slice_L6_opus5_composer_vs_slice_L9_concise.json"
+        },
+        {
+          "metric": "Asha cascade (tier auto: Base / Mid ensemble / Apex by stakes) (300-item slice, GPT-5.4 grader)",
+          "score": 51.5,
+          "comparator_score": 51.8,
+          "n": 300,
+          "note": "vs Asha Base on the 17 Sep code (Base identity) on the same items: -0.3 length-adjusted (GPT-5.4, p = 0.88), -0.4 (Opus 4.8). Harm rate 29.2% vs 30.0%. Opus 4.8 grader: 56.5 vs 56.9. not adopted: inside the 3-point band, gates pass. Pin n/a; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_bare_cascade_auto_vs_bare_base_lane_identity.json"
+        },
+        {
+          "metric": "Ladder L5: query-aware KIL recruiter (300-item slice, GPT-5.4 grader)",
+          "score": 69.3,
+          "comparator_score": 69.4,
+          "n": 300,
+          "note": "vs Ladder L9: concise composer style on the same items: -0.1 length-adjusted (GPT-5.4, p = 0.96), +0.3 (Opus 4.8). Harm rate 19.2% vs 19.2%. Opus 4.8 grader: 71.9 vs 71.7. not adopted: inside the 3-point band, gates pass. Pin cfa13318; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_slice_L5_recruiter_on_vs_slice_L9_concise.json"
+        },
+        {
+          "metric": "Ladder L4: dated PubMed live-evidence lane (300-item slice, GPT-5.4 grader)",
+          "score": 69.2,
+          "comparator_score": 69.4,
+          "n": 300,
+          "note": "vs Ladder L9: concise composer style on the same items: -0.2 length-adjusted (GPT-5.4, p = 0.89), +1.5 (Opus 4.8). Harm rate 18.3% vs 19.2%. Opus 4.8 grader: 72.9 vs 71.4. rejected: a gate failed or the score fell 3 points or more. Pin cfa13318; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_slice_L4_live_pubmed_vs_slice_L9_concise.json"
+        },
+        {
+          "metric": "Ladder L7: guarded composer style (four harm classes) (300-item slice, GPT-5.4 grader)",
+          "score": 68.2,
+          "comparator_score": 69.4,
+          "n": 300,
+          "note": "vs Ladder L9: concise composer style on the same items: -1.2 length-adjusted (GPT-5.4, p = 0.44), -0.9 (Opus 4.8). Harm rate 15.0% vs 19.2%. Opus 4.8 grader: 70.1 vs 71.0. not adopted: inside the 3-point band, gates pass. Pin cfa13318; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_slice_L7_guarded_vs_slice_L9_concise.json"
+        },
+        {
+          "metric": "Asha Base, clinician audience + concise (300-item slice, GPT-5.4 grader)",
+          "score": 54.9,
+          "comparator_score": 51.8,
+          "n": 300,
+          "note": "vs Asha Base on the 17 Sep code (Base identity) on the same items: +3.1 length-adjusted (GPT-5.4, p = 0.14), +1.6 (Opus 4.8). Harm rate 28.3% vs 30.0%. Opus 4.8 grader: 57.9 vs 56.4. adopted as incumbent under the pre-registered rule. Pin n/a; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_bare_base_clinician_concise_vs_bare_base_lane_identity.json"
+        },
+        {
+          "metric": "Asha Base, audience asserted as clinician (300-item slice, GPT-5.4 grader)",
+          "score": 52.9,
+          "comparator_score": 51.8,
+          "n": 300,
+          "note": "vs Asha Base on the 17 Sep code (Base identity) on the same items: +1.1 length-adjusted (GPT-5.4, p = 0.63), +0.7 (Opus 4.8). Harm rate 27.5% vs 30.0%. Opus 4.8 grader: 57.6 vs 56.9. not adopted: inside the 3-point band, gates pass. Pin n/a; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_bare_base_clinician_vs_bare_base_lane_identity.json"
+        },
+        {
+          "metric": "Ladder L9: concise composer style (300-item slice, GPT-5.4 grader)",
+          "score": 69.4,
+          "comparator_score": 65.8,
+          "n": 300,
+          "note": "vs Round 2 identity: Astra composer on the 17 Sep code (deploy check) on the same items: +3.6 length-adjusted (GPT-5.4, p = 0.01), +3.6 (Opus 4.8). Harm rate 19.2% vs 17.5%. Opus 4.8 grader: 71.3 vs 67.7. adopted as incumbent under the pre-registered rule. Pin cfa13318; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_slice_L9_concise_vs_slice_R2_identity_astra.json"
+        },
+        {
+          "metric": "Asha Base, translate-and-correct on unsafe handouts (300-item slice, GPT-5.4 grader)",
+          "score": 52.5,
+          "comparator_score": 51.8,
+          "n": 300,
+          "note": "vs Asha Base on the 17 Sep code (Base identity) on the same items: +0.7 length-adjusted (GPT-5.4, p = 0.75), -0.8 (Opus 4.8). Harm rate 23.3% vs 30.0%. Opus 4.8 grader: 55.9 vs 56.8. adopted as incumbent under the pre-registered rule. Pin n/a; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_bare_base_translate_correct_vs_bare_base_lane_identity.json"
+        },
+        {
+          "metric": "Asha Base, labelled recall on retrieval miss (300-item slice, GPT-5.4 grader)",
+          "score": 54.4,
+          "comparator_score": 51.8,
+          "n": 300,
+          "note": "vs Asha Base on the 17 Sep code (Base identity) on the same items: +2.5 length-adjusted (GPT-5.4, p = 0.25), +0.1 (Opus 4.8). Harm rate 26.7% vs 30.0%. Opus 4.8 grader: 56.6 vs 56.5. not adopted: inside the 3-point band, gates pass. Pin n/a; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_bare_base_labelled_recall_vs_bare_base_lane_identity.json"
+        },
+        {
+          "metric": "Ladder L8: audience asserted as clinician (300-item slice, GPT-5.4 grader)",
+          "score": 59.8,
+          "comparator_score": 65.8,
+          "n": 300,
+          "note": "vs Round 2 identity: Astra composer on the 17 Sep code (deploy check) on the same items: -6.0 length-adjusted (GPT-5.4, p = 0.00), -5.4 (Opus 4.8). Harm rate 19.2% vs 17.5%. Opus 4.8 grader: 62.9 vs 68.4. rejected: a gate failed or the score fell 3 points or more. Pin cfa13318; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_slice_L8_clinician_vs_slice_R2_identity_astra.json"
+        },
+        {
+          "metric": "Asha Base, concise style (300-item slice, GPT-5.4 grader)",
+          "score": 52.4,
+          "comparator_score": 51.8,
+          "n": 300,
+          "note": "vs Asha Base on the 17 Sep code (Base identity) on the same items: +0.5 length-adjusted (GPT-5.4, p = 0.80), +2.5 (Opus 4.8). Harm rate 31.7% vs 30.0%. Opus 4.8 grader: 59.1 vs 56.6. not adopted: inside the 3-point band, gates pass. Pin n/a; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_bare_base_concise_vs_bare_base_lane_identity.json"
+        },
+        {
+          "metric": "Round 2 identity: Astra composer on the 17 Sep code (deploy check) (300-item slice, GPT-5.4 grader)",
+          "score": 65.8,
+          "comparator_score": 67.2,
+          "n": 300,
+          "note": "vs Apex-J, GPT-6 Astra composer (E3; ceiling ladder incumbent) on the same items: -1.4 length-adjusted (GPT-5.4, p = 0.30), -1.4 (Opus 4.8). Harm rate 17.5% vs 17.5%. Opus 4.8 grader: 68.6 vs 70.0. not adopted: inside the 3-point band, gates pass. Pin cfa13318; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_slice_R2_identity_astra_vs_slice_apexj_astra.json"
+        },
+        {
+          "metric": "Asha Base on the 17 Sep code (Base identity) (300-item slice, GPT-5.4 grader)",
+          "score": 51.8,
+          "comparator_score": 53.1,
+          "n": 300,
+          "note": "vs Asha Base (live lane, 16 Sep) on the same items: -1.2 length-adjusted (GPT-5.4, p = 0.59), -1.0 (Opus 4.8). Harm rate 30.0% vs 26.7%. Opus 4.8 grader: 56.6 vs 57.6. rejected: a gate failed or the score fell 3 points or more. Pin n/a; one trial; read out 2026-09-18.",
+          "source_artifact": "ceiling_readout_bare_base_lane_identity_vs_bare_asha_base_s5.json"
+        },
+        {
+          "metric": "Ladder L3: every panel agent on Claude Opus 5 (300-item slice, GPT-5.4 grader)",
+          "score": 66.5,
+          "comparator_score": 67.2,
+          "n": 300,
+          "note": "vs Apex-J, GPT-6 Astra composer (E3; ceiling ladder incumbent) on the same items: -0.7 length-adjusted (GPT-5.4, p = 0.58), +0.2 (Opus 4.8). Harm rate 18.3% vs 17.5%. Opus 4.8 grader: 69.5 vs 69.4. not adopted: inside the 3-point band, gates pass. Pin 1c2b7fc6, cab1d043; one trial; read out 2026-09-17.",
+          "source_artifact": "ceiling_readout_slice_L3_opus5_agents_vs_slice_apexj_astra.json"
+        },
+        {
+          "metric": "Ladder L2: current-affairs and India corpora excluded from retrieval (300-item slice, GPT-5.4 grader)",
+          "score": 65.5,
+          "comparator_score": 67.2,
+          "n": 300,
+          "note": "vs Apex-J, GPT-6 Astra composer (E3; ceiling ladder incumbent) on the same items: -1.7 length-adjusted (GPT-5.4, p = 0.25), -2.7 (Opus 4.8). Harm rate 15.8% vs 17.5%. Opus 4.8 grader: 66.7 vs 69.4. not adopted: inside the 3-point band, gates pass. Pin cab1d043; one trial; read out 2026-09-17.",
+          "source_artifact": "ceiling_readout_slice_L2_kil_excl_vs_slice_apexj_astra.json"
+        },
+        {
+          "metric": "Apex-J, Fable composer, identity re-run on the 17 Sep pin (deploy check) (300-item slice, GPT-5.4 grader)",
+          "score": 62.0,
+          "comparator_score": 62.6,
+          "n": 300,
+          "note": "vs Apex-J, Fable 5.1 composer (E1 baseline, 16 Sep) on the same items: -0.6 length-adjusted (GPT-5.4, p = 0.74), +0.5 (Opus 4.8). Harm rate 31.7% vs 28.3%. Opus 4.8 grader: 67.4 vs 66.9. rejected: a gate failed or the score fell 3 points or more. Pin cab1d043; one trial; read out 2026-09-17.",
+          "source_artifact": "ceiling_readout_slice_R1_identity_fable51_vs_slice_apexj_fable51_newpin.json"
+        },
+        {
+          "metric": "Apex-J, Fable 5.1 composer, concise style, clean-pin re-run (300-item slice, GPT-5.4 grader)",
+          "score": 68.3,
+          "comparator_score": 67.2,
+          "n": 300,
+          "note": "vs Apex-J, GPT-6 Astra composer (E3; ceiling ladder incumbent) on the same items: +1.1 length-adjusted (GPT-5.4, p = 0.68), +4.9 (Opus 4.8). Harm rate 28.3% vs 17.5%. Opus 4.8 grader: 74.8 vs 69.9. rejected: a gate failed or the score fell 3 points or more. Pin cab1d043; one trial; read out 2026-09-17.",
+          "source_artifact": "ceiling_readout_slice_R1_fable51_concise_vs_slice_apexj_astra.json"
+        },
+        {
+          "metric": "Apex-J, GPT-6 Astra composer (E3; ceiling ladder incumbent) (300-item slice, GPT-5.4 grader)",
+          "score": 67.2,
+          "comparator_score": 62.6,
+          "n": 300,
+          "note": "vs Apex-J, Fable 5.1 composer (E1 baseline, 16 Sep) on the same items: +4.6 length-adjusted (GPT-5.4, p = 0.07), +1.8 (Opus 4.8). Harm rate 17.5% vs 28.3%. Opus 4.8 grader: 69.4 vs 67.5. adopted as incumbent under the pre-registered rule. Pin cab1d043; one trial; read out 2026-09-17.",
+          "source_artifact": "ceiling_readout_slice_apexj_astra_vs_slice_apexj_fable51_newpin.json"
+        },
+        {
+          "metric": "Apex-J, GPT-6 Astra composer, concise style (E6) (300-item slice, GPT-5.4 grader)",
+          "score": 69.4,
+          "comparator_score": 67.2,
+          "n": 300,
+          "note": "vs Apex-J, GPT-6 Astra composer (E3; ceiling ladder incumbent) on the same items: +2.2 length-adjusted (GPT-5.4, p = 0.08), +3.1 (Opus 4.8). Harm rate 19.2% vs 17.5%. Opus 4.8 grader: 72.5 vs 69.4. not adopted: inside the 3-point band, gates pass. Pin cab1d043; one trial; read out 2026-09-17.",
+          "source_artifact": "ceiling_readout_slice_apexj_astra_concise_vs_slice_apexj_astra.json"
+        },
+        {
+          "metric": "Apex-J, Fable 5.1 composer, concise style (E2; straddled a restart, record only) (300-item slice, GPT-5.4 grader)",
+          "score": 67.7,
+          "comparator_score": 62.6,
+          "n": 300,
+          "note": "vs Apex-J, Fable 5.1 composer (E1 baseline, 16 Sep) on the same items: +5.1 length-adjusted (GPT-5.4, p = 0.01), +4.6 (Opus 4.8). Harm rate 29.2% vs 28.3%. Opus 4.8 grader: 71.5 vs 66.9. rejected: a gate failed or the score fell 3 points or more. Pin 2165d45a, cab1d043; one trial; read out 2026-09-17.",
+          "source_artifact": "ceiling_readout_slice_apexj_fable51_concise_vs_slice_apexj_fable51_newpin.json"
+        }
+      ],
+      "comparators": [
+        {
+          "system": "GPT-6 Astra (bare, xhigh), length-adjusted, two trials",
+          "score": 67.0,
+          "n": 525,
+          "basis": "same_grader_self_run",
+          "source": "67.51 / 66.47. Leads the board on the official metric with the lowest harm rate (16%). The gap to Asha is answer length (2.3k vs 4.7k chars); Asha leads raw (73.3 vs 70.9) and red-team."
+        },
+        {
+          "system": "GPT-5.6 Sol (bare, xhigh), two trials",
+          "score": 62.1,
+          "n": 525,
+          "basis": "same_grader_self_run",
+          "source": "63.03 / 61.18"
+        },
+        {
+          "system": "Claude Opus 5 (bare)",
+          "score": 58.86,
+          "n": 525,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Claude Fable 5.1 (bare, adaptive thinking, max effort), two trials",
+          "score": 58.6,
+          "n": 525,
+          "basis": "same_grader_self_run",
+          "source": "58.76 / 58.5; 12 refusals per trial; highest harm rate of the frontier when it answers (35%)"
+        },
+        {
+          "system": "Claude Sonnet 5 (bare)",
+          "score": 58.24,
+          "n": 524,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Claude Opus 4.8 (bare), two trials",
+          "score": 57.2,
+          "n": 525,
+          "basis": "same_grader_self_run",
+          "source": "56.22 / 58.26"
+        },
+        {
+          "system": "GPT-5.6 Luna (bare)",
+          "score": 57.05,
+          "n": 525,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Gemini 3.8 Flash (bare, Vertex)",
+          "score": 53.0,
+          "n": 525,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Physician-written responses (dataset anchor)",
+          "score": 50.3,
+          "n": 525,
+          "basis": "same_grader_self_run",
+          "source": "the dataset's physician_response field graded by the same graders; 45.3 under GPT-5.4"
+        },
+        {
+          "system": "Glass Health 5.5 (vendor system, agentic search)",
+          "score": 46.15,
+          "n": 522,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Claude Sonnet 4.6 (bare)",
+          "score": 43.52,
+          "n": 525,
+          "basis": "same_grader_self_run"
+        }
+      ],
+      "paired_statistics": [
+        {
+          "comparison": "Apex-J Fable composer vs bare Fable 5.1 (same backbone as composer), full set",
+          "n": 525,
+          "delta_pp": 5.5,
+          "test": "paired t (paper SE)",
+          "p": "0.003"
+        },
+        {
+          "comparison": "Apex-J Fable composer vs Apex-J Opus 4.8 composer, full set",
+          "n": 525,
+          "delta_pp": 3.4,
+          "test": "paired t (paper SE)",
+          "p": "0.02"
+        },
+        {
+          "comparison": "Apex-J Astra composer vs bare GPT-6 Astra, same 300 items, GPT-5.4 grader (architecture held to the same model)",
+          "n": 300,
+          "delta_pp": 3.6,
+          "test": "paired t, length-adjusted",
+          "p": "0.03"
+        },
+        {
+          "comparison": "Same pair, red-team items only, length-adjusted",
+          "n": 109,
+          "delta_pp": 6.6,
+          "test": "paired t",
+          "p": "see artifact"
+        },
+        {
+          "comparison": "Asha Base vs bare Claude Sonnet 5 (same backbone), red-team items, length-adjusted",
+          "n": 191,
+          "delta_pp": 10.1,
+          "test": "paired t",
+          "p": "see artifact"
+        },
+        {
+          "comparison": "Asha Base vs bare Claude Sonnet 5 (same backbone), all items, length-adjusted",
+          "n": 524,
+          "delta_pp": 0.3,
+          "test": "paired t",
+          "p": "0.88"
+        }
+      ],
+      "notes": "Every arm on the board, ours and the bare frontier models, went through one harness and three graders, so the ranking is like-for-like. On the September board (Asha arms on the 12 September build, Fable 5.1 composer) GPT-6 Astra leads on the official length-adjusted metric and Asha Apex-J is second, ahead on raw content and on red-team items at a higher harm rate than Astra. We publish the ordering as measured. Since then a ceiling ladder has run on a 300-item stratified slice of this set, one trial per arm, every arm on one recorded api process (the pin) and paired item by item against the incumbent under a pre-registered rule: adopt on 3 points or more, or on a clear harm reduction at equal score, with harm, red-team, empty-answer, refusal and grader-agreement gates passing. Round 1 (17 Sep) moved the composer to GPT-6 Astra. Round 2 (18 Sep, on the 17 Sep code: clinician register, language, memory scope) adopted the concise composer style (+3.6 length-adjusted, p=0.01, harm within gate); the guarded style, a dated PubMed live-evidence lane and the query-aware retriever each read inside the noise band against that incumbent, and asserting a clinician audience on this physician-written set regressed on red-team items. The Opus 5 composer arm is running. On the Base tier the same ladder adopted two prompt levers: clinician register with the concise style (+3.1) and a translate-and-correct rule for unsafe handouts, adopted on safety alone (harm down 6.7 points overall and 9.3 on red-team items at equal score). The live cascade, which sends 32 of these 300 items above Base by gravity, read level with Base overall; in the 25-item Mid band the ensemble scored below Base on all three graders, which is the evidence the Mid-floor decision now rests on. Slice results are exploratory by design and do not replace the board. When round 2 closes, the incumbent runs the full 525 items twice against bare GPT-6 Astra twice on the same pin and graders; that pre-freeze number is listed here when it lands. The code-freeze battery (22 to 25 September, Professional 525 x 2 for Base, Mid and Apex on the frozen build) produces the number of record and replaces this row. Per-item Professional data are withheld at OpenAI's no-publish request, so this row is tier C until the freeze artifacts are released.",
+      "artifacts": [
+        {
+          "label": "June 2026 configs and aggregate results (public repo, professional/)",
+          "url": "https://github.com/EndlessRay/asha-healthbench-2026-06-26/tree/main/professional"
+        },
+        {
+          "label": "Preprint (Research Square rs-10206806)",
+          "url": "https://www.researchsquare.com/article/rs-10206806/v1"
+        }
+      ],
+      "lay_summary": "The 525 questions a clinician asks in practice (dosing, differentials, management), graded against physician checklists. The official score penalizes long answers, so a system cannot win by saying more. Every system on this board was scored by the same grader in the same run, which is what makes the ranking fair. The rows under Also measured are one experiment at a time on the same 300 questions: each row names what changed, what it was compared with, and whether the change was adopted, left alone, or rejected under a rule written before the run. The current best configuration wraps our architecture around the leading model and asks it to answer briefly; it leads that bare model on these questions at the same rate of harmful statements."
+    },
+    {
+      "id": "healthbench-500-independent",
+      "headline": true,
+      "category": "Accuracy (independent harness)",
+      "benchmark": "HealthBench, 500-item sample (Vishwanath et al. harness)",
+      "benchmark_ref": "Vishwanath et al., Nature Medicine 2026; seed-62 500-question sample",
+      "set": "Independent study's 500-item sample",
+      "n": 500,
+      "pipeline": "Apex-J",
+      "configuration": "Asha Apex-J, frozen 20 Sep 2026 (GPT-6 Astra composer, concise style, FENG on, KIL on), graded in the study's public pipeline",
+      "deployed_tier": "Apex tier of the production cascade (APEX_TIER_PIPELINE=apex_j)",
+      "kil": true,
+      "metric": "Rubric score in the study's pipeline (points achieved / points possible, pooled)",
+      "score": 63.8,
+      "ci_method": "none_reported",
+      "grader": "three-judge panel, majority per criterion (anthropic-claude-4-6-opus, google-gemini-3-1-pro-preview, openai-gpt-5-2): the published study's configuration, run in its own pipeline",
+      "run_date": "2026-09-23",
+      "tier": "B",
+      "secondary_results": [
+        {
+          "metric": "Frozen Apex-J on the same 500, gpt-4.1 single, HealthBench per-example mean (from the 5,000-item run)",
+          "score": 61.6,
+          "n": 500,
+          "note": "Ties the 500 to the 5,000 main grade; not the study's grader (the panel row above is).",
+          "source_artifact": "official_readout_hb5000_seed62.json",
+          "comparator_score": 53.2
+        },
+        {
+          "metric": "Apex-J, GPT-5.4 grader (seed-62 500)",
+          "score": 56.4,
+          "n": 500,
+          "note": "Sensitivity grader; official HealthBench grading is gpt-4.1. Harm proxy 20.8%. Paired vs bare Astra +7.3 pp.",
+          "source_artifact": "official_readout_hb5000_seed62.json",
+          "comparator_score": 49.1
+        },
+        {
+          "metric": "Apex-J, Claude Opus 4.8 grader (seed-62 500)",
+          "score": 67.1,
+          "n": 495,
+          "note": "Sensitivity grader; official HealthBench grading is gpt-4.1. Harm proxy 19.6%. Paired vs bare Astra +8.6 pp.",
+          "source_artifact": "official_readout_hb5000_seed62.json",
+          "comparator_score": 58.7
+        }
+      ],
+      "comparators": [
+        {
+          "system": "OpenEvidence",
+          "score": 62.6,
+          "basis": "literature",
+          "source": "as reported by Vishwanath et al. (Nat Med 2026), same three-judge panel configuration, same 500 items"
+        },
+        {
+          "system": "UpToDate Expert AI",
+          "score": 61.3,
+          "basis": "literature",
+          "source": "as reported by Vishwanath et al. (Nat Med 2026), same three-judge panel configuration, same 500 items"
+        },
+        {
+          "system": "GPT-6 Astra (bare, retrieval off)",
+          "score": 54.9,
+          "n": 500,
+          "basis": "same_grader_self_run",
+          "source": "same 500 answers graded by the same panel in the same pipeline; the composer backbone without the Asha layer"
+        },
+        {
+          "system": "Asha Apex (P6, June 2026 build)",
+          "score": 66.8,
+          "n": 500,
+          "basis": "same_grader_self_run",
+          "source": "June 2026 answers, two of the study's three judges (Claude Opus 4.6 + Gemini 3.1 Pro Preview); lineage"
+        }
+      ],
+      "notes": "The served configuration (frozen Apex-J) answered the study's 500-item sample inside the 5,000-item run; those 500 answers were graded in the study's own public pipeline with its published three-judge panel (majority per criterion), so the comparison with OpenEvidence and UpToDate Expert AI is on the study's own grader and items. Bare GPT-6 Astra is graded by the same panel on the same answers set. History: the 10 Sep independent run (Airpixels) scored 66.6 under gpt-4.1 single; the June P6 answers scored 66.8 under two of the three judges and 71.0 with gpt-4.1 as the third; grader stability of gpt-4.1 was 72.3 vs 72.6 on identical completions. Commercial-tool values are the study's, not ours, and say nothing about those tools outside this item sample.",
+      "artifacts": [
+        {
+          "label": "Preprint Table 4 and the study's pipeline (Research Square rs-10206806)",
+          "url": "https://www.researchsquare.com/article/rs-10206806/v1"
+        }
+      ],
+      "lay_summary": "An independent research group published a 500-question sample and a scoring pipeline to compare commercial clinical tools such as OpenEvidence and UpToDate Expert AI. The model that ships on 1 October answered those 500 questions and was scored inside the study's own pipeline with the study's own three-judge panel, so the comparison is on their terms.",
+      "paired_statistics": [
+        {
+          "comparison": "Grader stability: today's gpt-4.1 vs June gpt-4.1 on identical June-29 completions (study pipeline, 500 items)",
+          "n": 500,
+          "delta_pp": -0.3,
+          "test": "same completions, points achieved / possible",
+          "p": "n/a"
+        }
+      ]
+    },
+    {
+      "id": "medqa-usmle-locked",
+      "headline": true,
+      "category": "Accuracy (multiple choice)",
+      "benchmark": "MedQA USMLE, 4-option test split",
+      "benchmark_ref": "Jin et al. 2021, Applied Sciences 11(14):6421",
+      "set": "Canonical test split, SHA-256 locked, single shot, same day across arms",
+      "n": 1273,
+      "successes": 1216,
+      "pipeline": "P2",
+      "configuration": "Deployed single-call engine",
+      "deployed_tier": "Base tier (the live single-call engine)",
+      "kil": true,
+      "metric": "Accuracy",
+      "score": 95.52,
+      "ci95": [
+        94.24,
+        96.53
+      ],
+      "ci_method": "wilson",
+      "grader": "None (deterministic letter match, strict regex)",
+      "run_date": "2026-05-04",
+      "tier": "A",
+      "comparators": [
+        {
+          "system": "Claude Opus 4.5",
+          "score": 94.7,
+          "n": 1273,
+          "basis": "same_grader_self_run",
+          "source": "paired McNemar vs Asha p = 0.228, indistinguishable"
+        },
+        {
+          "system": "o4-mini-high",
+          "score": 93.8,
+          "n": 1273,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Gemini 3.1 Pro Preview",
+          "score": 92.3,
+          "n": 1273,
+          "basis": "same_grader_self_run",
+          "source": "paired McNemar vs Asha p = 2.0e-5, OR 2.64 [1.67, 4.18]; 5.58% parse failures vs 0 for Asha"
+        },
+        {
+          "system": "GPT-4o",
+          "score": 91.6,
+          "n": 1273,
+          "basis": "same_grader_self_run"
+        }
+      ],
+      "notes": "Locked head-to-head: every arm answered the same 1,273 items on the same day, so question drift and grader variation are controlled across arms. Zero parse failures for Asha on the May 2026 run. September re-runs of the live system read 92.5 to 93.6; the code-freeze battery re-runs MedQA with a shared extractor.",
+      "artifacts": [
+        {
+          "label": "Per-item results, dataset hash, scripts (public repo, medqa-2026-05-04/)",
+          "url": "https://github.com/EndlessRay/asha-bench-public/tree/main/medqa-2026-05-04"
+        }
+      ],
+      "secondary_results": [
+        {
+          "metric": "Independent re-run of the live system (Airpixels, September 2026, strict extractor)",
+          "score": 92.46,
+          "n": 1273,
+          "note": "1177/1273, 13 unparsed; our own September re-run 93.64"
+        }
+      ],
+      "lay_summary": "Multiple-choice questions from the US medical licensing exam. Every system answered the same 1,273 questions on the same day and the score is the share answered correctly. A floor for medical knowledge that frontier models have nearly saturated; the paired comparisons are the useful part."
+    },
+    {
+      "id": "psychosis-bench-sis",
+      "headline": true,
+      "category": "Safety (multi-turn)",
+      "benchmark": "psychosis-bench (Au Yeung et al. 2025)",
+      "benchmark_ref": "arXiv:2509.10970; 16 scenarios x 12 turns",
+      "set": "Full protocol; 96 intervention-eligible turns per arm",
+      "n": 96,
+      "successes": 92,
+      "small_n_by_design": true,
+      "pipeline": "P2",
+      "configuration": "Deployed engine, backbone gemini-2.5-flash",
+      "deployed_tier": "Base tier (the live engine), same backbone as the bare arm",
+      "kil": true,
+      "metric": "Safe-intervention rate (SIS), higher is safer",
+      "score": 95.8,
+      "ci95": [
+        89.8,
+        98.4
+      ],
+      "ci_method": "wilson",
+      "grader": "gpt-4o-mini (the benchmark's protocol judge); Claude Haiku 4.5 as second judge",
+      "run_date": "2026-05-11",
+      "tier": "A",
+      "secondary_results": [
+        {
+          "metric": "Deployed engine re-run by the independent validator (Airpixels, September 2026)",
+          "score": 96.9,
+          "n": 96,
+          "note": "93/96"
+        },
+        {
+          "metric": "Delusion-confirmation score (DCS), lower is safer",
+          "score": 0.354,
+          "comparator_score": 1.215,
+          "note": "3.43x lower; scenario-paired bootstrap 95% CI [2.15, 6.13]"
+        },
+        {
+          "metric": "Harm-enablement score (HES), lower is safer",
+          "score": 0.104,
+          "comparator_score": 0.823,
+          "note": "7.9x lower"
+        },
+        {
+          "metric": "Asha Apex (P6) SIS",
+          "score": 97.9,
+          "n": 96,
+          "note": "94/96; DCS 0.02, HES 0.00"
+        },
+        {
+          "metric": "Frozen Apex-J (freeze-2026-09-20: Astra composer, concise, FENG) SIS",
+          "score": 95.8,
+          "n": 96,
+          "ci95": [
+            89.8,
+            98.4
+          ],
+          "note": "92/96; DCS 0.146, HES 0.021; the four misses are one scenario (secret_project_implicit, turns 7-9 and 12) where the answer refused the harmful instructions but did not redirect; protocol judge gpt-4o-mini; run 2026-09-20 on the lane"
+        },
+        {
+          "metric": "Asha Base, same run (20 Sep) SIS",
+          "score": 100.0,
+          "n": 96,
+          "note": "96/96; DCS 0.118, HES 0.135"
+        },
+        {
+          "metric": "Bare Claude Sonnet 4.5, same run (20 Sep) SIS",
+          "score": 100.0,
+          "n": 96,
+          "note": "96/96; DCS 0.007, HES 0.000. Current bare frontier models match Asha on this protocol; the May held-backbone gap (30.2% for bare gemini-2.5-flash) is a statement about what the architecture adds to a given backbone, not about frontier models today"
+        }
+      ],
+      "comparators": [
+        {
+          "system": "Bare gemini-2.5-flash (the May 2026 backbone, no architecture)",
+          "score": 30.2,
+          "n": 96,
+          "successes": 29,
+          "ci95": [
+            21.9,
+            40.0
+          ],
+          "basis": "same_grader_self_run",
+          "source": "Fisher exact two-sided P = 4.0e-23, odds ratio 53 [18, 158]. Same backbone as the Asha arm, so the gap is the architecture."
+        },
+        {
+          "system": "Bare Gemini 3.6 Flash (a current bare model, independent run, September 2026)",
+          "score": 93.8,
+          "n": 96,
+          "basis": "independent_validator",
+          "source": "Current bare frontier models score far higher on this protocol than the May 2026 backbone did; the 30.2 to 95.8 gap is a same-backbone measurement from May."
+        },
+        {
+          "system": "Bare GLM-5.2 (open weights)",
+          "score": 80.2,
+          "n": 96,
+          "basis": "same_grader_self_run",
+          "source": "DCS 0.31 / HES 0.31"
+        }
+      ],
+      "notes": "The backbone is held fixed and only the surrounding architecture varies, so the May 2026 gain is attributable to the architecture. Both pre-registered hypotheses (DCS, SIS) pass; the two judges agree on the direction of every metric, and inter-judge agreement fell below the pre-registered gate (kappa 0.25), which the pre-registration records as an inconclusive formal verdict. n=96 is fixed by the protocol (16 scenarios x 12 turns, 96 intervention-eligible turns per arm). Re-run 2026-09-20 on the frozen Apex-J with the same protocol and judge: SIS 95.8% [89.8, 98.4], DCS 0.146, HES 0.021; Asha Base 100%; bare Claude Sonnet 4.5 100% with DCS 0.007 and HES 0. The crisis claim to make is the held-backbone one (same model, 30% without Asha, 96% with); against today's bare frontier models the protocol reads parity, not superiority.",
+      "artifacts": [
+        {
+          "label": "Per-turn judge outputs, scenarios, pre-registration (public repo, psychosis-bench-2026-05-11/)",
+          "url": "https://github.com/EndlessRay/asha-bench-public/tree/main/psychosis-bench-2026-05-11"
+        },
+        {
+          "label": "Attribution study: Flash to Pro tier jump gives no safety lift",
+          "url": "https://github.com/EndlessRay/asha-bench-public/tree/main/psychosis-attribution-2026-05-12"
+        }
+      ],
+      "lay_summary": "Scripted 12-turn conversations in which a user slides toward delusional beliefs and asks for things that could cause harm. The safety score is how often the system intervened safely when it should have, instead of agreeing along. The same underlying model was tested bare and inside Asha, so the difference is the architecture."
+    },
+    {
+      "id": "enclomiphene-bench-sis",
+      "headline": false,
+      "category": "Safety (multi-turn, single-topic)",
+      "benchmark": "Enclomiphene-bench v1.0, patient arm (psychosis-bench protocol)",
+      "benchmark_ref": "DNAi, 2026-09-17; 6 scenarios x 12 turns on the compounded-enclomiphene fad; bench-public/enclomiphene-bench-2026-09-18",
+      "set": "Full protocol; 36 intervention-eligible turns per arm",
+      "n": 36,
+      "successes": 36,
+      "small_n_by_design": true,
+      "pipeline": "P2",
+      "configuration": "Deployed engine, anthropic_routed backbone (claude-sonnet-4-6 / claude-opus-4-8 by gravity)",
+      "deployed_tier": "Production cascade as routed",
+      "kil": true,
+      "metric": "Safe-intervention rate (SIS), higher is safer",
+      "score": 100.0,
+      "ci95": [
+        90.4,
+        100.0
+      ],
+      "ci_method": "wilson",
+      "grader": "gpt-4o-mini (the psychosis-bench protocol judge); Claude Haiku 4.5 as second judge, same 36/36",
+      "run_date": "2026-09-18",
+      "tier": "A",
+      "secondary_results": [
+        {
+          "metric": "Emergency turns with explicit emergency direction",
+          "score": 100.0,
+          "n": 4,
+          "note": "4/4: calf swelling with dyspnea, chest pressure twice, a child's monocular visual loss"
+        },
+        {
+          "metric": "Suicidal-ideation turns with crisis direction",
+          "score": 100.0,
+          "n": 3,
+          "note": "3/3, 988 named each time"
+        },
+        {
+          "metric": "Harm-enablement score (HES), lower is safer",
+          "score": 0.306,
+          "note": "Judge A; Judge B 0.417. Judges disagree on HES magnitude for three of four arms (kappa 0.03 to 0.29), so HES is not used to rank arms in this release. Pre-registered H1 fails under Judge A on three turns that Judge B scores 0 and that read as explicit refusals."
+        }
+      ],
+      "comparators": [
+        {
+          "system": "Bare Claude Sonnet 4.5",
+          "score": 100.0,
+          "n": 36,
+          "successes": 36,
+          "basis": "same_grader_self_run",
+          "source": "36/36 under both judges; HES 0.000 under both"
+        },
+        {
+          "system": "Bare GPT-5 (reasoning_effort low)",
+          "score": 94.4,
+          "n": 36,
+          "successes": 34,
+          "ci95": [
+            81.9,
+            98.5
+          ],
+          "basis": "same_grader_self_run",
+          "source": "Judge A; Judge B 31/36"
+        },
+        {
+          "system": "Bare Gemini 3.5 Flash (Vertex)",
+          "score": 86.1,
+          "n": 36,
+          "successes": 31,
+          "ci95": [
+            71.3,
+            93.9
+          ],
+          "basis": "same_grader_self_run",
+          "source": "Judge A; Judge B 33/36. HES 0.917 with 16 HES = 2 turns under Judge A"
+        }
+      ],
+      "notes": "Single-topic longitudinal safety set on the 2026 compounded-enclomiphene fad (young eugonadal men, telehealth at about $90 a month, 'I don't take testosterone'). Asha and bare Claude Sonnet 4.5 both intervene on every eligible turn; the separation between Asha and the bare models appears in the clinician red-team arm (appendix). Per-turn artifacts for all four arms and both judges are public.",
+      "artifacts": [
+        {
+          "label": "Per-turn outputs for both judges and all four arms, question files, stats script (public repo, enclomiphene-bench-2026-09-18/)",
+          "url": "https://github.com/EndlessRay/asha-bench-public/tree/main/enclomiphene-bench-2026-09-18"
+        },
+        {
+          "label": "Benchmark design and pre-registration (monorepo, scripts/audits/enclomiphene_bench/README.md)",
+          "url": "https://github.com/EndlessRay/asha-bench-public/blob/main/enclomiphene-bench-2026-09-18/README.md"
+        }
+      ]
+    },
+    {
+      "id": "aom-locked-chart-cds",
+      "headline": true,
+      "category": "Clinical decision support (clinician-authored)",
+      "benchmark": "Locked pediatric AOM chart (Hobbs, dochobbs/aom-chart packet v5)",
+      "benchmark_ref": "Clinician-authored locked chart; author adjudication pending",
+      "set": "Locked 24-month stem",
+      "n": 14,
+      "successes": 14,
+      "small_n_by_design": true,
+      "pipeline": "P2",
+      "configuration": "Deployed production build, serial runs, 2026-08-26",
+      "deployed_tier": "Live engine",
+      "kil": true,
+      "metric": "Runs passing every scored dimension (boundary arithmetic, weight-based dose, duration, declared assumptions, no invented chart facts)",
+      "score": 100.0,
+      "ci95": [
+        78.5,
+        100.0
+      ],
+      "ci_method": "wilson",
+      "grader": "Rubric applied by us to verbatim traces; the benchmark author's adjudication is pending and owns the scoreboard",
+      "run_date": "2026-08-26",
+      "tier": "A",
+      "secondary_results": [
+        {
+          "metric": "Identity-variant cells with invariant plan (insurance, race, name, caregiver age, occupation, interpreter)",
+          "score": 100.0,
+          "n": 36,
+          "note": "36/36; zero adverse reliability inferences"
+        },
+        {
+          "metric": "18-month counter-stem (rule generalizes rather than memorizes)",
+          "score": 100.0,
+          "n": 5,
+          "note": "5/5 kept the 10-day course and the 6-to-23-month stratum"
+        },
+        {
+          "metric": "Casual-phrasing probe",
+          "score": 100.0,
+          "n": 4,
+          "note": "4/4"
+        }
+      ],
+      "comparators": [],
+      "notes": "Self-run receipts on a clinician's public locked chart; the author adjudicates and owns the scoreboard. Known imperfection, quantified in the traces: in roughly 1 to 2 of every 10 runs the amoxicillin-clavulanate trigger check is phrased as an assertion plus a confirm-with-caregiver directive rather than the stricter declared form. n is set by the chart; the interval is shown for that reason.",
+      "artifacts": [
+        {
+          "label": "Verbatim traces and scoring (public repo)",
+          "url": "https://github.com/EndlessRay/asha-aom-chart-2026-08"
+        },
+        {
+          "label": "The benchmark author's chart and packet",
+          "url": "https://github.com/dochobbs/aom-chart"
+        }
+      ],
+      "lay_summary": "A pediatrician published a locked chart of a two-year-old with an ear infection and asked AI systems for the plan. Passing means correct age arithmetic, correct weight-based dose and duration, no invented chart facts, and the same plan whatever the child's insurance, race, or name. The chart's author owns the scoreboard."
+    },
+    {
+      "id": "healthbench-standard",
+      "headline": true,
+      "category": "Accuracy (physician rubric)",
+      "benchmark": "HealthBench standard",
+      "benchmark_ref": "Arora et al., arXiv:2505.08775",
+      "set": "Standard, full set",
+      "n": 5000,
+      "pipeline": "Apex-J",
+      "configuration": "Asha Apex-J, frozen 20 Sep 2026 (GPT-6 Astra composer, concise style, FENG on, KIL on)",
+      "deployed_tier": "Apex tier of the production cascade (APEX_TIER_PIPELINE=apex_j)",
+      "kil": true,
+      "metric": "Rubric score",
+      "score": 60.7,
+      "ci95": [
+        59.8,
+        61.5
+      ],
+      "ci_method": "bootstrap",
+      "grader": "gpt-4.1 (the official HealthBench grader)",
+      "run_date": "2026-09-21",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "GPT-6 Astra (bare, retrieval off)",
+          "score": 52.7,
+          "n": 5000,
+          "basis": "same_grader_self_run",
+          "source": "same harness, same items, same grader; the composer backbone of Apex-J without the Asha layer; run 19 Sep 2026"
+        },
+        {
+          "system": "Asha Mid (P5, June 2026 build)",
+          "score": 60.6,
+          "n": 5000,
+          "basis": "same_grader_self_run",
+          "source": "June 2026 run in the same harness (lineage; a different build, no longer served)"
+        },
+        {
+          "system": "Asha Base (P2, June 2026 build)",
+          "score": 44.1,
+          "n": 5000,
+          "basis": "same_grader_self_run",
+          "source": "June 2026 run in the same harness (lineage; a different build, no longer served)"
+        }
+      ],
+      "notes": "The served configuration (frozen Apex-J) on the full 5,000-item Standard set, graded by gpt-4.1. Harm proxy (negative-point criteria met) 29.8%, 0 empty answers. Bare GPT-6 Astra is the composer backbone without the Asha layer, run on the same items with retrieval off; the paired difference is the architecture. The June 2026 Mid and Base rows stay as lineage: different builds, not the served tier. Standard and Hard are different benchmarks; never compare across sets. Grading paused during the 22 Sep vendor credit outage; rows that carried 429 errors were discarded and re-graded, no partial rows are counted. Per-theme and per-axis scores are in the register (breakdown). Pre-registered harm test NOT met: negative-point criteria met 29.8% vs 27.0% for bare Astra (+2.8 points, bound +2.0). Fuller answers trip more negative-point criteria while scoring higher on every theme; per the gate document the number ships with this caveat and the freeze is under review before any launch claim.",
+      "artifacts": [
+        {
+          "label": "Per-item completions and graded JSONLs on the bench host (public mirror pending)",
+          "url": "https://dnai.systems/benchmarks"
+        }
+      ],
+      "lay_summary": "The full 5,000-conversation HealthBench set, easier on average than the Hard subset. Same physician checklists, same official grader. This is the model that ships on 1 October, measured once, frozen, against its own bare backbone on the same questions. Standard and Hard scores are never compared with each other.",
+      "harm_proxy_pct": 29.8,
+      "refusals": 0,
+      "median_chars": 2725.0,
+      "breakdown": {
+        "axis:accuracy": {
+          "score": 67.0,
+          "n": 4150,
+          "bare_astra": 60.4
+        },
+        "axis:communication_quality": {
+          "score": 68.1,
+          "n": 2226,
+          "bare_astra": 76.1
+        },
+        "axis:completeness": {
+          "score": 55.5,
+          "n": 4145,
+          "bare_astra": 41.6
+        },
+        "axis:context_awareness": {
+          "score": 53.5,
+          "n": 3337,
+          "bare_astra": 50.0
+        },
+        "axis:instruction_following": {
+          "score": 62.8,
+          "n": 1020,
+          "bare_astra": 61.0
+        },
+        "physician_agreed_category:any-reducible-uncertainty": {
+          "score": 65.0,
+          "n": 285,
+          "bare_astra": 54.1
+        },
+        "physician_agreed_category:conditionally-emergent": {
+          "score": 72.6,
+          "n": 180,
+          "bare_astra": 66.1
+        },
+        "physician_agreed_category:context-does-not-matter": {
+          "score": 62.6,
+          "n": 220,
+          "bare_astra": 50.9
+        },
+        "physician_agreed_category:context-matters-but-unclear": {
+          "score": 56.7,
+          "n": 219,
+          "bare_astra": 42.9
+        },
+        "physician_agreed_category:context-matters-is-clear": {
+          "score": 51.9,
+          "n": 195,
+          "bare_astra": 45.7
+        },
+        "physician_agreed_category:detailed": {
+          "score": 56.2,
+          "n": 161,
+          "bare_astra": 51.5
+        },
+        "physician_agreed_category:emergent": {
+          "score": 75.3,
+          "n": 139,
+          "bare_astra": 75.1
+        },
+        "physician_agreed_category:enough-context": {
+          "score": 54.1,
+          "n": 227,
+          "bare_astra": 47.7
+        },
+        "physician_agreed_category:enough-info-to-complete-task": {
+          "score": 64.1,
+          "n": 215,
+          "bare_astra": 59.4
+        },
+        "physician_agreed_category:health-professional": {
+          "score": 68.1,
+          "n": 322,
+          "bare_astra": 65.7
+        },
+        "physician_agreed_category:no-uncertainty": {
+          "score": 64.2,
+          "n": 228,
+          "bare_astra": 59.5
+        },
+        "physician_agreed_category:non-emergent": {
+          "score": 76.3,
+          "n": 134,
+          "bare_astra": 71.9
+        },
+        "physician_agreed_category:not-enough-context": {
+          "score": 62.1,
+          "n": 181,
+          "bare_astra": 45.4
+        },
+        "physician_agreed_category:not-enough-info-to-complete-task": {
+          "score": 62.4,
+          "n": 180,
+          "bare_astra": 51.1
+        },
+        "physician_agreed_category:not-health-professional": {
+          "score": 71.7,
+          "n": 424,
+          "bare_astra": 63.6
+        },
+        "physician_agreed_category:only-irreducible-uncertainty": {
+          "score": 60.7,
+          "n": 198,
+          "bare_astra": 56.3
+        },
+        "physician_agreed_category:simple": {
+          "score": 56.0,
+          "n": 163,
+          "bare_astra": 57.3
+        },
+        "theme:communication": {
+          "score": 66.1,
+          "n": 919,
+          "bare_astra": 61.3
+        },
+        "theme:complex_responses": {
+          "score": 53.5,
+          "n": 360,
+          "bare_astra": 52.3
+        },
+        "theme:context_seeking": {
+          "score": 55.3,
+          "n": 594,
+          "bare_astra": 44.2
+        },
+        "theme:emergency_referrals": {
+          "score": 73.7,
+          "n": 482,
+          "bare_astra": 69.4
+        },
+        "theme:global_health": {
+          "score": 55.0,
+          "n": 1097,
+          "bare_astra": 42.7
+        },
+        "theme:health_data_tasks": {
+          "score": 59.9,
+          "n": 477,
+          "bare_astra": 52.5
+        },
+        "theme:hedging": {
+          "score": 61.9,
+          "n": 1071,
+          "bare_astra": 52.8
+        }
+      },
+      "harm_gate": {
+        "rule": "pre-registered (CEILING_5000_GATE.md, A3): harm proxy vs bare Astra within +2.0 points on the 5,000",
+        "delta_pts": 2.8,
+        "bound_pts": 2.0,
+        "passed": false
+      },
+      "paired_statistics": [
+        {
+          "comparison": "Apex-J vs bare GPT-6 Astra, same 5,000 items",
+          "n": 5000,
+          "delta_pp": 8.0,
+          "ci95_pp": [
+            7.3,
+            8.7
+          ],
+          "wins_losses_ties": "2618 / 1162 / 1220",
+          "test": "paired t-test, two-sided; exact sign test p = 5.2e-127",
+          "p": "6.9e-110"
+        }
+      ],
+      "secondary_results": [
+        {
+          "metric": "Apex-J, GPT-5.4 grader (full 5,000)",
+          "score": 55.2,
+          "n": 5000,
+          "note": "Sensitivity grader; official HealthBench grading is gpt-4.1. Harm proxy 22.0%. Paired vs bare Astra +7.1 pp.",
+          "source_artifact": "official_readout_hb5000_standard.json",
+          "comparator_score": 48.1
+        },
+        {
+          "metric": "Apex-J, Claude Opus 4.8 grader (full 5,000)",
+          "score": 65.8,
+          "n": 4932,
+          "note": "Sensitivity grader; official HealthBench grading is gpt-4.1. Harm proxy 20.9%. Paired vs bare Astra +8.3 pp.",
+          "source_artifact": "official_readout_hb5000_standard.json",
+          "comparator_score": 57.7
+        }
+      ]
+    },
+    {
+      "id": "kable-belief-220",
+      "headline": false,
+      "category": "Epistemics (knowledge vs belief)",
+      "benchmark": "KaBLE, belief-reasoning subset",
+      "benchmark_ref": "Suzgun et al., Nature Machine Intelligence 2025",
+      "set": "220-question subset spanning first-person, third-person, and recursive belief",
+      "n": 220,
+      "successes": 215,
+      "pipeline": "P2",
+      "configuration": "Deployed single-call engine",
+      "deployed_tier": "Base tier (the live single-call engine)",
+      "kil": true,
+      "metric": "Accuracy, answer-key matched",
+      "score": 97.7,
+      "ci95": [
+        94.8,
+        99.0
+      ],
+      "ci_method": "wilson",
+      "grader": "None (answer-key match)",
+      "run_date": "2026-06",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "GPT-4o, first-person false belief (literature)",
+          "score": 64.4,
+          "basis": "literature",
+          "source": "Suzgun et al. 2025, on the full KaBLE task, a different item set; reference point only"
+        },
+        {
+          "system": "15-model average (literature)",
+          "score": 54.4,
+          "basis": "literature",
+          "source": "Suzgun et al. 2025; reference point only"
+        }
+      ],
+      "notes": "Literature reference points are on the published KaBLE task, a different item set from our 220-question subset, so they are context and never a like-for-like bar. Per-item record is internal; public release pending.",
+      "artifacts": [
+        {
+          "label": "Preprint Table 4 and Section 5 (Research Square rs-10206806)",
+          "url": "https://www.researchsquare.com/article/rs-10206806/v1"
+        }
+      ],
+      "secondary_results": [
+        {
+          "metric": "KaBLE BioMedicine subset, independent run (Airpixels, September 2026)",
+          "score": 97.62,
+          "n": 1050,
+          "note": "1025/1050 scored; a different subset from the 220"
+        }
+      ],
+      "lay_summary": "Tests whether a system keeps what a person believes separate from what is true, for example a user who says they believe something false. The score is the share of belief-reasoning questions answered correctly. Bare language models tend to adopt the user's belief."
+    }
+  ],
+  "appendix_small_n": [
+    {
+      "id": "medhelm-aci-bench",
+      "benchmark": "MedHELM: aci_bench",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Clinical note generation, jury mean",
+      "unit": "scale_1_5",
+      "score": 4.867,
+      "ci95": null,
+      "ci_method": "none_reported",
+      "grader": "LLM jury, 1 to 5 scale (MedHELM protocol)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run",
+          "score": 4.356,
+          "unit": "scale_1_5",
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "GPT-5, published v4.0.0 field (mid-2025 models), as published",
+          "score": 4.858,
+          "unit": "scale_1_5",
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. Jury of gpt-4o and llama-3.3-70b (the official judges) plus claude-sonnet-4-5 in the retired claude-3-7-sonnet seat, so absolutes are not exactly comparable with rows scored by the original trio. Per-item jury scores not exported; no interval. Apex above Base under both jury configurations.",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-mtsamples",
+      "benchmark": "MedHELM: mtsamples_replicate",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Treatment plans, jury mean",
+      "unit": "scale_1_5",
+      "score": 4.859,
+      "ci95": null,
+      "ci_method": "none_reported",
+      "grader": "LLM jury, 1 to 5 scale (MedHELM protocol)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run",
+          "score": 4.559,
+          "unit": "scale_1_5",
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "GPT-5 mini, published v4.0.0 field (mid-2025 models), as published",
+          "score": 4.719,
+          "unit": "scale_1_5",
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. Jury of gpt-4o and llama-3.3-70b (the official judges) plus claude-sonnet-4-5 in the retired claude-3-7-sonnet seat, so absolutes are not exactly comparable with rows scored by the original trio. Per-item jury scores not exported; no interval. ",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-medication-qa",
+      "benchmark": "MedHELM: medication_qa",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Consumer medication answers, jury mean",
+      "unit": "scale_1_5",
+      "score": 4.759,
+      "ci95": null,
+      "ci_method": "none_reported",
+      "grader": "LLM jury, 1 to 5 scale (MedHELM protocol)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run",
+          "score": 4.596,
+          "unit": "scale_1_5",
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Gemini 2.5 Pro, published v4.0.0 field (mid-2025 models), as published",
+          "score": 4.838,
+          "unit": "scale_1_5",
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. Jury of gpt-4o and llama-3.3-70b (the official judges) plus claude-sonnet-4-5 in the retired claude-3-7-sonnet seat, so absolutes are not exactly comparable with rows scored by the original trio. Per-item jury scores not exported; no interval. ",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-medi-qa",
+      "benchmark": "MedHELM: medi_qa",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Consumer health answers, jury mean",
+      "unit": "scale_1_5",
+      "score": 4.941,
+      "ci95": null,
+      "ci_method": "none_reported",
+      "grader": "LLM jury, 1 to 5 scale (MedHELM protocol)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run",
+          "score": 4.859,
+          "unit": "scale_1_5",
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Gemini 2.5 Pro, published v4.0.0 field (mid-2025 models), as published",
+          "score": 4.967,
+          "unit": "scale_1_5",
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. Jury of gpt-4o and llama-3.3-70b (the official judges) plus claude-sonnet-4-5 in the retired claude-3-7-sonnet seat, so absolutes are not exactly comparable with rows scored by the original trio. Per-item jury scores not exported; no interval. ",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-medcalc-bench",
+      "benchmark": "MedHELM: medcalc_bench",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "successes": 12,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Clinical calculation accuracy",
+      "score": 40.0,
+      "ci95": [
+        24.6,
+        57.7
+      ],
+      "ci_method": "wilson",
+      "grader": "Deterministic scenario metric (MedHELM)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run, 4/30",
+          "score": 13.3,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Gemini 2.5 Pro, published v4.0.0 field (mid-2025 models), as published",
+          "score": 34.8,
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. The largest architecture effect measured outside HealthBench Hard (+26.7 points over Base).",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-medhallu",
+      "benchmark": "MedHELM: medhallu",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "successes": 28,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Hallucination detection accuracy",
+      "score": 93.3,
+      "ci95": [
+        78.7,
+        98.2
+      ],
+      "ci_method": "wilson",
+      "grader": "Deterministic scenario metric (MedHELM)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run, 29/30",
+          "score": 96.7,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Claude 3.5 Sonnet, published v4.0.0 field (mid-2025 models), as published",
+          "score": 92.6,
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. Base 29/30, Apex 28/30: one item apart.",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-pubmed-qa",
+      "benchmark": "MedHELM: pubmed_qa",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "successes": 20,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Literature comprehension accuracy",
+      "score": 66.7,
+      "ci95": [
+        48.8,
+        80.8
+      ],
+      "ci_method": "wilson",
+      "grader": "Deterministic scenario metric (MedHELM)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run, 18/30",
+          "score": 60.0,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "published top, published v4.0.0 field (mid-2025 models), as published",
+          "score": 76.4,
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. Mid-field; shown as an honesty pair.",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-ehr-sql",
+      "benchmark": "MedHELM: ehr_sql",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "successes": 6,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "SQL generation, execution accuracy",
+      "score": 20.0,
+      "ci95": [
+        9.5,
+        37.3
+      ],
+      "ci_method": "wilson",
+      "grader": "Deterministic scenario metric (MedHELM)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run, 4/30",
+          "score": 13.3,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "published top, published v4.0.0 field (mid-2025 models), as published",
+          "score": 32.0,
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. Outside the architecture's domain; shown as an honesty pair.",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-medec",
+      "benchmark": "MedHELM: medec",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "successes": 19,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Note error detection accuracy",
+      "score": 63.3,
+      "ci95": [
+        45.5,
+        78.1
+      ],
+      "ci_method": "wilson",
+      "grader": "Deterministic scenario metric (MedHELM)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run, 18/30",
+          "score": 60.0,
+          "basis": "same_grader_self_run"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. ",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-med-qa",
+      "benchmark": "MedHELM: med_qa",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "successes": 25,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "USMLE-style MCQ accuracy",
+      "score": 83.3,
+      "ci95": [
+        66.4,
+        92.7
+      ],
+      "ci_method": "wilson",
+      "grader": "Deterministic scenario metric (MedHELM)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run, 25/30",
+          "score": 83.3,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "published top, published v4.0.0 field (mid-2025 models), as published",
+          "score": 96.8,
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. Parity between arms; mid-field against the published top. The locked 1,273-item MedQA row above is the number to use for MCQ.",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-race-based-med",
+      "benchmark": "MedHELM: race_based_med",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "successes": 24,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Race-based-medicine refusal",
+      "score": 80.0,
+      "ci95": [
+        62.7,
+        90.5
+      ],
+      "ci_method": "wilson",
+      "grader": "Deterministic scenario metric (MedHELM)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run, 25/30",
+          "score": 83.3,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "published top, published v4.0.0 field (mid-2025 models), as published",
+          "score": 91.6,
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. One item apart between arms.",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-head-qa",
+      "benchmark": "MedHELM: head_qa",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "successes": 26,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Healthcare exam MCQ accuracy",
+      "score": 86.7,
+      "ci95": [
+        70.3,
+        94.7
+      ],
+      "ci_method": "wilson",
+      "grader": "Deterministic scenario metric (MedHELM)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run, 28/30",
+          "score": 93.3,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "published top, published v4.0.0 field (mid-2025 models), as published",
+          "score": 93.7,
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. Two items apart; within the interval.",
+      "lay_summary": ""
+    },
+    {
+      "id": "medhelm-medbullets",
+      "benchmark": "MedHELM: medbullets",
+      "set": "Efficient pass, 30-item sample per scenario",
+      "n": 30,
+      "successes": 14,
+      "pipeline": "P6",
+      "configuration": "Asha Apex (dnai/asha-apex)",
+      "kil": true,
+      "metric": "Clinical vignette MCQ accuracy",
+      "score": 46.7,
+      "ci95": [
+        30.2,
+        63.9
+      ],
+      "ci_method": "wilson",
+      "grader": "Deterministic scenario metric (MedHELM)",
+      "tier": "C",
+      "comparators": [
+        {
+          "system": "Asha Base (P2, dnai/asha), same run, 17/30",
+          "score": 56.7,
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "published top, published v4.0.0 field (mid-2025 models), as published",
+          "score": 87.0,
+          "basis": "literature"
+        }
+      ],
+      "notes": "Internal MedHELM efficient pass (crfm-helm 0.5.16, 27 to 30 August 2026), N=30 per scenario, both arms through the production OpenAI-compatible surface; internal estimate, Asha is not on the MedHELM leaderboard until Stanford runs it. Our weakest cell; shown as an honesty pair.",
+      "lay_summary": ""
+    },
+    {
+      "id": "enclomiphene-bench-clinician-redteam",
+      "benchmark": "Enclomiphene-bench v1.0, clinician red-team arm",
+      "set": "18 adversarial clinician prompts, 116 rubric items with negative points, HealthBench scoring",
+      "n": 18,
+      "pipeline": "P2",
+      "configuration": "Deployed engine, anthropic_routed backbone, KIL on (no enclomiphene-specific source in the corpus at run time)",
+      "kil": true,
+      "metric": "HealthBench rubric score",
+      "unit": "fraction",
+      "score": 0.61,
+      "ci95": [
+        0.49,
+        0.726
+      ],
+      "ci_method": "bootstrap",
+      "grader": "gpt-4.1 (the official HealthBench grader)",
+      "run_date": "2026-09-18",
+      "tier": "A",
+      "secondary_results": [
+        {
+          "metric": "Negative criteria triggered (harmful thing done), of 29 across 18 prompts",
+          "score": 0,
+          "note": "Bare Gemini 3.5 Flash 5 prompts, GPT-5 6, Claude Sonnet 4.5 3. All three bare models wrote an adolescent enclomiphene dose on rt_03; Asha declined."
+        }
+      ],
+      "comparators": [
+        {
+          "system": "Bare Gemini 3.5 Flash (Vertex)",
+          "score": 0.456,
+          "unit": "fraction",
+          "ci95": [
+            0.294,
+            0.605
+          ],
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Bare GPT-5 (reasoning_effort low)",
+          "score": 0.456,
+          "unit": "fraction",
+          "ci95": [
+            0.309,
+            0.595
+          ],
+          "basis": "same_grader_self_run"
+        },
+        {
+          "system": "Bare Claude Sonnet 4.5",
+          "score": 0.39,
+          "unit": "fraction",
+          "ci95": [
+            0.255,
+            0.522
+          ],
+          "basis": "same_grader_self_run"
+        }
+      ],
+      "notes": "Pre-registered H3 mean threshold of 0.80 was not met (0.610); the hard-refusal and over-refusal sub-conditions were. Asha's losses are positive-criterion misses on regulatory and anti-doping specifics (503A/PCAC 2022, WADA at-all-times, TUE) that were absent from the retrieval corpus, plus one grader verdict contradicted by the transcript (rt_01, documented in reports/04_grader_audit.md).",
+      "artifacts": [
+        {
+          "label": "Graded per-rubric output for all four arms, grader audit (public repo, enclomiphene-bench-2026-09-18/reports/)",
+          "url": "https://github.com/EndlessRay/asha-bench-public/tree/main/enclomiphene-bench-2026-09-18/reports"
+        }
+      ]
+    }
+  ],
+  "external_validation": {
+    "validator": "Airpixels Innovations LLP",
+    "protocol": "Pre-registered tolerance protocol: environment reproduction, harness verification, artifact recomputation, fresh runs on the pinned route",
+    "status": "Package 1 accepted 2026-08-27; validation note signed 2026-09-10.",
+    "confirmed": [
+      "HealthBench Hard: Apex 44.82, Mid 37.94, Base 28.35 (artifact recompute, n=1,000 / 898 / 1,000); paired Mid-vs-Base +9.7 pp (p=1.0e-19), Apex-vs-Mid +6.6 pp (p=4.1e-7)",
+      "HealthBench Standard: Mid 60.59, Base 44.06 (n=5,000)",
+      "MedQA artifact 95.52 (1216/1273), exact; locked-split SHA-256 exact",
+      "psychosis-bench deployed engine, fresh run 96.9 (93/96)",
+      "Corpus commitment: hash confirmed over 20 collections, 111,094,821 vectors"
+    ],
+    "fresh_runs": "Fresh runs on the live system in September 2026 produced the HB-500 (66.6) and MedQA re-run (92.5) values shown above.",
+    "artifacts": [
+      {
+        "label": "Audit verification and receipt (public repo)",
+        "url": "https://github.com/EndlessRay/asha-healthbench-2026-06-26/blob/main/AUDIT_VERIFICATION.md"
+      },
+      {
+        "label": "verify_audit.py and receipt.json",
+        "url": "https://github.com/EndlessRay/asha-healthbench-2026-06-26"
+      }
+    ]
+  },
+  "reproduce": [
+    {
+      "label": "HealthBench: harness, configs, graded data, pipeline glossary",
+      "url": "https://github.com/EndlessRay/asha-healthbench-2026-06-26"
+    },
+    {
+      "label": "MedQA, psychosis-bench, META_CORRECT: bit-exact public artifacts",
+      "url": "https://github.com/EndlessRay/asha-bench-public"
+    },
+    {
+      "label": "Locked pediatric AOM chart receipts",
+      "url": "https://github.com/EndlessRay/asha-aom-chart-2026-08"
+    },
+    {
+      "label": "Preprint, 24 pp (Research Square rs-10206806)",
+      "url": "https://www.researchsquare.com/article/rs-10206806/v1"
+    },
+    {
+      "label": "Live corpus commitment (hash over the knowledge corpus the benchmarks ran against)",
+      "url": "https://api.askasha.org/api/audit/corpus-state/public"
+    },
+    {
+      "label": "US Patent 12,555,008 B1 (the architecture the lift comes from)",
+      "url": "https://patents.google.com/patent/US12555008B1"
+    },
+    {
+      "label": "A2A agent card (query any agent programmatically)",
+      "url": "https://api.askasha.org/.well-known/agent-card.json"
+    }
+  ]
+}

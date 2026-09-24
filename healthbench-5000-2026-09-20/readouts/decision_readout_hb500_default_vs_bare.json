@@ -1,0 +1,3082 @@
+{
+ "readout_utc": "2026-09-23T13:15:19Z",
+ "tag": "hb500_default_vs_bare",
+ "dataset": "hb500_seed62.jsonl",
+ "set_size": 500,
+ "arm": "hb500_apexj_default",
+ "comparator": "bare_hb5000_astra",
+ "official_grader": "gpt_4_1",
+ "metric": "HealthBench score: mean over examples of (points earned / positive points possible), clipped to [0, 1]",
+ "arm_meta": {
+  "trial_dirs": [
+   "hb500_apexj_default_t1"
+  ],
+  "config": {
+   "label": "hb500_apexj_default",
+   "pipeline": "apexj",
+   "route": "bench lane, eval route",
+   "dataset": "healthbench_results/hbp_20260911/hb500_seed62.jsonl",
+   "dataset_sha256": "3dac9145bee6031aa39dc096bdea831a63e71f48b752398d532fd8ca9ca49f07",
+   "n_items": 500,
+   "concurrency": 4,
+   "graders": "claude-opus-4-8 gpt-4.1",
+   "started_utc": "2026-09-23T02:46:48Z",
+   "apexj_extra_args": "--compose-model gpt-6-astra --compose-max-tokens 4096 --compose-style default"
+  },
+  "pin_start": {
+   "process_fingerprint": "552880d4b15143f6",
+   "process_started_at": "2026-09-23T00:27:50Z",
+   "git_sha": "d796407d0cab",
+   "pipeline_id": "P6-J",
+   "llm_provider": "anthropic_routed",
+   "routed_low_model": "claude-sonnet-5",
+   "routed_high_model": "claude-opus-5",
+   "kil_fingerprint": {
+    "knowledge_collections": 355,
+    "sha256_16": "a727c73f06eb790a"
+   },
+   "culture_charter_version": "0.2.0",
+   "disk_drift": false
+  },
+  "pin_end": {
+   "process_fingerprint": "552880d4b15143f6",
+   "process_started_at": "2026-09-23T00:27:50Z",
+   "git_sha": "d796407d0cab",
+   "pipeline_id": "P6-J",
+   "llm_provider": "anthropic_routed",
+   "routed_low_model": "claude-sonnet-5",
+   "routed_high_model": "claude-opus-5",
+   "kil_fingerprint": {
+    "knowledge_collections": 355,
+    "sha256_16": "a727c73f06eb790a"
+   },
+   "culture_charter_version": "0.2.0",
+   "disk_drift": false
+  },
+  "repo_git_sha": "7a8c8e8eebcb65e0154f746015674180a21fd098",
+  "completions_file": "healthbench_apex_j_20260923_024648.jsonl"
+ },
+ "comparator_meta": {
+  "trial_dirs": [
+   "bare_hb5000_astra_t1"
+  ],
+  "config": {
+   "label": "hb5000_astra",
+   "provider": "openai",
+   "model": "gpt-6-astra",
+   "dataset_sha256": "e99dd3c6372c10d6fcc5e385c5fae69d0dd40392dae56836ef9493ae324ecd2f",
+   "conditions": "no tools from us, no system prompt, highest effort; vendor systems run as shipped",
+   "started_utc": "2026-09-19T19:06:03Z"
+  },
+  "completions_file": "healthbench_bare_gpt-6-astra_20260919_190603.jsonl"
+ },
+ "graders": {
+  "gpt_4_1": {
+   "coverage": 1.0,
+   "arm": {
+    "raw": {
+     "n": 500,
+     "score": 57.453885910243926,
+     "score_unclipped": 57.453885910243926,
+     "boot_ci95": [
+      54.29105084233191,
+      60.32881561916446
+     ],
+     "se": 1.5374746562224908
+    },
+    "length_adjusted": {
+     "n": 500,
+     "score": 55.10309719024393,
+     "score_unclipped": 55.10309719024393,
+     "boot_ci95": [
+      51.879576666455385,
+      57.96942312398179
+     ],
+     "se": 1.5530607935523342
+    },
+    "harm": {
+     "harm_pct": 28.496196606202457,
+     "neg_criteria": 1709,
+     "neg_met": 487,
+     "refusals": 0
+    },
+    "median_chars": 2218.0,
+    "empty_answers": 0,
+    "excluded_failed_grades": 0,
+    "tags": {
+     "axis:accuracy": {
+      "n": 414,
+      "score": 65.08695642839417,
+      "boot_ci95": [
+       60.75641128287705,
+       69.19993069212516
+      ]
+     },
+     "axis:communication_quality": {
+      "n": 225,
+      "score": 68.71820822605136,
+      "boot_ci95": [
+       60.120237061413526,
+       76.54512698630346
+      ]
+     },
+     "axis:completeness": {
+      "n": 420,
+      "score": 48.34266232862962,
+      "boot_ci95": [
+       42.85020562705037,
+       53.48132751931295
+      ]
+     },
+     "axis:context_awareness": {
+      "n": 345,
+      "score": 53.9364226947356,
+      "boot_ci95": [
+       47.04730127994216,
+       60.3486282919274
+      ]
+     },
+     "axis:instruction_following": {
+      "n": 112,
+      "score": 60.02607057294558,
+      "boot_ci95": [
+       48.92554783179783,
+       70.06650323056573
+      ]
+     },
+     "physician_agreed_category:any-reducible-uncertainty": {
+      "n": 29,
+      "score": 63.3040388218435,
+      "boot_ci95": [
+       56.54279929201238,
+       69.77467239588542
+      ]
+     },
+     "physician_agreed_category:conditionally-emergent": {
+      "n": 23,
+      "score": 72.72013852143169,
+      "boot_ci95": [
+       62.70393047587327,
+       82.00220129114662
+      ]
+     },
+     "physician_agreed_category:context-does-not-matter": {
+      "n": 24,
+      "score": 58.7549563726213,
+      "boot_ci95": [
+       49.93423471164086,
+       67.00453151179536
+      ]
+     },
+     "physician_agreed_category:context-matters-but-unclear": {
+      "n": 24,
+      "score": 47.08814487659667,
+      "boot_ci95": [
+       38.79573908863823,
+       55.49428888632468
+      ]
+     },
+     "physician_agreed_category:context-matters-is-clear": {
+      "n": 21,
+      "score": 49.186750077894445,
+      "boot_ci95": [
+       38.561766720594285,
+       58.77493671536902
+      ]
+     },
+     "physician_agreed_category:detailed": {
+      "n": 14,
+      "score": 60.70913780956844,
+      "boot_ci95": [
+       52.38602199098856,
+       68.83668589650247
+      ]
+     },
+     "physician_agreed_category:emergent": {
+      "n": 16,
+      "score": 74.97171553912084,
+      "boot_ci95": [
+       64.34215571623311,
+       84.46104410883984
+      ]
+     },
+     "physician_agreed_category:enough-context": {
+      "n": 18,
+      "score": 49.92654570168262,
+      "boot_ci95": [
+       42.95258925123907,
+       56.65787981375392
+      ]
+     },
+     "physician_agreed_category:enough-info-to-complete-task": {
+      "n": 31,
+      "score": 63.89986636756713,
+      "boot_ci95": [
+       54.457281316604565,
+       72.81132643830186
+      ]
+     },
+     "physician_agreed_category:health-professional": {
+      "n": 34,
+      "score": 67.74383766347248,
+      "boot_ci95": [
+       59.98198136513309,
+       75.64201218670368
+      ]
+     },
+     "physician_agreed_category:no-uncertainty": {
+      "n": 22,
+      "score": 61.53086425683484,
+      "boot_ci95": [
+       53.56287630572629,
+       69.20548165084361
+      ]
+     },
+     "physician_agreed_category:non-emergent": {
+      "n": 23,
+      "score": 69.05659758799581,
+      "boot_ci95": [
+       58.11042478368991,
+       80.23818633758874
+      ]
+     },
+     "physician_agreed_category:not-enough-context": {
+      "n": 19,
+      "score": 54.478261062190256,
+      "boot_ci95": [
+       42.6691699899355,
+       64.52254168985237
+      ]
+     },
+     "physician_agreed_category:not-enough-info-to-complete-task": {
+      "n": 20,
+      "score": 51.25984830335455,
+      "boot_ci95": [
+       41.233213475941106,
+       61.109813156029865
+      ]
+     },
+     "physician_agreed_category:not-health-professional": {
+      "n": 50,
+      "score": 68.83848055056069,
+      "boot_ci95": [
+       61.10896944608684,
+       76.04635835902467
+      ]
+     },
+     "physician_agreed_category:only-irreducible-uncertainty": {
+      "n": 15,
+      "score": 51.86680752013583,
+      "boot_ci95": [
+       40.21786358960812,
+       63.13374355971811
+      ]
+     },
+     "physician_agreed_category:simple": {
+      "n": 6,
+      "score": 53.1743469607367,
+      "boot_ci95": [
+       29.154739117599444,
+       73.10081754897199
+      ]
+     },
+     "theme:communication": {
+      "n": 95,
+      "score": 66.43862038942046,
+      "boot_ci95": [
+       61.02698972812678,
+       71.87881291654811
+      ]
+     },
+     "theme:complex_responses": {
+      "n": 23,
+      "score": 45.69038143491914,
+      "boot_ci95": [
+       13.272437738868161,
+       66.1623393948906
+      ]
+     },
+     "theme:context_seeking": {
+      "n": 49,
+      "score": 51.55071593505567,
+      "boot_ci95": [
+       44.942893106043755,
+       57.71643158636313
+      ]
+     },
+     "theme:emergency_referrals": {
+      "n": 65,
+      "score": 71.01489130305112,
+      "boot_ci95": [
+       64.34293516856289,
+       77.25105135799642
+      ]
+     },
+     "theme:global_health": {
+      "n": 117,
+      "score": 48.44424892538138,
+      "boot_ci95": [
+       42.74714363403247,
+       53.89693797648971
+      ]
+     },
+     "theme:health_data_tasks": {
+      "n": 60,
+      "score": 54.24803434167268,
+      "boot_ci95": [
+       40.28315640639064,
+       64.68004989792306
+      ]
+     },
+     "theme:hedging": {
+      "n": 91,
+      "score": 58.23717631689943,
+      "boot_ci95": [
+       53.18758344872688,
+       62.97415829952556
+      ]
+     }
+    }
+   },
+   "comparator": {
+    "raw": {
+     "n": 500,
+     "score": 53.2443775609878,
+     "score_unclipped": 53.2443775609878,
+     "boot_ci95": [
+      50.29056735600766,
+      56.10678126585099
+     ],
+     "se": 1.4834003736319532
+    },
+    "length_adjusted": {
+     "n": 500,
+     "score": 53.3085048409878,
+     "score_unclipped": 53.3085048409878,
+     "boot_ci95": [
+      50.35587211235115,
+      56.16652165693446
+     ],
+     "se": 1.4928595000679714
+    },
+    "harm": {
+     "harm_pct": 25.45348156816852,
+     "neg_criteria": 1709,
+     "neg_met": 435,
+     "refusals": 0
+    },
+    "median_chars": 1400.0,
+    "empty_answers": 0,
+    "tags": {
+     "axis:accuracy": {
+      "n": 414,
+      "score": 61.51520501977252,
+      "boot_ci95": [
+       57.60397894878847,
+       65.48249886163386
+      ]
+     },
+     "axis:communication_quality": {
+      "n": 225,
+      "score": 73.23701164485479,
+      "boot_ci95": [
+       64.78212948997263,
+       81.26368867153181
+      ]
+     },
+     "axis:completeness": {
+      "n": 420,
+      "score": 39.62872422293996,
+      "boot_ci95": [
+       34.34952361343618,
+       44.733544733485694
+      ]
+     },
+     "axis:context_awareness": {
+      "n": 345,
+      "score": 53.163818487123514,
+      "boot_ci95": [
+       47.51854884292984,
+       58.6764264575893
+      ]
+     },
+     "axis:instruction_following": {
+      "n": 112,
+      "score": 59.78753274085469,
+      "boot_ci95": [
+       51.00153804723132,
+       68.32007837128636
+      ]
+     },
+     "physician_agreed_category:any-reducible-uncertainty": {
+      "n": 29,
+      "score": 53.91494642955564,
+      "boot_ci95": [
+       46.037950558542526,
+       60.93758653121429
+      ]
+     },
+     "physician_agreed_category:conditionally-emergent": {
+      "n": 23,
+      "score": 71.90780619336168,
+      "boot_ci95": [
+       61.4711273035721,
+       81.62348584623255
+      ]
+     },
+     "physician_agreed_category:context-does-not-matter": {
+      "n": 24,
+      "score": 47.9066594291365,
+      "boot_ci95": [
+       39.86919953317293,
+       56.534832795411646
+      ]
+     },
+     "physician_agreed_category:context-matters-but-unclear": {
+      "n": 24,
+      "score": 38.80181494825105,
+      "boot_ci95": [
+       30.995011463045202,
+       46.67111340590093
+      ]
+     },
+     "physician_agreed_category:context-matters-is-clear": {
+      "n": 21,
+      "score": 49.90054727236227,
+      "boot_ci95": [
+       42.172315742683566,
+       58.072112360198034
+      ]
+     },
+     "physician_agreed_category:detailed": {
+      "n": 14,
+      "score": 64.0854669197257,
+      "boot_ci95": [
+       49.86879818803471,
+       77.16148796390581
+      ]
+     },
+     "physician_agreed_category:emergent": {
+      "n": 16,
+      "score": 76.23262808119009,
+      "boot_ci95": [
+       67.40956412594555,
+       84.34980647146958
+      ]
+     },
+     "physician_agreed_category:enough-context": {
+      "n": 18,
+      "score": 40.807113611414856,
+      "boot_ci95": [
+       33.38437896702076,
+       48.3402154879224
+      ]
+     },
+     "physician_agreed_category:enough-info-to-complete-task": {
+      "n": 31,
+      "score": 62.97592697149912,
+      "boot_ci95": [
+       51.39263524778232,
+       73.42085192852137
+      ]
+     },
+     "physician_agreed_category:health-professional": {
+      "n": 34,
+      "score": 64.74501817029639,
+      "boot_ci95": [
+       56.90503446968287,
+       72.88836751484374
+      ]
+     },
+     "physician_agreed_category:no-uncertainty": {
+      "n": 22,
+      "score": 63.27195519904439,
+      "boot_ci95": [
+       53.27454747912081,
+       72.93130374569903
+      ]
+     },
+     "physician_agreed_category:non-emergent": {
+      "n": 23,
+      "score": 72.06886995158939,
+      "boot_ci95": [
+       58.51394291394734,
+       84.42160141648634
+      ]
+     },
+     "physician_agreed_category:not-enough-context": {
+      "n": 19,
+      "score": 41.612031557200574,
+      "boot_ci95": [
+       29.346060480480023,
+       54.15520104483487
+      ]
+     },
+     "physician_agreed_category:not-enough-info-to-complete-task": {
+      "n": 20,
+      "score": 48.66663243053342,
+      "boot_ci95": [
+       37.20222014468132,
+       59.907380943135834
+      ]
+     },
+     "physician_agreed_category:not-health-professional": {
+      "n": 50,
+      "score": 65.12407814007985,
+      "boot_ci95": [
+       58.11502172412757,
+       72.07228411157772
+      ]
+     },
+     "physician_agreed_category:only-irreducible-uncertainty": {
+      "n": 15,
+      "score": 52.21615529090812,
+      "boot_ci95": [
+       40.28949598868958,
+       64.10549655320943
+      ]
+     },
+     "physician_agreed_category:simple": {
+      "n": 6,
+      "score": 59.19460507882393,
+      "boot_ci95": [
+       46.87701900683645,
+       70.49766270033997
+      ]
+     },
+     "theme:communication": {
+      "n": 95,
+      "score": 63.15945795593216,
+      "boot_ci95": [
+       57.778215357914696,
+       68.43545665138058
+      ]
+     },
+     "theme:complex_responses": {
+      "n": 23,
+      "score": 57.928876841265364,
+      "boot_ci95": [
+       47.302888619501374,
+       68.69492449333964
+      ]
+     },
+     "theme:context_seeking": {
+      "n": 49,
+      "score": 41.44665835445491,
+      "boot_ci95": [
+       34.39552195962091,
+       48.14480064941576
+      ]
+     },
+     "theme:emergency_referrals": {
+      "n": 65,
+      "score": 71.96875732867554,
+      "boot_ci95": [
+       65.09532202321815,
+       78.49288786153564
+      ]
+     },
+     "theme:global_health": {
+      "n": 117,
+      "score": 40.63775462778308,
+      "boot_ci95": [
+       35.02608693963184,
+       46.07317756619103
+      ]
+     },
+     "theme:health_data_tasks": {
+      "n": 60,
+      "score": 47.77339720432522,
+      "boot_ci95": [
+       32.31799593698262,
+       59.380596242506755
+      ]
+     },
+     "theme:hedging": {
+      "n": 91,
+      "score": 54.50329118559238,
+      "boot_ci95": [
+       49.49540266222014,
+       59.402349970378374
+      ]
+     }
+    }
+   },
+   "paired": {
+    "raw": {
+     "n": 500,
+     "mean_diff_pp": 4.2095083492561285,
+     "se": 1.1038087326947685,
+     "ci95": [
+      2.046043233174382,
+      6.372973465337875
+     ],
+     "t": 3.8136211687502257,
+     "p_t": 0.00015409727523648225,
+     "p_sign": 1.2209696904382553e-05,
+     "wins": 214,
+     "losses": 132,
+     "ties": 154
+    },
+    "length_adjusted": {
+     "n": 500,
+     "mean_diff_pp": 1.7945923492561289,
+     "se": 1.0979179747939913,
+     "ci95": [
+      -0.35732688134009405,
+      3.946511579852352
+     ],
+     "t": 1.6345413687145969,
+     "p_t": 0.10277588995501319,
+     "p_sign": 0.0012173353304316568,
+     "wins": 212,
+     "losses": 285,
+     "ties": 3
+    },
+    "harm_delta_pts": 3.0427150380339363,
+    "tags": {
+     "axis:accuracy": {
+      "n": 414,
+      "mean_diff_pp": 3.5717514086216413,
+      "se": 1.7937324502466974,
+      "ci95": [
+       0.05603580613811454,
+       7.0874670111051685
+      ],
+      "t": 1.9912397794500556,
+      "p_t": 0.04711287602391367,
+      "p_sign": 0.0004305357384844241,
+      "wins": 86,
+      "losses": 45,
+      "ties": 283
+     },
+     "axis:communication_quality": {
+      "n": 225,
+      "mean_diff_pp": -4.518803418803419,
+      "se": 2.734624808861649,
+      "ci95": [
+       -9.878668044172251,
+       0.8410612065654135
+      ],
+      "t": -1.652439999871308,
+      "p_t": 0.09984584947333253,
+      "p_sign": 0.06391465663909912,
+      "wins": 7,
+      "losses": 17,
+      "ties": 201
+     },
+     "axis:completeness": {
+      "n": 420,
+      "mean_diff_pp": 8.713938105689662,
+      "se": 1.9949529603252627,
+      "ci95": [
+       4.8038303034521475,
+       12.624045907927176
+      ],
+      "t": 4.367991766717606,
+      "p_t": 1.5824271313278088e-05,
+      "p_sign": 9.384375713519788e-06,
+      "wins": 146,
+      "losses": 79,
+      "ties": 195
+     },
+     "axis:context_awareness": {
+      "n": 345,
+      "mean_diff_pp": 0.7726042076120753,
+      "se": 2.370511107121302,
+      "ci95": [
+       -3.873597562345677,
+       5.418805977569828
+      ],
+      "t": 0.3259230489539065,
+      "p_t": 0.7446807482812552,
+      "p_sign": 0.03630649114131785,
+      "wins": 67,
+      "losses": 44,
+      "ties": 234
+     },
+     "axis:instruction_following": {
+      "n": 112,
+      "mean_diff_pp": 0.23853783209087873,
+      "se": 3.7451975862708102,
+      "ci95": [
+       -7.102049436999909,
+       7.579125101181667
+      ],
+      "t": 0.0636916548716451,
+      "p_t": 0.9493303064795314,
+      "p_sign": 1.0,
+      "wins": 10,
+      "losses": 10,
+      "ties": 92
+     },
+     "physician_agreed_category:any-reducible-uncertainty": {
+      "n": 29,
+      "mean_diff_pp": 9.38909239228786,
+      "se": 3.7475515211387687,
+      "ci95": [
+       2.043891410855874,
+       16.734293373719847
+      ],
+      "t": 2.5053938122870147,
+      "p_t": 0.018322524106552,
+      "p_sign": 0.0931396484375,
+      "wins": 16,
+      "losses": 7,
+      "ties": 6
+     },
+     "physician_agreed_category:conditionally-emergent": {
+      "n": 23,
+      "mean_diff_pp": 0.8123323280700226,
+      "se": 3.5580322192687,
+      "ci95": [
+       -6.161410821696629,
+       7.786075477836674
+      ],
+      "t": 0.228309435668063,
+      "p_t": 0.8215144408040902,
+      "p_sign": 1.0,
+      "wins": 7,
+      "losses": 8,
+      "ties": 8
+     },
+     "physician_agreed_category:context-does-not-matter": {
+      "n": 24,
+      "mean_diff_pp": 10.848296943484796,
+      "se": 3.144135451724436,
+      "ci95": [
+       4.685791458104901,
+       17.01080242886469
+      ],
+      "t": 3.45032747795103,
+      "p_t": 0.0021758483828212137,
+      "p_sign": 0.012725830078125,
+      "wins": 14,
+      "losses": 3,
+      "ties": 7
+     },
+     "physician_agreed_category:context-matters-but-unclear": {
+      "n": 24,
+      "mean_diff_pp": 8.286329928345625,
+      "se": 3.0573764161713783,
+      "ci95": [
+       2.2938721526497234,
+       14.278787704041527
+      ],
+      "t": 2.710274693203214,
+      "p_t": 0.012484267782522294,
+      "p_sign": 0.007197380065917969,
+      "wins": 17,
+      "losses": 4,
+      "ties": 3
+     },
+     "physician_agreed_category:context-matters-is-clear": {
+      "n": 21,
+      "mean_diff_pp": -0.7137971944678163,
+      "se": 3.472390793081336,
+      "ci95": [
+       -7.519683148907235,
+       6.092088759971602
+      ],
+      "t": -0.2055636122207333,
+      "p_t": 0.8392097065511444,
+      "p_sign": 1.0,
+      "wins": 7,
+      "losses": 8,
+      "ties": 6
+     },
+     "physician_agreed_category:detailed": {
+      "n": 14,
+      "mean_diff_pp": -3.3763291101572674,
+      "se": 4.887849653854809,
+      "ci95": [
+       -12.95651443171269,
+       6.203856211398157
+      ],
+      "t": -0.6907596078562935,
+      "p_t": 0.5018647914220148,
+      "p_sign": 1.0,
+      "wins": 5,
+      "losses": 5,
+      "ties": 4
+     },
+     "physician_agreed_category:emergent": {
+      "n": 16,
+      "mean_diff_pp": -1.2609125420692424,
+      "se": 4.1031325852304805,
+      "ci95": [
+       -9.303052409120983,
+       6.781227324982499
+      ],
+      "t": -0.3073048496185542,
+      "p_t": 0.7628366282233993,
+      "p_sign": 0.2265625,
+      "wins": 3,
+      "losses": 8,
+      "ties": 5
+     },
+     "physician_agreed_category:enough-context": {
+      "n": 18,
+      "mean_diff_pp": 9.119432090267775,
+      "se": 4.883359518959231,
+      "ci95": [
+       -0.45195256689231655,
+       18.690816747427867
+      ],
+      "t": 1.8674504825750287,
+      "p_t": 0.0791786750564356,
+      "p_sign": 0.237884521484375,
+      "wins": 12,
+      "losses": 6,
+      "ties": 0
+     },
+     "physician_agreed_category:enough-info-to-complete-task": {
+      "n": 31,
+      "mean_diff_pp": 0.9239393960680032,
+      "se": 5.216279582205857,
+      "ci95": [
+       -9.299968585055476,
+       11.147847377191484
+      ],
+      "t": 0.17712612629503427,
+      "p_t": 0.8605997879374484,
+      "p_sign": 0.629058837890625,
+      "wins": 7,
+      "losses": 10,
+      "ties": 14
+     },
+     "physician_agreed_category:health-professional": {
+      "n": 34,
+      "mean_diff_pp": 2.998819493176077,
+      "se": 2.1072883258712434,
+      "ci95": [
+       -1.1314656255315603,
+       7.129104611883714
+      ],
+      "t": 1.423070329939894,
+      "p_t": 0.16410146284431315,
+      "p_sign": 0.2295229434967041,
+      "wins": 16,
+      "losses": 9,
+      "ties": 9
+     },
+     "physician_agreed_category:no-uncertainty": {
+      "n": 22,
+      "mean_diff_pp": -1.7410909422095664,
+      "se": 2.627986793308152,
+      "ci95": [
+       -6.891945057093544,
+       3.4097631726744115
+      ],
+      "t": -0.6625189086349453,
+      "p_t": 0.5148448519297277,
+      "p_sign": 0.6476058959960938,
+      "wins": 8,
+      "losses": 11,
+      "ties": 3
+     },
+     "physician_agreed_category:non-emergent": {
+      "n": 23,
+      "mean_diff_pp": -3.0122723635935826,
+      "se": 4.027833306670534,
+      "ci95": [
+       -10.906825644667828,
+       4.882280917480664
+      ],
+      "t": -0.7478642074399974,
+      "p_t": 0.4624620890395008,
+      "p_sign": 0.60723876953125,
+      "wins": 6,
+      "losses": 9,
+      "ties": 8
+     },
+     "physician_agreed_category:not-enough-context": {
+      "n": 19,
+      "mean_diff_pp": 12.866229504989677,
+      "se": 4.672896898461365,
+      "ci95": [
+       3.707351584005403,
+       22.02510742597395
+      ],
+      "t": 2.753373289538255,
+      "p_t": 0.013077864274280987,
+      "p_sign": 0.09625244140625,
+      "wins": 13,
+      "losses": 5,
+      "ties": 1
+     },
+     "physician_agreed_category:not-enough-info-to-complete-task": {
+      "n": 20,
+      "mean_diff_pp": 2.5932158728211356,
+      "se": 6.087447093810824,
+      "ci95": [
+       -9.33818043104808,
+       14.52461217669035
+      ],
+      "t": 0.4259939894110435,
+      "p_t": 0.6748991107863542,
+      "p_sign": 0.79052734375,
+      "wins": 8,
+      "losses": 6,
+      "ties": 6
+     },
+     "physician_agreed_category:not-health-professional": {
+      "n": 50,
+      "mean_diff_pp": 3.7144024104808415,
+      "se": 1.9201203449037068,
+      "ci95": [
+       -0.04903346553042365,
+       7.477838286492107
+      ],
+      "t": 1.9344633373316593,
+      "p_t": 0.05884102064460701,
+      "p_sign": 0.028959274291992188,
+      "wins": 19,
+      "losses": 7,
+      "ties": 24
+     },
+     "physician_agreed_category:only-irreducible-uncertainty": {
+      "n": 15,
+      "mean_diff_pp": -0.3493477707722897,
+      "se": 3.1739107949419814,
+      "ci95": [
+       -6.570212928858573,
+       5.871517387313994
+      ],
+      "t": -0.1100685537000657,
+      "p_t": 0.9139172530253631,
+      "p_sign": 1.0,
+      "wins": 5,
+      "losses": 6,
+      "ties": 4
+     },
+     "physician_agreed_category:simple": {
+      "n": 6,
+      "mean_diff_pp": -6.020258118087233,
+      "se": 7.425199274149945,
+      "ci95": [
+       -20.573648695421124,
+       8.533132459246659
+      ],
+      "t": -0.8107874140221574,
+      "p_t": 0.45433398036542405,
+      "p_sign": 1.0,
+      "wins": 3,
+      "losses": 3,
+      "ties": 0
+     },
+     "theme:communication": {
+      "n": 95,
+      "mean_diff_pp": 3.2791624334883123,
+      "se": 1.3591477281695248,
+      "ci95": [
+       0.6152328862760439,
+       5.943091980700581
+      ],
+      "t": 2.412660791409796,
+      "p_t": 0.01777689960538651,
+      "p_sign": 0.014453833533827731,
+      "wins": 37,
+      "losses": 18,
+      "ties": 40
+     },
+     "theme:complex_responses": {
+      "n": 23,
+      "mean_diff_pp": -12.238495406346226,
+      "se": 12.292685443413944,
+      "ci95": [
+       -36.33215887543756,
+       11.855168062745102
+      ],
+      "t": -0.995591684394987,
+      "p_t": 0.33027364700404394,
+      "p_sign": 1.0,
+      "wins": 10,
+      "losses": 9,
+      "ties": 4
+     },
+     "theme:context_seeking": {
+      "n": 49,
+      "mean_diff_pp": 10.104057580600765,
+      "se": 3.2434279244936612,
+      "ci95": [
+       3.7469388485931887,
+       16.46117631260834
+      ],
+      "t": 3.115240361685587,
+      "p_t": 0.0030986506260424346,
+      "p_sign": 0.023702702470473014,
+      "wins": 27,
+      "losses": 12,
+      "ties": 10
+     },
+     "theme:emergency_referrals": {
+      "n": 65,
+      "mean_diff_pp": -0.9538660256244361,
+      "se": 2.1327630435274667,
+      "ci95": [
+       -5.134081590938271,
+       3.2263495396893984
+      ],
+      "t": -0.4472442583432977,
+      "p_t": 0.6562087287598672,
+      "p_sign": 0.27995623852893914,
+      "wins": 17,
+      "losses": 25,
+      "ties": 23
+     },
+     "theme:global_health": {
+      "n": 117,
+      "mean_diff_pp": 7.806494297598292,
+      "se": 2.0464554140771978,
+      "ci95": [
+       3.795441686006984,
+       11.817546909189598
+      ],
+      "t": 3.8146417673694843,
+      "p_t": 0.00022021615853760304,
+      "p_sign": 6.5442273311708145e-06,
+      "wins": 64,
+      "losses": 22,
+      "ties": 31
+     },
+     "theme:health_data_tasks": {
+      "n": 60,
+      "mean_diff_pp": 6.474637137347453,
+      "se": 4.114778887636554,
+      "ci95": [
+       -1.5903294824201923,
+       14.5396037571151
+      ],
+      "t": 1.5735079123695888,
+      "p_t": 0.12094894096956854,
+      "p_sign": 0.617719317029696,
+      "wins": 20,
+      "losses": 16,
+      "ties": 24
+     },
+     "theme:hedging": {
+      "n": 91,
+      "mean_diff_pp": 3.733885131307051,
+      "se": 2.182387543238207,
+      "ci95": [
+       -0.5435944534398351,
+       8.011364716053937
+      ],
+      "t": 1.7109175420634712,
+      "p_t": 0.0905411116112792,
+      "p_sign": 0.33555761823401514,
+      "wins": 39,
+      "losses": 30,
+      "ties": 22
+     }
+    }
+   }
+  },
+  "gpt_5_4": {
+   "coverage": 1.0,
+   "arm": {
+    "raw": {
+     "n": 500,
+     "score": 53.664092736090105,
+     "score_unclipped": 53.664092736090105,
+     "boot_ci95": [
+      50.45759435145955,
+      56.64174681236649
+     ],
+     "se": 1.5751012967553857
+    },
+    "length_adjusted": {
+     "n": 500,
+     "score": 51.3133040160901,
+     "score_unclipped": 51.3133040160901,
+     "boot_ci95": [
+      48.02806157802337,
+      54.32678795387941
+     ],
+     "se": 1.6026944059081585
+    },
+    "harm": {
+     "harm_pct": 21.650087770626097,
+     "neg_criteria": 1709,
+     "neg_met": 370,
+     "refusals": 0
+    },
+    "median_chars": 2218.0,
+    "empty_answers": 0,
+    "excluded_failed_grades": 0,
+    "tags": {
+     "axis:accuracy": {
+      "n": 414,
+      "score": 57.36278474430543,
+      "boot_ci95": [
+       53.33264436339903,
+       61.28378605360019
+      ]
+     },
+     "axis:communication_quality": {
+      "n": 225,
+      "score": 74.22113862898176,
+      "boot_ci95": [
+       67.53449020115686,
+       80.85154845154845
+      ]
+     },
+     "axis:completeness": {
+      "n": 420,
+      "score": 47.18752204052922,
+      "boot_ci95": [
+       42.38930117585096,
+       51.73186984282755
+      ]
+     },
+     "axis:context_awareness": {
+      "n": 345,
+      "score": 53.17319796100666,
+      "boot_ci95": [
+       47.34707743582253,
+       58.96017016486306
+      ]
+     },
+     "axis:instruction_following": {
+      "n": 112,
+      "score": 56.07805379338993,
+      "boot_ci95": [
+       46.20860521267559,
+       65.65915519762683
+      ]
+     },
+     "physician_agreed_category:any-reducible-uncertainty": {
+      "n": 29,
+      "score": 62.133735357106936,
+      "boot_ci95": [
+       55.514204131975234,
+       68.64657843448548
+      ]
+     },
+     "physician_agreed_category:conditionally-emergent": {
+      "n": 23,
+      "score": 71.98277317062862,
+      "boot_ci95": [
+       60.43045580361242,
+       82.43417750204489
+      ]
+     },
+     "physician_agreed_category:context-does-not-matter": {
+      "n": 24,
+      "score": 53.28581085554919,
+      "boot_ci95": [
+       45.027916452486224,
+       61.46696897033072
+      ]
+     },
+     "physician_agreed_category:context-matters-but-unclear": {
+      "n": 24,
+      "score": 53.875699756051986,
+      "boot_ci95": [
+       47.07844373238202,
+       60.61531772335802
+      ]
+     },
+     "physician_agreed_category:context-matters-is-clear": {
+      "n": 21,
+      "score": 49.778272507812204,
+      "boot_ci95": [
+       37.933754219328705,
+       60.415744340528335
+      ]
+     },
+     "physician_agreed_category:detailed": {
+      "n": 14,
+      "score": 51.03446856173165,
+      "boot_ci95": [
+       37.29639112855567,
+       63.70908935081492
+      ]
+     },
+     "physician_agreed_category:emergent": {
+      "n": 16,
+      "score": 67.2796825724045,
+      "boot_ci95": [
+       57.871670703815184,
+       76.53849835117458
+      ]
+     },
+     "physician_agreed_category:enough-context": {
+      "n": 18,
+      "score": 45.53546751684898,
+      "boot_ci95": [
+       37.550920373622375,
+       52.83113195801735
+      ]
+     },
+     "physician_agreed_category:enough-info-to-complete-task": {
+      "n": 31,
+      "score": 61.83870379295519,
+      "boot_ci95": [
+       53.810738865118736,
+       70.10936344116901
+      ]
+     },
+     "physician_agreed_category:health-professional": {
+      "n": 34,
+      "score": 58.14480997398336,
+      "boot_ci95": [
+       49.40038286962331,
+       66.701754947075
+      ]
+     },
+     "physician_agreed_category:no-uncertainty": {
+      "n": 22,
+      "score": 62.580926106094694,
+      "boot_ci95": [
+       52.605417183259675,
+       71.09936700547954
+      ]
+     },
+     "physician_agreed_category:non-emergent": {
+      "n": 23,
+      "score": 43.513174154145055,
+      "boot_ci95": [
+       35.466467214748995,
+       50.41695423147227
+      ]
+     },
+     "physician_agreed_category:not-enough-context": {
+      "n": 19,
+      "score": 53.03192779694208,
+      "boot_ci95": [
+       39.9631788001882,
+       64.51137754302214
+      ]
+     },
+     "physician_agreed_category:not-enough-info-to-complete-task": {
+      "n": 20,
+      "score": 49.54824307517893,
+      "boot_ci95": [
+       36.52999586654034,
+       61.8462218784943
+      ]
+     },
+     "physician_agreed_category:not-health-professional": {
+      "n": 50,
+      "score": 68.6625327477104,
+      "boot_ci95": [
+       61.58291901122133,
+       75.50236130103174
+      ]
+     },
+     "physician_agreed_category:only-irreducible-uncertainty": {
+      "n": 15,
+      "score": 58.31965616416749,
+      "boot_ci95": [
+       47.41477879356239,
+       68.87233573231238
+      ]
+     },
+     "physician_agreed_category:simple": {
+      "n": 6,
+      "score": 38.32795052752092,
+      "boot_ci95": [
+       16.970926301555103,
+       60.25502873563219
+      ]
+     },
+     "theme:communication": {
+      "n": 95,
+      "score": 62.90245659250833,
+      "boot_ci95": [
+       57.1905505697353,
+       68.28953662113089
+      ]
+     },
+     "theme:complex_responses": {
+      "n": 23,
+      "score": 35.058914127570894,
+      "boot_ci95": [
+       2.0133378825497066,
+       57.05102655448279
+      ]
+     },
+     "theme:context_seeking": {
+      "n": 49,
+      "score": 47.783627774700264,
+      "boot_ci95": [
+       38.52165325709765,
+       56.13930050447624
+      ]
+     },
+     "theme:emergency_referrals": {
+      "n": 65,
+      "score": 59.849102325365145,
+      "boot_ci95": [
+       53.364019637650664,
+       66.27225868893905
+      ]
+     },
+     "theme:global_health": {
+      "n": 117,
+      "score": 44.853216932899066,
+      "boot_ci95": [
+       39.00899266140412,
+       50.60658393629749
+      ]
+     },
+     "theme:health_data_tasks": {
+      "n": 60,
+      "score": 51.290032039365784,
+      "boot_ci95": [
+       37.32292635845706,
+       61.80939424255818
+      ]
+     },
+     "theme:hedging": {
+      "n": 91,
+      "score": 60.36417858464227,
+      "boot_ci95": [
+       55.28198092784474,
+       65.20637654896359
+      ]
+     }
+    }
+   },
+   "comparator": {
+    "raw": {
+     "n": 500,
+     "score": 49.069377061130645,
+     "score_unclipped": 49.069377061130645,
+     "boot_ci95": [
+      46.034955164127,
+      51.93894226186998
+     ],
+     "se": 1.5333872100939754
+    },
+    "length_adjusted": {
+     "n": 500,
+     "score": 49.13350434113064,
+     "score_unclipped": 49.13350434113064,
+     "boot_ci95": [
+      46.12048128355703,
+      51.9933217066456
+     ],
+     "se": 1.5430806064980191
+    },
+    "harm": {
+     "harm_pct": 21.006436512580457,
+     "neg_criteria": 1709,
+     "neg_met": 359,
+     "refusals": 0
+    },
+    "median_chars": 1400.0,
+    "empty_answers": 0,
+    "tags": {
+     "axis:accuracy": {
+      "n": 414,
+      "score": 54.278347810942094,
+      "boot_ci95": [
+       50.222256807877294,
+       58.238047782786985
+      ]
+     },
+     "axis:communication_quality": {
+      "n": 225,
+      "score": 79.52940269606937,
+      "boot_ci95": [
+       73.06339216339217,
+       85.26216376216375
+      ]
+     },
+     "axis:completeness": {
+      "n": 420,
+      "score": 37.03268964910901,
+      "boot_ci95": [
+       31.828457765562025,
+       42.145649676719096
+      ]
+     },
+     "axis:context_awareness": {
+      "n": 345,
+      "score": 49.99472952769307,
+      "boot_ci95": [
+       44.33135060389087,
+       55.51367444505993
+      ]
+     },
+     "axis:instruction_following": {
+      "n": 112,
+      "score": 56.319177668639334,
+      "boot_ci95": [
+       47.475035735933844,
+       64.91656200164604
+      ]
+     },
+     "physician_agreed_category:any-reducible-uncertainty": {
+      "n": 29,
+      "score": 51.735877304336675,
+      "boot_ci95": [
+       43.22383781593125,
+       60.00664345795453
+      ]
+     },
+     "physician_agreed_category:conditionally-emergent": {
+      "n": 23,
+      "score": 70.17689681349783,
+      "boot_ci95": [
+       58.10641798926597,
+       81.63696018357378
+      ]
+     },
+     "physician_agreed_category:context-does-not-matter": {
+      "n": 24,
+      "score": 46.173107392111135,
+      "boot_ci95": [
+       37.45810303227967,
+       55.69545182016626
+      ]
+     },
+     "physician_agreed_category:context-matters-but-unclear": {
+      "n": 24,
+      "score": 39.32133623220006,
+      "boot_ci95": [
+       32.23543119314362,
+       45.98451885345416
+      ]
+     },
+     "physician_agreed_category:context-matters-is-clear": {
+      "n": 21,
+      "score": 44.21271544095204,
+      "boot_ci95": [
+       34.04539682624661,
+       54.060563278166526
+      ]
+     },
+     "physician_agreed_category:detailed": {
+      "n": 14,
+      "score": 49.29469421426006,
+      "boot_ci95": [
+       36.074844565486394,
+       62.2550109844464
+      ]
+     },
+     "physician_agreed_category:emergent": {
+      "n": 16,
+      "score": 65.9688230146862,
+      "boot_ci95": [
+       56.07308174793727,
+       75.60463520745375
+      ]
+     },
+     "physician_agreed_category:enough-context": {
+      "n": 18,
+      "score": 38.23564649179989,
+      "boot_ci95": [
+       31.198003231205323,
+       45.61542940171186
+      ]
+     },
+     "physician_agreed_category:enough-info-to-complete-task": {
+      "n": 31,
+      "score": 58.230467488788804,
+      "boot_ci95": [
+       49.380305396883465,
+       66.94493616955947
+      ]
+     },
+     "physician_agreed_category:health-professional": {
+      "n": 34,
+      "score": 56.50827027446441,
+      "boot_ci95": [
+       48.44107984557876,
+       64.97885730138213
+      ]
+     },
+     "physician_agreed_category:no-uncertainty": {
+      "n": 22,
+      "score": 60.74365182524185,
+      "boot_ci95": [
+       51.89514431673881,
+       68.7589968996052
+      ]
+     },
+     "physician_agreed_category:non-emergent": {
+      "n": 23,
+      "score": 48.64923172780982,
+      "boot_ci95": [
+       37.181173918130135,
+       59.8773922028706
+      ]
+     },
+     "physician_agreed_category:not-enough-context": {
+      "n": 19,
+      "score": 41.50342267030418,
+      "boot_ci95": [
+       27.726159582958665,
+       53.762236295306366
+      ]
+     },
+     "physician_agreed_category:not-enough-info-to-complete-task": {
+      "n": 20,
+      "score": 38.92760574585628,
+      "boot_ci95": [
+       28.30597925186728,
+       48.948282844620756
+      ]
+     },
+     "physician_agreed_category:not-health-professional": {
+      "n": 50,
+      "score": 65.99192743511763,
+      "boot_ci95": [
+       58.642263975987916,
+       73.42326737930993
+      ]
+     },
+     "physician_agreed_category:only-irreducible-uncertainty": {
+      "n": 15,
+      "score": 50.484040406334444,
+      "boot_ci95": [
+       38.008694194883454,
+       62.737338720639116
+      ]
+     },
+     "physician_agreed_category:simple": {
+      "n": 6,
+      "score": 37.32895017728639,
+      "boot_ci95": [
+       19.82230392156863,
+       56.79100223949058
+      ]
+     },
+     "theme:communication": {
+      "n": 95,
+      "score": 59.751954999082535,
+      "boot_ci95": [
+       53.95755836504081,
+       65.4943402463742
+      ]
+     },
+     "theme:complex_responses": {
+      "n": 23,
+      "score": 32.29003689716469,
+      "boot_ci95": [
+       0.7046411353103804,
+       53.62324985001036
+      ]
+     },
+     "theme:context_seeking": {
+      "n": 49,
+      "score": 40.06988739807973,
+      "boot_ci95": [
+       30.844847728418383,
+       49.12236473412317
+      ]
+     },
+     "theme:emergency_referrals": {
+      "n": 65,
+      "score": 60.54285769870845,
+      "boot_ci95": [
+       53.24012186627202,
+       67.42230742218266
+      ]
+     },
+     "theme:global_health": {
+      "n": 117,
+      "score": 38.68150940420711,
+      "boot_ci95": [
+       33.2271944650562,
+       44.296169487911676
+      ]
+     },
+     "theme:health_data_tasks": {
+      "n": 60,
+      "score": 45.9194193811891,
+      "boot_ci95": [
+       35.37283996827289,
+       55.03310596639325
+      ]
+     },
+     "theme:hedging": {
+      "n": 91,
+      "score": 54.241428142111616,
+      "boot_ci95": [
+       48.90568720475899,
+       59.23885465737898
+      ]
+     }
+    }
+   },
+   "paired": {
+    "raw": {
+     "n": 500,
+     "mean_diff_pp": 4.594715674959462,
+     "se": 0.8625494756714724,
+     "ci95": [
+      2.904118702643377,
+      6.285312647275548
+     ],
+     "t": 5.326901012121763,
+     "p_t": 1.514403628102192e-07,
+     "p_sign": 4.384264850886706e-09,
+     "wins": 223,
+     "losses": 115,
+     "ties": 162
+    },
+    "length_adjusted": {
+     "n": 500,
+     "mean_diff_pp": 2.179799674959462,
+     "se": 0.8632730369129443,
+     "ci95": [
+      0.4877845226100912,
+      3.871814827308833
+     ],
+     "t": 2.5250408407916964,
+     "p_t": 0.0118772308828856,
+     "p_sign": 0.009351272841182168,
+     "wins": 220,
+     "losses": 279,
+     "ties": 1
+    },
+    "harm_delta_pts": 0.6436512580456402,
+    "tags": {
+     "axis:accuracy": {
+      "n": 414,
+      "mean_diff_pp": 3.084436933363328,
+      "se": 1.4396518052272127,
+      "ci95": [
+       0.26271939511799136,
+       5.906154471608665
+      ],
+      "t": 2.142488150373644,
+      "p_t": 0.03273823891115657,
+      "p_sign": 0.0009131976345915793,
+      "wins": 86,
+      "losses": 47,
+      "ties": 281
+     },
+     "axis:communication_quality": {
+      "n": 225,
+      "mean_diff_pp": -5.308264067087596,
+      "se": 2.0345023636718627,
+      "ci95": [
+       -9.295888699884447,
+       -1.3206394342907455
+      ],
+      "t": -2.6091216023496084,
+      "p_t": 0.009688957400195536,
+      "p_sign": 0.002493917942047119,
+      "wins": 5,
+      "losses": 21,
+      "ties": 199
+     },
+     "axis:completeness": {
+      "n": 420,
+      "mean_diff_pp": 10.154832391420204,
+      "se": 1.5756026699833452,
+      "ci95": [
+       7.0666511582528475,
+       13.24301362458756
+      ],
+      "t": 6.445046447863372,
+      "p_t": 3.182227663999753e-10,
+      "p_sign": 8.308981955221778e-11,
+      "wins": 153,
+      "losses": 59,
+      "ties": 208
+     },
+     "axis:context_awareness": {
+      "n": 345,
+      "mean_diff_pp": 3.1784684333135913,
+      "se": 2.3312836859121933,
+      "ci95": [
+       -1.3908475910743072,
+       7.74778445770149
+      ],
+      "t": 1.3633983939924963,
+      "p_t": 0.1736485954769419,
+      "p_sign": 0.018693425409254057,
+      "wins": 75,
+      "losses": 48,
+      "ties": 222
+     },
+     "axis:instruction_following": {
+      "n": 112,
+      "mean_diff_pp": -0.24112387524940013,
+      "se": 4.228449957274262,
+      "ci95": [
+       -8.528885791506953,
+       8.046638041008153
+      ],
+      "t": -0.05702417616048437,
+      "p_t": 0.9546284603242751,
+      "p_sign": 1.0,
+      "wins": 14,
+      "losses": 14,
+      "ties": 84
+     },
+     "physician_agreed_category:any-reducible-uncertainty": {
+      "n": 29,
+      "mean_diff_pp": 10.397858052770268,
+      "se": 3.8658270856484047,
+      "ci95": [
+       2.820836964899394,
+       17.974879140641143
+      ],
+      "t": 2.689685240028335,
+      "p_t": 0.01191649197492074,
+      "p_sign": 0.043285250663757324,
+      "wins": 18,
+      "losses": 7,
+      "ties": 4
+     },
+     "physician_agreed_category:conditionally-emergent": {
+      "n": 23,
+      "mean_diff_pp": 1.8058763571307865,
+      "se": 2.558155913631372,
+      "ci95": [
+       -3.2081092335867023,
+       6.819861947848276
+      ],
+      "t": 0.7059289652784673,
+      "p_t": 0.48764111133817056,
+      "p_sign": 1.0,
+      "wins": 7,
+      "losses": 8,
+      "ties": 8
+     },
+     "physician_agreed_category:context-does-not-matter": {
+      "n": 24,
+      "mean_diff_pp": 7.112703463438049,
+      "se": 2.232929859017381,
+      "ci95": [
+       2.7361609397639812,
+       11.489245987112117
+      ],
+      "t": 3.185368064614466,
+      "p_t": 0.0041201502033178725,
+      "p_sign": 0.0192108154296875,
+      "wins": 15,
+      "losses": 4,
+      "ties": 5
+     },
+     "physician_agreed_category:context-matters-but-unclear": {
+      "n": 24,
+      "mean_diff_pp": 14.554363523851928,
+      "se": 2.564992056267779,
+      "ci95": [
+       9.526979093567082,
+       19.581747954136773
+      ],
+      "t": 5.674233371712433,
+      "p_t": 8.903709774971964e-06,
+      "p_sign": 0.00012111663818359375,
+      "wins": 20,
+      "losses": 2,
+      "ties": 2
+     },
+     "physician_agreed_category:context-matters-is-clear": {
+      "n": 21,
+      "mean_diff_pp": 5.565557066860175,
+      "se": 2.11210198896336,
+      "ci95": [
+       1.4258371684919897,
+       9.70527696522836
+      ],
+      "t": 2.6350796959344773,
+      "p_t": 0.01587295025827669,
+      "p_sign": 0.03515625,
+      "wins": 12,
+      "losses": 3,
+      "ties": 6
+     },
+     "physician_agreed_category:detailed": {
+      "n": 14,
+      "mean_diff_pp": 1.7397743474715843,
+      "se": 5.065782556269139,
+      "ci95": [
+       -8.189159462815928,
+       11.668708157759097
+      ],
+      "t": 0.34343644405315693,
+      "p_t": 0.736760814736648,
+      "p_sign": 0.75390625,
+      "wins": 6,
+      "losses": 4,
+      "ties": 4
+     },
+     "physician_agreed_category:emergent": {
+      "n": 16,
+      "mean_diff_pp": 1.3108595577182998,
+      "se": 5.718576870303944,
+      "ci95": [
+       -9.89755110807743,
+       12.519270223514031
+      ],
+      "t": 0.229228283093557,
+      "p_t": 0.8217876643846463,
+      "p_sign": 0.79052734375,
+      "wins": 8,
+      "losses": 6,
+      "ties": 2
+     },
+     "physician_agreed_category:enough-context": {
+      "n": 18,
+      "mean_diff_pp": 7.299821025049086,
+      "se": 3.5787700031586547,
+      "ci95": [
+       0.28543181885812263,
+       14.31421023124005
+      ],
+      "t": 2.0397569608011126,
+      "p_t": 0.05722771871874139,
+      "p_sign": 0.210113525390625,
+      "wins": 11,
+      "losses": 5,
+      "ties": 2
+     },
+     "physician_agreed_category:enough-info-to-complete-task": {
+      "n": 31,
+      "mean_diff_pp": 3.608236304166376,
+      "se": 4.112110540578507,
+      "ci95": [
+       -4.451500355367498,
+       11.66797296370025
+      ],
+      "t": 0.8774657851631479,
+      "p_t": 0.38720689449560075,
+      "p_sign": 0.8238029479980469,
+      "wins": 11,
+      "losses": 9,
+      "ties": 11
+     },
+     "physician_agreed_category:health-professional": {
+      "n": 34,
+      "mean_diff_pp": 1.6365396995189478,
+      "se": 2.8291270813591978,
+      "ci95": [
+       -3.9085493799450797,
+       7.181628778982975
+      ],
+      "t": 0.5784610066836252,
+      "p_t": 0.56688016170294,
+      "p_sign": 0.6900379657745361,
+      "wins": 14,
+      "losses": 11,
+      "ties": 9
+     },
+     "physician_agreed_category:no-uncertainty": {
+      "n": 22,
+      "mean_diff_pp": 1.8372742808528344,
+      "se": 2.1366261478953694,
+      "ci95": [
+       -2.3505129690220894,
+       6.025061530727758
+      ],
+      "t": 0.8598950652469529,
+      "p_t": 0.39955744132184856,
+      "p_sign": 0.3017578125,
+      "wins": 10,
+      "losses": 5,
+      "ties": 7
+     },
+     "physician_agreed_category:non-emergent": {
+      "n": 23,
+      "mean_diff_pp": -5.136057573664766,
+      "se": 4.325411182378192,
+      "ci95": [
+       -13.613863491126022,
+       3.3417483437964917
+      ],
+      "t": -1.187414873894339,
+      "p_t": 0.24772699248437724,
+      "p_sign": 0.79052734375,
+      "wins": 6,
+      "losses": 8,
+      "ties": 9
+     },
+     "physician_agreed_category:not-enough-context": {
+      "n": 19,
+      "mean_diff_pp": 11.528505126637905,
+      "se": 4.409493126409308,
+      "ci95": [
+       2.885898598875661,
+       20.17111165440015
+      ],
+      "t": 2.614473998744086,
+      "p_t": 0.017556501144866773,
+      "p_sign": 0.11846923828125,
+      "wins": 11,
+      "losses": 4,
+      "ties": 4
+     },
+     "physician_agreed_category:not-enough-info-to-complete-task": {
+      "n": 20,
+      "mean_diff_pp": 10.62063732932265,
+      "se": 6.916915106456745,
+      "ci95": [
+       -2.9365162793325705,
+       24.177790937977868
+      ],
+      "t": 1.5354586785962696,
+      "p_t": 0.14115639239040656,
+      "p_sign": 0.11846923828125,
+      "wins": 11,
+      "losses": 4,
+      "ties": 5
+     },
+     "physician_agreed_category:not-health-professional": {
+      "n": 50,
+      "mean_diff_pp": 2.6706053125927642,
+      "se": 1.349481526165696,
+      "ci95": [
+       0.025621521307999995,
+       5.315589103877528
+      ],
+      "t": 1.9789861964104087,
+      "p_t": 0.05345161834938818,
+      "p_sign": 0.44206833839416504,
+      "wins": 16,
+      "losses": 11,
+      "ties": 23
+     },
+     "physician_agreed_category:only-irreducible-uncertainty": {
+      "n": 15,
+      "mean_diff_pp": 7.835615757833057,
+      "se": 2.9090458619496298,
+      "ci95": [
+       2.1338858684117827,
+       13.537345647254332
+      ],
+      "t": 2.6935346260170894,
+      "p_t": 0.017476487380298864,
+      "p_sign": 0.021484375,
+      "wins": 9,
+      "losses": 1,
+      "ties": 5
+     },
+     "physician_agreed_category:simple": {
+      "n": 6,
+      "mean_diff_pp": 0.9990003502345303,
+      "se": 4.245669422915514,
+      "ci95": [
+       -7.322511718679877,
+       9.320512419148937
+      ],
+      "t": 0.23529866570452718,
+      "p_t": 0.8233102804076804,
+      "p_sign": 1.0,
+      "wins": 3,
+      "losses": 2,
+      "ties": 1
+     },
+     "theme:communication": {
+      "n": 95,
+      "mean_diff_pp": 3.150501593425792,
+      "se": 1.4154208125949435,
+      "ci95": [
+       0.3762768007397028,
+       5.924726386111881
+      ],
+      "t": 2.22584094100599,
+      "p_t": 0.02841491642657075,
+      "p_sign": 0.18485048241641847,
+      "wins": 34,
+      "losses": 23,
+      "ties": 38
+     },
+     "theme:complex_responses": {
+      "n": 23,
+      "mean_diff_pp": 2.7688772304062037,
+      "se": 3.4988490363747498,
+      "ci95": [
+       -4.088866880888306,
+       9.626621341700712
+      ],
+      "t": 0.7913680189171897,
+      "p_t": 0.43717868170941443,
+      "p_sign": 0.454498291015625,
+      "wins": 10,
+      "losses": 6,
+      "ties": 7
+     },
+     "theme:context_seeking": {
+      "n": 49,
+      "mean_diff_pp": 7.713740376620538,
+      "se": 2.4380417493388955,
+      "ci95": [
+       2.935178547916303,
+       12.492302205324773
+      ],
+      "t": 3.1639082385329176,
+      "p_t": 0.0027006317429005937,
+      "p_sign": 0.06524533522315323,
+      "wins": 24,
+      "losses": 12,
+      "ties": 13
+     },
+     "theme:emergency_referrals": {
+      "n": 65,
+      "mean_diff_pp": -0.6937553733433083,
+      "se": 2.268907737252211,
+      "ci95": [
+       -5.140814538357642,
+       3.753303791671025
+      ],
+      "t": -0.3057662336607347,
+      "p_t": 0.7607750145501347,
+      "p_sign": 1.0,
+      "wins": 22,
+      "losses": 22,
+      "ties": 21
+     },
+     "theme:global_health": {
+      "n": 117,
+      "mean_diff_pp": 6.171707528691947,
+      "se": 1.5677804094285808,
+      "ci95": [
+       3.0988579262119287,
+       9.244557131171964
+      ],
+      "t": 3.9365892643992084,
+      "p_t": 0.00014138907824595405,
+      "p_sign": 3.7146415938284177e-06,
+      "wins": 62,
+      "losses": 20,
+      "ties": 35
+     },
+     "theme:health_data_tasks": {
+      "n": 60,
+      "mean_diff_pp": 5.370612658176677,
+      "se": 4.154525271166673,
+      "ci95": [
+       -2.772256873310001,
+       13.513482189663355
+      ],
+      "t": 1.2927139222018749,
+      "p_t": 0.20114960800031467,
+      "p_sign": 0.21102359760880063,
+      "wins": 25,
+      "losses": 16,
+      "ties": 19
+     },
+     "theme:hedging": {
+      "n": 91,
+      "mean_diff_pp": 6.122750442530643,
+      "se": 1.8679339978614624,
+      "ci95": [
+       2.4615998067221767,
+       9.78390107833911
+      ],
+      "t": 3.2778194783864865,
+      "p_t": 0.0014875626017024385,
+      "p_sign": 0.00017632711255144299,
+      "wins": 46,
+      "losses": 16,
+      "ties": 29
+     }
+    }
+   }
+  },
+  "claude_opus_4_8": {
+   "coverage": 0.986,
+   "arm": {
+    "raw": {
+     "n": 493,
+     "score": 63.19174839688505,
+     "score_unclipped": 63.19174839688505,
+     "boot_ci95": [
+      60.07959637552052,
+      65.93184242096312
+     ],
+     "se": 1.5081252749280858
+    },
+    "length_adjusted": {
+     "n": 493,
+     "score": 60.83477484718932,
+     "score_unclipped": 60.83477484718932,
+     "boot_ci95": [
+      57.748751275120114,
+      63.72205705523106
+     ],
+     "se": 1.52359915431604
+    },
+    "harm": {
+     "harm_pct": 20.238805970149254,
+     "neg_criteria": 1675,
+     "neg_met": 339,
+     "refusals": 0
+    },
+    "median_chars": 2209.0,
+    "empty_answers": 0,
+    "excluded_failed_grades": 7,
+    "tags": {
+     "axis:accuracy": {
+      "n": 407,
+      "score": 66.70783804489379,
+      "boot_ci95": [
+       62.85761859953427,
+       70.62693992450532
+      ]
+     },
+     "axis:communication_quality": {
+      "n": 221,
+      "score": 80.0466391769293,
+      "boot_ci95": [
+       73.61389741480238,
+       86.05243483337706
+      ]
+     },
+     "axis:completeness": {
+      "n": 414,
+      "score": 56.53657368198779,
+      "boot_ci95": [
+       51.54356165950039,
+       61.08012709992514
+      ]
+     },
+     "axis:context_awareness": {
+      "n": 340,
+      "score": 63.486083067910435,
+      "boot_ci95": [
+       58.335037362135864,
+       68.4714606377229
+      ]
+     },
+     "axis:instruction_following": {
+      "n": 109,
+      "score": 67.9428245995974,
+      "boot_ci95": [
+       58.44805599898692,
+       76.49757260388668
+      ]
+     },
+     "physician_agreed_category:any-reducible-uncertainty": {
+      "n": 29,
+      "score": 68.85692721469768,
+      "boot_ci95": [
+       62.89001830662432,
+       74.70159588046718
+      ]
+     },
+     "physician_agreed_category:conditionally-emergent": {
+      "n": 23,
+      "score": 77.7914134673388,
+      "boot_ci95": [
+       68.3486963624072,
+       86.5752708833157
+      ]
+     },
+     "physician_agreed_category:context-does-not-matter": {
+      "n": 23,
+      "score": 63.49386622005868,
+      "boot_ci95": [
+       55.30292141070971,
+       71.47829849493709
+      ]
+     },
+     "physician_agreed_category:context-matters-but-unclear": {
+      "n": 24,
+      "score": 59.62194054786997,
+      "boot_ci95": [
+       52.36737236059532,
+       66.89570740467452
+      ]
+     },
+     "physician_agreed_category:context-matters-is-clear": {
+      "n": 21,
+      "score": 57.913984810644145,
+      "boot_ci95": [
+       47.53341551449125,
+       67.64736802836171
+      ]
+     },
+     "physician_agreed_category:detailed": {
+      "n": 12,
+      "score": 64.81226948222626,
+      "boot_ci95": [
+       49.03368888493742,
+       80.13162135239659
+      ]
+     },
+     "physician_agreed_category:emergent": {
+      "n": 16,
+      "score": 72.46454308040937,
+      "boot_ci95": [
+       62.77052587839426,
+       81.83574835390199
+      ]
+     },
+     "physician_agreed_category:enough-context": {
+      "n": 17,
+      "score": 61.600529735227795,
+      "boot_ci95": [
+       54.319079356095514,
+       68.86018451090152
+      ]
+     },
+     "physician_agreed_category:enough-info-to-complete-task": {
+      "n": 30,
+      "score": 72.74177520201533,
+      "boot_ci95": [
+       65.52595642020287,
+       79.60810137652126
+      ]
+     },
+     "physician_agreed_category:health-professional": {
+      "n": 33,
+      "score": 72.84632009983957,
+      "boot_ci95": [
+       64.83701366525004,
+       80.72823783157143
+      ]
+     },
+     "physician_agreed_category:no-uncertainty": {
+      "n": 22,
+      "score": 70.89213174216914,
+      "boot_ci95": [
+       63.2927074287235,
+       78.15608387079791
+      ]
+     },
+     "physician_agreed_category:non-emergent": {
+      "n": 22,
+      "score": 73.89308916612801,
+      "boot_ci95": [
+       64.08627042903315,
+       83.57557379260935
+      ]
+     },
+     "physician_agreed_category:not-enough-context": {
+      "n": 19,
+      "score": 59.599451228063884,
+      "boot_ci95": [
+       46.210793228621526,
+       70.02635162412129
+      ]
+     },
+     "physician_agreed_category:not-enough-info-to-complete-task": {
+      "n": 20,
+      "score": 56.473935059497826,
+      "boot_ci95": [
+       46.45186720937994,
+       65.7207539569746
+      ]
+     },
+     "physician_agreed_category:not-health-professional": {
+      "n": 50,
+      "score": 73.23459178811682,
+      "boot_ci95": [
+       66.05379614231727,
+       79.77989288347462
+      ]
+     },
+     "physician_agreed_category:only-irreducible-uncertainty": {
+      "n": 15,
+      "score": 57.64703691965133,
+      "boot_ci95": [
+       46.039102446082566,
+       68.27742992660018
+      ]
+     },
+     "physician_agreed_category:simple": {
+      "n": 6,
+      "score": 61.211079724912466,
+      "boot_ci95": [
+       47.6504246064623,
+       76.21168582375479
+      ]
+     },
+     "theme:communication": {
+      "n": 94,
+      "score": 70.88304064776308,
+      "boot_ci95": [
+       65.74932536551803,
+       75.88632203622605
+      ]
+     },
+     "theme:complex_responses": {
+      "n": 21,
+      "score": 47.94849876385485,
+      "boot_ci95": [
+       11.232493011322434,
+       71.01881730745943
+      ]
+     },
+     "theme:context_seeking": {
+      "n": 48,
+      "score": 57.52933674866981,
+      "boot_ci95": [
+       49.04596411258944,
+       65.18129129755222
+      ]
+     },
+     "theme:emergency_referrals": {
+      "n": 64,
+      "score": 73.93114222204105,
+      "boot_ci95": [
+       67.91904394964571,
+       79.96478597939145
+      ]
+     },
+     "theme:global_health": {
+      "n": 116,
+      "score": 54.26553868275893,
+      "boot_ci95": [
+       48.98442783280394,
+       59.34119314480637
+      ]
+     },
+     "theme:health_data_tasks": {
+      "n": 59,
+      "score": 60.454164476153,
+      "boot_ci95": [
+       46.28673281633383,
+       70.23272969182207
+      ]
+     },
+     "theme:hedging": {
+      "n": 91,
+      "score": 67.35173854169022,
+      "boot_ci95": [
+       63.04863443212106,
+       71.5355246596516
+      ]
+     }
+    }
+   },
+   "comparator": {
+    "raw": {
+     "n": 490,
+     "score": 58.65494828395801,
+     "score_unclipped": 58.65494828395801,
+     "boot_ci95": [
+      55.68659782185631,
+      61.46706450564356
+     ],
+     "se": 1.483790072697929
+    },
+    "length_adjusted": {
+     "n": 490,
+     "score": 58.71994028395802,
+     "score_unclipped": 58.71994028395802,
+     "boot_ci95": [
+      55.72885522587189,
+      61.53043371484005
+     ],
+     "se": 1.4836264745098289
+    },
+    "harm": {
+     "harm_pct": 19.21921921921922,
+     "neg_criteria": 1665,
+     "neg_met": 320,
+     "refusals": 0
+    },
+    "median_chars": 1397.0,
+    "empty_answers": 0,
+    "tags": {
+     "axis:accuracy": {
+      "n": 406,
+      "score": 62.84206796474257,
+      "boot_ci95": [
+       59.01083836609169,
+       66.60630784314861
+      ]
+     },
+     "axis:communication_quality": {
+      "n": 220,
+      "score": 85.79694777889966,
+      "boot_ci95": [
+       81.09786677968496,
+       90.34853782581055
+      ]
+     },
+     "axis:completeness": {
+      "n": 411,
+      "score": 48.5369163071656,
+      "boot_ci95": [
+       43.089742470597606,
+       53.440734760860444
+      ]
+     },
+     "axis:context_awareness": {
+      "n": 338,
+      "score": 59.72205071935017,
+      "boot_ci95": [
+       53.82338786394884,
+       65.16518978119082
+      ]
+     },
+     "axis:instruction_following": {
+      "n": 107,
+      "score": 65.46492133078169,
+      "boot_ci95": [
+       57.16332854733075,
+       73.65803292720554
+      ]
+     },
+     "physician_agreed_category:any-reducible-uncertainty": {
+      "n": 29,
+      "score": 58.7875887122824,
+      "boot_ci95": [
+       49.72381446074752,
+       66.9630869385001
+      ]
+     },
+     "physician_agreed_category:conditionally-emergent": {
+      "n": 23,
+      "score": 75.64071704240234,
+      "boot_ci95": [
+       65.12618296995741,
+       85.07682387128024
+      ]
+     },
+     "physician_agreed_category:context-does-not-matter": {
+      "n": 23,
+      "score": 54.77559333465013,
+      "boot_ci95": [
+       44.93883190689553,
+       64.16736419010792
+      ]
+     },
+     "physician_agreed_category:context-matters-but-unclear": {
+      "n": 24,
+      "score": 53.62195778979112,
+      "boot_ci95": [
+       45.54894680926722,
+       61.20543524105132
+      ]
+     },
+     "physician_agreed_category:context-matters-is-clear": {
+      "n": 21,
+      "score": 52.17348237957322,
+      "boot_ci95": [
+       42.83735968214205,
+       61.348674208214725
+      ]
+     },
+     "physician_agreed_category:detailed": {
+      "n": 12,
+      "score": 58.12267141712548,
+      "boot_ci95": [
+       43.23347761455575,
+       73.31718258594258
+      ]
+     },
+     "physician_agreed_category:emergent": {
+      "n": 16,
+      "score": 76.32108928424164,
+      "boot_ci95": [
+       66.59149720073218,
+       85.48743208273545
+      ]
+     },
+     "physician_agreed_category:enough-context": {
+      "n": 17,
+      "score": 57.40623868530393,
+      "boot_ci95": [
+       49.60924122874463,
+       64.07728117867738
+      ]
+     },
+     "physician_agreed_category:enough-info-to-complete-task": {
+      "n": 29,
+      "score": 70.11308477744275,
+      "boot_ci95": [
+       61.351185135871035,
+       78.73616335554368
+      ]
+     },
+     "physician_agreed_category:health-professional": {
+      "n": 33,
+      "score": 70.23283804144656,
+      "boot_ci95": [
+       62.46709244152249,
+       77.70025549456857
+      ]
+     },
+     "physician_agreed_category:no-uncertainty": {
+      "n": 22,
+      "score": 69.03807821274984,
+      "boot_ci95": [
+       59.623788907874676,
+       77.43487592806687
+      ]
+     },
+     "physician_agreed_category:non-emergent": {
+      "n": 22,
+      "score": 63.72072619830927,
+      "boot_ci95": [
+       50.78125831550489,
+       76.34100323892582
+      ]
+     },
+     "physician_agreed_category:not-enough-context": {
+      "n": 19,
+      "score": 46.299948168247354,
+      "boot_ci95": [
+       32.08831879475824,
+       58.51032057525265
+      ]
+     },
+     "physician_agreed_category:not-enough-info-to-complete-task": {
+      "n": 20,
+      "score": 47.98095811381071,
+      "boot_ci95": [
+       37.71852577416667,
+       57.67860160372407
+      ]
+     },
+     "physician_agreed_category:not-health-professional": {
+      "n": 50,
+      "score": 69.40648274634236,
+      "boot_ci95": [
+       63.199826096383816,
+       75.64710889488173
+      ]
+     },
+     "physician_agreed_category:only-irreducible-uncertainty": {
+      "n": 15,
+      "score": 57.3631657162646,
+      "boot_ci95": [
+       45.535538950141266,
+       68.4936730797719
+      ]
+     },
+     "physician_agreed_category:simple": {
+      "n": 6,
+      "score": 52.74663990441031,
+      "boot_ci95": [
+       38.54711328976035,
+       65.78663793103449
+      ]
+     },
+     "theme:communication": {
+      "n": 94,
+      "score": 67.59258811650743,
+      "boot_ci95": [
+       62.67009680817798,
+       72.40610022873928
+      ]
+     },
+     "theme:complex_responses": {
+      "n": 21,
+      "score": 40.755078968415695,
+      "boot_ci95": [
+       5.482280617656246,
+       63.08664516805488
+      ]
+     },
+     "theme:context_seeking": {
+      "n": 48,
+      "score": 52.27196585552873,
+      "boot_ci95": [
+       44.1404272915267,
+       59.39034941178484
+      ]
+     },
+     "theme:emergency_referrals": {
+      "n": 64,
+      "score": 70.4337365101876,
+      "boot_ci95": [
+       63.32085859599999,
+       77.05328067954173
+      ]
+     },
+     "theme:global_health": {
+      "n": 115,
+      "score": 48.80252224380623,
+      "boot_ci95": [
+       43.70300432534706,
+       53.970220646531175
+      ]
+     },
+     "theme:health_data_tasks": {
+      "n": 57,
+      "score": 56.18588755296533,
+      "boot_ci95": [
+       44.692017373710904,
+       65.8747964318516
+      ]
+     },
+     "theme:hedging": {
+      "n": 91,
+      "score": 62.63368759974587,
+      "boot_ci95": [
+       57.48813384817524,
+       67.7601036225858
+      ]
+     }
+    }
+   },
+   "paired": {
+    "raw": {
+     "n": 490,
+     "mean_diff_pp": 4.647988026169472,
+     "se": 0.8174306532256387,
+     "ci95": [
+      3.0458239458472196,
+      6.250152106491724
+     ],
+     "t": 5.686094603656207,
+     "p_t": 2.2384236210467977e-08,
+     "p_sign": 4.941478429183902e-10,
+     "wins": 215,
+     "losses": 104,
+     "ties": 171
+    },
+    "length_adjusted": {
+     "n": 490,
+     "mean_diff_pp": 2.2198540261694713,
+     "se": 0.8147522069820307,
+     "ci95": [
+      0.6229397004846913,
+      3.8167683518542512
+     ],
+     "t": 2.7245756527523346,
+     "p_t": 0.0066690376364252025,
+     "p_sign": 0.0009323000371581905,
+     "wins": 207,
+     "losses": 281,
+     "ties": 2
+    },
+    "harm_delta_pts": 1.019586750930035,
+    "tags": {
+     "axis:accuracy": {
+      "n": 406,
+      "mean_diff_pp": 3.783769681247013,
+      "se": 1.1246011001649903,
+      "ci95": [
+       1.579551524923632,
+       5.987987837570394
+      ],
+      "t": 3.3645438197525293,
+      "p_t": 0.0008398212001048227,
+      "p_sign": 1.6356858141740275e-05,
+      "wins": 79,
+      "losses": 33,
+      "ties": 294
+     },
+     "axis:communication_quality": {
+      "n": 220,
+      "mean_diff_pp": -5.3864602420752155,
+      "se": 2.4848011101525733,
+      "ci95": [
+       -10.25667041797426,
+       -0.5162500661761715
+      ],
+      "t": -2.1677631340660795,
+      "p_t": 0.03125492252346662,
+      "p_sign": 0.028959274291992188,
+      "wins": 7,
+      "losses": 19,
+      "ties": 194
+     },
+     "axis:completeness": {
+      "n": 411,
+      "mean_diff_pp": 8.016459706554562,
+      "se": 1.9055855936635084,
+      "ci95": [
+       4.281511942974085,
+       11.751407470135039
+      ],
+      "t": 4.206822161760172,
+      "p_t": 3.183462548079294e-05,
+      "p_sign": 2.1204459267245956e-08,
+      "wins": 139,
+      "losses": 60,
+      "ties": 212
+     },
+     "axis:context_awareness": {
+      "n": 338,
+      "mean_diff_pp": 4.0016225836761,
+      "se": 1.958482491992793,
+      "ci95": [
+       0.16299689937022555,
+       7.840248267981973
+      ],
+      "t": 2.043226120241888,
+      "p_t": 0.04180748810805564,
+      "p_sign": 0.047011561644854,
+      "wins": 56,
+      "losses": 36,
+      "ties": 246
+     },
+     "axis:instruction_following": {
+      "n": 107,
+      "mean_diff_pp": 1.8787037286212656,
+      "se": 4.579087735349627,
+      "ci95": [
+       -7.096308232664003,
+       10.853715689906535
+      ],
+      "t": 0.4102790418532614,
+      "p_t": 0.6824293450101292,
+      "p_sign": 1.0,
+      "wins": 14,
+      "losses": 13,
+      "ties": 80
+     },
+     "physician_agreed_category:any-reducible-uncertainty": {
+      "n": 29,
+      "mean_diff_pp": 10.069338502415278,
+      "se": 3.482331091442777,
+      "ci95": [
+       3.2439695631874343,
+       16.89470744164312
+      ],
+      "t": 2.8915511586933604,
+      "p_t": 0.0073326692757688895,
+      "p_sign": 0.004077315330505371,
+      "wins": 20,
+      "losses": 5,
+      "ties": 4
+     },
+     "physician_agreed_category:conditionally-emergent": {
+      "n": 23,
+      "mean_diff_pp": 2.150696424936455,
+      "se": 2.5617222392173944,
+      "ci95": [
+       -2.870279163929638,
+       7.171672013802548
+      ],
+      "t": 0.839550983323427,
+      "p_t": 0.41019107077729944,
+      "p_sign": 0.266845703125,
+      "wins": 9,
+      "losses": 4,
+      "ties": 10
+     },
+     "physician_agreed_category:context-does-not-matter": {
+      "n": 23,
+      "mean_diff_pp": 8.718272885408554,
+      "se": 2.485187211647296,
+      "ci95": [
+       3.8473059505798544,
+       13.589239820237253
+      ],
+      "t": 3.5080950217950315,
+      "p_t": 0.0019851621449452597,
+      "p_sign": 0.0192108154296875,
+      "wins": 15,
+      "losses": 4,
+      "ties": 4
+     },
+     "physician_agreed_category:context-matters-but-unclear": {
+      "n": 24,
+      "mean_diff_pp": 5.999982758078837,
+      "se": 2.4917723059213284,
+      "ci95": [
+       1.1161090384730334,
+       10.883856477684642
+      ],
+      "t": 2.4079177474686455,
+      "p_t": 0.024460707507321818,
+      "p_sign": 0.1670684814453125,
+      "wins": 13,
+      "losses": 6,
+      "ties": 5
+     },
+     "physician_agreed_category:context-matters-is-clear": {
+      "n": 21,
+      "mean_diff_pp": 5.740502431070929,
+      "se": 3.5539920322514726,
+      "ci95": [
+       -1.2253219521419565,
+       12.706326814283816
+      ],
+      "t": 1.6152265899803637,
+      "p_t": 0.12192780624283606,
+      "p_sign": 0.332305908203125,
+      "wins": 11,
+      "losses": 6,
+      "ties": 4
+     },
+     "physician_agreed_category:detailed": {
+      "n": 12,
+      "mean_diff_pp": 6.689598065100774,
+      "se": 5.199849855340203,
+      "ci95": [
+       -3.502107651366024,
+       16.88130378156757
+      ],
+      "t": 1.2864983126831273,
+      "p_t": 0.22468587649907357,
+      "p_sign": 0.14599609375,
+      "wins": 9,
+      "losses": 3,
+      "ties": 0
+     },
+     "physician_agreed_category:emergent": {
+      "n": 16,
+      "mean_diff_pp": -3.8565462038322593,
+      "se": 2.1940497074288863,
+      "ci95": [
+       -8.156883630392876,
+       0.4437912227283576
+      ],
+      "t": -1.7577296406614151,
+      "p_t": 0.09917631310013271,
+      "p_sign": 0.453125,
+      "wins": 2,
+      "losses": 5,
+      "ties": 9
+     },
+     "physician_agreed_category:enough-context": {
+      "n": 17,
+      "mean_diff_pp": 4.194291049923857,
+      "se": 2.8799918895567926,
+      "ci95": [
+       -1.450493053607457,
+       9.83907515345517
+      ],
+      "t": 1.4563551602811369,
+      "p_t": 0.16463780601441402,
+      "p_sign": 0.4239501953125,
+      "wins": 9,
+      "losses": 5,
+      "ties": 3
+     },
+     "physician_agreed_category:enough-info-to-complete-task": {
+      "n": 29,
+      "mean_diff_pp": 3.41288956946966,
+      "se": 3.810609848199403,
+      "ci95": [
+       -4.05590573300117,
+       10.88168487194049
+      ],
+      "t": 0.895628181689166,
+      "p_t": 0.3780868117394939,
+      "p_sign": 1.0,
+      "wins": 7,
+      "losses": 8,
+      "ties": 14
+     },
+     "physician_agreed_category:health-professional": {
+      "n": 33,
+      "mean_diff_pp": 2.6134820583930107,
+      "se": 2.542456324246047,
+      "ci95": [
+       -2.369732337129241,
+       7.596696453915262
+      ],
+      "t": 1.02793587188485,
+      "p_t": 0.3116876972960825,
+      "p_sign": 0.4048728942871094,
+      "wins": 14,
+      "losses": 9,
+      "ties": 10
+     },
+     "physician_agreed_category:no-uncertainty": {
+      "n": 22,
+      "mean_diff_pp": 1.8540535294193108,
+      "se": 2.5383457601168566,
+      "ci95": [
+       -3.121104160409728,
+       6.829211219248349
+      ],
+      "t": 0.7304180378223795,
+      "p_t": 0.47320539934816885,
+      "p_sign": 0.60723876953125,
+      "wins": 9,
+      "losses": 6,
+      "ties": 7
+     },
+     "physician_agreed_category:non-emergent": {
+      "n": 22,
+      "mean_diff_pp": 10.172362967818735,
+      "se": 3.5077560613719405,
+      "ci95": [
+       3.297161087529732,
+       17.04756484810774
+      ],
+      "t": 2.899963050406692,
+      "p_t": 0.00856542855489721,
+      "p_sign": 0.001953125,
+      "wins": 10,
+      "losses": 0,
+      "ties": 12
+     },
+     "physician_agreed_category:not-enough-context": {
+      "n": 19,
+      "mean_diff_pp": 13.299503059816525,
+      "se": 4.906710916314342,
+      "ci95": [
+       3.682349663840414,
+       22.916656455792634
+      ],
+      "t": 2.7104721037461075,
+      "p_t": 0.014329250842569677,
+      "p_sign": 0.012939453125,
+      "wins": 12,
+      "losses": 2,
+      "ties": 5
+     },
+     "physician_agreed_category:not-enough-info-to-complete-task": {
+      "n": 20,
+      "mean_diff_pp": 8.492976945687113,
+      "se": 4.955006046499834,
+      "ci95": [
+       -1.218834905452562,
+       18.20478879682679
+      ],
+      "t": 1.7140194917999072,
+      "p_t": 0.10279287784530841,
+      "p_sign": 0.210113525390625,
+      "wins": 11,
+      "losses": 5,
+      "ties": 4
+     },
+     "physician_agreed_category:not-health-professional": {
+      "n": 50,
+      "mean_diff_pp": 3.828109041774451,
+      "se": 1.8307288940831603,
+      "ci95": [
+       0.23988040937145705,
+       7.416337674177445
+      ],
+      "t": 2.091030001299887,
+      "p_t": 0.041733165059046735,
+      "p_sign": 0.005924612283706665,
+      "wins": 21,
+      "losses": 6,
+      "ties": 23
+     },
+     "physician_agreed_category:only-irreducible-uncertainty": {
+      "n": 15,
+      "mean_diff_pp": 0.2838712033867322,
+      "se": 2.1824823981973243,
+      "ci95": [
+       -3.9937942970800235,
+       4.561536703853488
+      ],
+      "t": 0.130068037946699,
+      "p_t": 0.8983629633814143,
+      "p_sign": 1.0,
+      "wins": 5,
+      "losses": 4,
+      "ties": 6
+     },
+     "physician_agreed_category:simple": {
+      "n": 6,
+      "mean_diff_pp": 8.464439820502157,
+      "se": 6.820047597380398,
+      "ci95": [
+       -4.902853470363423,
+       21.83173311136774
+      ],
+      "t": 1.24111154645803,
+      "p_t": 0.26961605588380966,
+      "p_sign": 1.0,
+      "wins": 3,
+      "losses": 2,
+      "ties": 1
+     },
+     "theme:communication": {
+      "n": 94,
+      "mean_diff_pp": 3.29045253125565,
+      "se": 1.387648663621708,
+      "ci95": [
+       0.5706611505571022,
+       6.0102439119541975
+      ],
+      "t": 2.3712432530779797,
+      "p_t": 0.019790921053989347,
+      "p_sign": 0.006455803109956637,
+      "wins": 38,
+      "losses": 17,
+      "ties": 39
+     },
+     "theme:complex_responses": {
+      "n": 21,
+      "mean_diff_pp": 7.193419795439153,
+      "se": 3.5337500053065396,
+      "ci95": [
+       0.26726978503833543,
+       14.119569805839971
+      ],
+      "t": 2.0356334728367833,
+      "p_t": 0.05525275340369266,
+      "p_sign": 0.09625244140625,
+      "wins": 13,
+      "losses": 5,
+      "ties": 3
+     },
+     "theme:context_seeking": {
+      "n": 48,
+      "mean_diff_pp": 5.257370893141087,
+      "se": 2.7703116978403206,
+      "ci95": [
+       -0.17244003462594115,
+       10.687181820908116
+      ],
+      "t": 1.8977542841982828,
+      "p_t": 0.06388029383500862,
+      "p_sign": 0.04095959151163697,
+      "wins": 24,
+      "losses": 11,
+      "ties": 13
+     },
+     "theme:emergency_referrals": {
+      "n": 64,
+      "mean_diff_pp": 3.4974057118534443,
+      "se": 1.7358659052990526,
+      "ci95": [
+       0.09510853746730108,
+       6.899702886239588
+      ],
+      "t": 2.0147902560773643,
+      "p_t": 0.048199315284917006,
+      "p_sign": 0.029449373483657837,
+      "wins": 22,
+      "losses": 9,
+      "ties": 33
+     },
+     "theme:global_health": {
+      "n": 115,
+      "mean_diff_pp": 5.686443483399048,
+      "se": 1.7464673456446063,
+      "ci95": [
+       2.2633674859356194,
+       9.109519480862476
+      ],
+      "t": 3.2559689693483675,
+      "p_t": 0.001488380197216862,
+      "p_sign": 0.0006279472715818218,
+      "wins": 58,
+      "losses": 26,
+      "ties": 31
+     },
+     "theme:health_data_tasks": {
+      "n": 57,
+      "mean_diff_pp": 4.520673235852079,
+      "se": 3.7988164988078785,
+      "ci95": [
+       -2.925007101811363,
+       11.96635357351552
+      ],
+      "t": 1.190021480971963,
+      "p_t": 0.23905863251748205,
+      "p_sign": 0.7428293587290682,
+      "wins": 20,
+      "losses": 17,
+      "ties": 20
+     },
+     "theme:hedging": {
+      "n": 91,
+      "mean_diff_pp": 4.718050941944351,
+      "se": 1.6380665518635213,
+      "ci95": [
+       1.5074405002918492,
+       7.928661383596852
+      ],
+      "t": 2.8802559557650036,
+      "p_t": 0.0049657343572201565,
+      "p_sign": 0.008641499683281734,
+      "wins": 40,
+      "losses": 19,
+      "ties": 32
+     }
+    }
+   }
+  }
+ },
+ "note": "default style vs bare GPT-6 Astra, seed-62 500"
+}
