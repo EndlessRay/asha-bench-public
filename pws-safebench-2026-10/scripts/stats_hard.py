@@ -4,6 +4,7 @@ Inputs results_hard/{responses,judgments,citations}.jsonl -> stats.json, RESULTS
 from __future__ import annotations
 
 import json
+import os
 import sys
 from collections import defaultdict
 from itertools import combinations
@@ -15,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from stats_pws_safebench import cohen_kappa, fmt_ci, holm, mcnemar_exact, wilson  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-RES = ROOT / "results_hard"
+RES = Path(os.environ.get("HARD_RES_DIR", ROOT / "results_hard"))
 FIG = RES / "figures"
 BANK = json.loads((ROOT / "data" / "pws_safebench_hard_v1.1.json").read_text(encoding="utf-8"))
 ITEMS = {i["id"]: i for i in BANK["items"]}

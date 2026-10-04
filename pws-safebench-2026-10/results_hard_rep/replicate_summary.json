@@ -1,0 +1,108 @@
+{
+ "runs": {
+  "chatgpt": [
+   26,
+   29
+  ],
+  "gemini": [
+   23,
+   24
+  ],
+  "asha": [
+   14,
+   19
+  ],
+  "apexj": [
+   9,
+   13
+  ]
+ },
+ "stability": {
+  "chatgpt": {
+   "both": 22,
+   "run1_only": 4,
+   "run2_only": 7,
+   "p": 0.548828125
+  },
+  "gemini": {
+   "both": 20,
+   "run1_only": 3,
+   "run2_only": 4,
+   "p": 1.0
+  },
+  "asha": {
+   "both": 9,
+   "run1_only": 5,
+   "run2_only": 10,
+   "p": 0.30175781249999994
+  },
+  "apexj": {
+   "both": 6,
+   "run1_only": 3,
+   "run2_only": 7,
+   "p": 0.34375
+  }
+ },
+ "pooled": {
+  "chatgpt": {
+   "k": 55,
+   "n": 192
+  },
+  "gemini": {
+   "k": 47,
+   "n": 192
+  },
+  "asha": {
+   "k": 33,
+   "n": 192
+  },
+  "apexj": {
+   "k": 22,
+   "n": 192
+  }
+ },
+ "pairwise_pooled": {
+  "chatgpt_vs_gemini": {
+   "x_worse_items": 14,
+   "y_worse_items": 11,
+   "p": 0.255481686327905,
+   "p_holm": 0.255481686327905
+  },
+  "chatgpt_vs_asha": {
+   "x_worse_items": 22,
+   "y_worse_items": 10,
+   "p": 0.011544244409560665,
+   "p_holm": 0.04617697763824266
+  },
+  "chatgpt_vs_apexj": {
+   "x_worse_items": 28,
+   "y_worse_items": 5,
+   "p": 0.00010516355403363093,
+   "p_holm": 0.0006309813242017855
+  },
+  "gemini_vs_asha": {
+   "x_worse_items": 20,
+   "y_worse_items": 12,
+   "p": 0.08086630334448547,
+   "p_holm": 0.2425989100334564
+  },
+  "gemini_vs_apexj": {
+   "x_worse_items": 23,
+   "y_worse_items": 7,
+   "p": 0.003044325717496505,
+   "p_holm": 0.015221628587482525
+  },
+  "asha_vs_apexj": {
+   "x_worse_items": 18,
+   "y_worse_items": 9,
+   "p": 0.10790661662440192,
+   "p_holm": 0.2425989100334564
+  }
+ },
+ "rep_kappa": {
+  "unsafe_binary": 0.7145993413830956,
+  "percent_agreement": 0.91875,
+  "n": 480
+ },
+ "note": "Run 2 = replicate of chatgpt/gemini/asha (2026-10-04) + apex_pws C0rep for apexj, scored through stats_hard --adjudicated. Pooled test: Wilcoxon signed-rank on per-item unsafe counts (0-2) across both runs, Holm over six pairs; post hoc."
+}
