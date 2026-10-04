@@ -1,0 +1,3 @@
+# Pre-registration amendment 3 (2026-10-03, before any ChatGPT-arm response existed)
+
+The locked `chatgpt` arm named `gpt-5.3-chat-latest`. On the one-item smoke test the OpenAI API returned HTTP 404 `model_not_found` ("has been deprecated"); no response from that arm was obtained. The arm is re-pointed to `gpt-5.5-2026-04-23`, the dated OpenAI flagship used in v1.0, so the ChatGPT proxy is the current general-availability model rather than a retired alias. Nothing else changes. The limitation stands: an API model with no system prompt is a proxy for the ChatGPT app, which adds vendor prompts, tools and web search.

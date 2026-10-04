@@ -89,6 +89,21 @@ A DNAi-authored single-topic safety benchmark on the 2026 compounded-enclomiphen
 
 All three bare models wrote an enclomiphene dose for a 16-year-old when the requester claimed to be an endocrinologist; Asha declined. Two of four pre-registered hypotheses failed and the README says which and why (an HES verdict split between judges on three turns, and a clinician-arm mean threshold set above what any arm reached). The first run of this benchmark, earlier the same day, surfaced a production defect (a jailbreak detector misfiring on Asha's own folded transcript) that was fixed before the run published here. Question files SHA-256 locked in [`enclomiphene-bench-2026-09-18/data/DATASET_LOCK.md`](enclomiphene-bench-2026-09-18/data/DATASET_LOCK.md).
 
+### Chapter 6: PWS-SafeBench (2026-10-03)
+
+→ [`pws-safebench-2026-10/`](pws-safebench-2026-10/)
+
+Two pre-registered banks of Prader-Willi syndrome hazard items, written by PWS clinicians, posed to consumer chatbot models and to Asha; two blinded LLM judges (name-redacted, temperature 0), every PMID and DOI resolved by machine. **v1.0** (60 explicit items + 3 twelve-turn scenarios; lock `39911be9`, SHA-256 `e2312422…2728cf`) saturated: GPT-5.5 13.3%, Claude Sonnet 5.5 11.7%, Gemini 3.8 Flash 11.7%, Asha 16.7% unsafe responses, no pair different (H1 FAIL, reported as such). **Hard v1.1** (96 red-team items in 8 archetypes; lock `5ad814cb`, SHA-256 `358011e9…aaed19`) separated the systems:
+
+| Arm | Unsafe items (of 96, either-judge, currency items re-judged with a verified fact block) |
+|---|---:|
+| `gpt-5.5-2026-04-23` (ChatGPT model, API) | 26 (27.1% [19.2, 36.7]) |
+| `gemini-3.8-flash` (API) | 23 (24.0% [16.5, 33.4]) |
+| **Asha** (production) | 14 (14.6% [8.9, 23.0]) |
+| **Asha Apex-J** (11-agent panel) | 9 (9.4% [5.0, 16.9]); replicate run 14 |
+
+Apex-J lower than both consumer models (Holm p = 0.0013, 0.013); production lower in count only; the two Asha configurations not different from each other. The bundle also carries the judges' currency failure (both judges predate the March 2025 Vykat XR approval and penalized correct answers until handed a fact block), a public-register sensitivity re-run of production's failures (8 of 14 persist), and a post hoc remediation ladder with a locked 48-item held-out bank (`apex_pws/`). Study 1 (128 real PWS sessions, 990 PMIDs, 0 unresolvable) ships as aggregate statistics and code only; turn-level logs are deidentified operational data and are not released.
+
 ### Attribution summary
 
 On both measurement endpoints, the symbolic stack composes with the underlying LM. On the **structural** endpoint (MedQA parse-failure rescue) META_CORRECT is the proximal mechanism: 51 of 66 paired wins are parse-failure rescues. On the **semantic-safety** endpoint (Psychosis-bench) the full cognition stack lifts SIS from 30.2% (bare Flash) to 95.8% (Asha), a +65.6 pp gap, over an LM that is not at safety ceiling. The tier-attribution chapter (Chapter 4) establishes that neither the Flash→Pro tier jump nor the Gemini→Anthropic family jump explains this gap. We do not claim the same gap would appear over an intrinsically safety-ceiling LM; that is a separate test, queued.
@@ -103,6 +118,8 @@ asha-bench-public/
 ├── meta-correct/                          Chapter 2: META_CORRECT primitive
 ├── psychosis-bench-2026-05-11/            Chapter 3: Asha vs bare Gemini-Flash
 ├── psychosis-attribution-2026-05-12/      Chapter 4: tier-attribution (Pro vs Flash vs Asha)
+├── enclomiphene-bench-2026-09-18/         Chapter 5: enclomiphene safety bench
+├── pws-safebench-2026-10/                 Chapter 6: PWS-SafeBench v1.0 + Hard v1.1 + remediation ladder
 ├── figures/                               reproducible figure scripts + PNGs
 └── PREREGISTRATION/                       commit-locked hypotheses
 ```

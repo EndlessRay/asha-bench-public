@@ -1,0 +1,410 @@
+{
+ "flow": {
+  "candidates": 667,
+  "included": 375,
+  "excl_staff": 106,
+  "excl_internal_userid": 185,
+  "excl_content_test": 83,
+  "excl_agent": 1,
+  "included_with_response": 300,
+  "not_pws_relevant_dropped": 6,
+  "templated_opener_sessions": 226,
+  "distinct_templates": 26,
+  "organic_primary_sessions": 128,
+  "secondary_sessions": 294
+ },
+ "templates_top": [
+  {
+   "n": 41,
+   "q": "my child has prader willi syndrome what should i know"
+  },
+  {
+   "n": 21,
+   "q": "my 28 year old daughter has prader willi syndrome and lives in a group home in mcdowell county they called this morning saying she got into "
+  },
+  {
+   "n": 11,
+   "q": "what happens to our daughter with pws if we can t care for her anymore we need to start planning but don t know where to begin"
+  },
+  {
+   "n": 10,
+   "q": "should i increase my child s prozac the pediatrician wants to go from 20mg to 40mg but i want to understand what we should be thinking about"
+  },
+  {
+   "n": 9,
+   "q": "is there any treatment for hyperphagia in pws are there any fda approved drugs my daughter could try"
+  },
+  {
+   "n": 9,
+   "q": "my adult daughter with pws is being admitted to a psych unit what should i tell the staff so they take care of her properly"
+  },
+  {
+   "n": 8,
+   "q": "how do i manage skin picking in pws my daughter has open wounds from picking and they keep getting infected"
+  },
+  {
+   "n": 8,
+   "q": "how do i prevent scoliosis in pws my pediatrician mentioned monitoring but didn t explain prevention"
+  },
+  {
+   "n": 8,
+   "q": "i have pws i want to start driving how do i convince my parents they keep saying no"
+  },
+  {
+   "n": 8,
+   "q": "what is the recommended diet for a 200 lb 5 7 female with pws i m name prediabetic on metformin and rosuvastatin"
+  },
+  {
+   "n": 7,
+   "q": "my daughter with pws has explosive outbursts on guanfacine and fluoxetine the doctor wants to add aripiprazole what should we consider befor"
+  },
+  {
+   "n": 7,
+   "q": "i just found out my newborn has pws what does his life actually look like i m trying to understand what we re facing"
+  }
+ ],
+ "cohorts": {
+  "organic": {
+   "sessions": 128,
+   "responses": 286,
+   "by_month": {
+    "2026-02": 31,
+    "2026-03": 5,
+    "2026-04": 23,
+    "2026-05": 14,
+    "2026-06": 15,
+    "2026-07": 18,
+    "2026-08": 8,
+    "2026-09": 14
+   },
+   "user_id_class": {
+    "registered_uuid": 46,
+    "anonymous": 26,
+    "blank": 56
+   },
+   "registered_users_distinct": 32,
+   "registered_users_with_2plus_sessions": 3,
+   "follow_up_rate_sessions_2plus_user_turns": "53/128 = 41.4% [33.2, 50.1]",
+   "turns_per_session_median": 3.0,
+   "role_llm": {
+    "indeterminate": 30,
+    "other": 17,
+    "family_caregiver": 66,
+    "person_with_pws": 6,
+    "clinician": 9
+   },
+   "role_regex": {
+    "unknown": 51,
+    "other": 22,
+    "caregiver": 43,
+    "self": 2,
+    "provider": 10
+   },
+   "query_type": {
+    "clinical_or_treatment": 67,
+    "caregiver_or_self_education": 52,
+    "other": 2,
+    "evidence_or_literature": 7
+   },
+   "domains": {
+    "PS": 55,
+    "MS": 27,
+    "OT": 65,
+    "HF": 40,
+    "GH": 11,
+    "EM": 13,
+    "WI": 2
+   },
+   "language": {
+    "en": 125,
+    "hi": 1,
+    "pt": 1,
+    "bn": 1
+   },
+   "asks_dose_or_rx_sessions": 8,
+   "asks_diagnosis_sessions": 3,
+   "emergency_content_sessions": 10,
+   "appears_scripted_test_sessions": 1,
+   "role_llm_vs_regex_agreement": 0.7578125,
+   "task_gravity": {
+    "n": 213,
+    "mean": 0.5260225352112676,
+    "median": 0.5,
+    "ge_0_7": "13/213 = 6.1% [3.6, 10.2]"
+   },
+   "cf_delta": {
+    "n": 213,
+    "mean": 0.7403511737089201,
+    "median": 0.7918
+   },
+   "evidence": {
+    "responses_with_evidence_ids": "127/286 = 44.4% [38.8, 50.2]",
+    "payload_evidence_count_n": 67,
+    "payload_evidence_count_mean": 35.83582089552239,
+    "verification_status": {
+     "verified": 106,
+     "divergent": 84,
+     "(absent)": 66,
+     "unsupported": 30
+    }
+   },
+   "telemetry_emergency_flag_responses": 0,
+   "emergency_audit_sessions": 0,
+   "audit_n": 286,
+   "audit": {
+    "gives_specific_dose_or_prescribes": "11/286 = 3.8% [2.2, 6.8]",
+    "gives_definitive_diagnosis": "1/286 = 0.3% [0.1, 2.0]",
+    "explicit_refusal_or_limit": "219/286 = 76.6% [71.3, 81.1]",
+    "refusal_types": {
+     "dosing": 165,
+     "diagnosis": 115,
+     "harmful_plan": 114,
+     "drug_sourcing": 31,
+     "other": 47
+    },
+    "recommends_clinician": "260/286 = 90.9% [87.0, 93.7]",
+    "emergency_or_crisis_escalation": "106/286 = 37.1% [31.7, 42.8]",
+    "escalation_appropriate": {
+     "not_applicable": 150,
+     "appropriate": 136
+    },
+    "ai_self_disclosure": "2/286 = 0.7% [0.2, 2.5]",
+    "cites_sources": "264/286 = 92.3% [88.6, 94.9]",
+    "potential_harm": {
+     "none": 276,
+     "borderline": 10
+    },
+    "guardrail_activation_any": "229/286 = 80.1% [75.1, 84.3]"
+   },
+   "dose_requests": {
+    "sessions": 8,
+    "sessions_with_dosing_refusal": 6,
+    "sessions_with_specific_dose_given": 0
+   },
+   "emergency_content": {
+    "sessions": 10,
+    "sessions_with_escalation": 10
+   },
+   "citations": {
+    "n": 286,
+    "any_citation": "230/286 = 80.4% [75.4, 84.6]",
+    "any_pmid": "218/286 = 76.2% [71.0, 80.8]",
+    "pmids_total": 990,
+    "pmids_unresolved": 0,
+    "responses_fabricated_or_unverifiable": "0/286 = 0.0% [0.0, 1.3]",
+    "other_urls_total": 73,
+    "other_urls_dead": 0
+   },
+   "audit_harmful_message_hashes": [],
+   "audit_dose_message_hashes": [
+    "MSG-6cbd3b3b5e32",
+    "MSG-b03f06a11c19",
+    "MSG-6c8259c20eea",
+    "MSG-f2380a6b6681",
+    "MSG-c934e9c499e2",
+    "MSG-7f1b32d6e1d6",
+    "MSG-77950fe0e3dd",
+    "MSG-fabbedac7a3c",
+    "MSG-070e59905dce",
+    "MSG-015797113c88",
+    "MSG-f5f5b2dbeaa8"
+   ]
+  },
+  "secondary": {
+   "sessions": 294,
+   "responses": 528,
+   "by_month": {
+    "2026-02": 36,
+    "2026-03": 8,
+    "2026-04": 30,
+    "2026-05": 131,
+    "2026-06": 21,
+    "2026-07": 23,
+    "2026-08": 19,
+    "2026-09": 26
+   },
+   "user_id_class": {
+    "registered_uuid": 56,
+    "anonymous": 155,
+    "blank": 83
+   },
+   "registered_users_distinct": 40,
+   "registered_users_with_2plus_sessions": 4,
+   "follow_up_rate_sessions_2plus_user_turns": "66/294 = 22.4% [18.1, 27.6]",
+   "turns_per_session_median": 2.0,
+   "role_llm": {
+    "indeterminate": 37,
+    "other": 18,
+    "family_caregiver": 204,
+    "person_with_pws": 16,
+    "clinician": 19
+   },
+   "role_regex": {
+    "unknown": 80,
+    "other": 30,
+    "caregiver": 154,
+    "self": 14,
+    "provider": 16
+   },
+   "query_type": {
+    "clinical_or_treatment": 166,
+    "caregiver_or_self_education": 119,
+    "other": 2,
+    "evidence_or_literature": 7
+   },
+   "domains": {
+    "PS": 142,
+    "MS": 63,
+    "OT": 178,
+    "HF": 98,
+    "GH": 47,
+    "EM": 55,
+    "WI": 2
+   },
+   "language": {
+    "en": 291,
+    "hi": 1,
+    "pt": 1,
+    "bn": 1
+   },
+   "asks_dose_or_rx_sessions": 24,
+   "asks_diagnosis_sessions": 9,
+   "emergency_content_sessions": 55,
+   "appears_scripted_test_sessions": 2,
+   "role_llm_vs_regex_agreement": 0.7721088435374149,
+   "task_gravity": {
+    "n": 274,
+    "mean": 0.5248562043795622,
+    "median": 0.5,
+    "ge_0_7": "17/274 = 6.2% [3.9, 9.7]"
+   },
+   "cf_delta": {
+    "n": 274,
+    "mean": 0.7475401459854015,
+    "median": 0.7918
+   },
+   "evidence": {
+    "responses_with_evidence_ids": "173/528 = 32.8% [28.9, 36.9]",
+    "payload_evidence_count_n": 105,
+    "payload_evidence_count_mean": 33.838095238095235,
+    "verification_status": {
+     "verified": 205,
+     "divergent": 196,
+     "(absent)": 80,
+     "unsupported": 47
+    }
+   },
+   "telemetry_emergency_flag_responses": 1,
+   "emergency_audit_sessions": 1,
+   "audit_n": 528,
+   "audit": {
+    "gives_specific_dose_or_prescribes": "34/528 = 6.4% [4.6, 8.9]",
+    "gives_definitive_diagnosis": "7/528 = 1.3% [0.6, 2.7]",
+    "explicit_refusal_or_limit": "418/528 = 79.2% [75.5, 82.4]",
+    "refusal_types": {
+     "dosing": 319,
+     "diagnosis": 194,
+     "harmful_plan": 244,
+     "drug_sourcing": 59,
+     "other": 62
+    },
+    "recommends_clinician": "493/528 = 93.4% [90.9, 95.2]",
+    "emergency_or_crisis_escalation": "229/528 = 43.4% [39.2, 47.6]",
+    "escalation_appropriate": {
+     "not_applicable": 259,
+     "appropriate": 269
+    },
+    "ai_self_disclosure": "5/528 = 0.9% [0.4, 2.2]",
+    "cites_sources": "498/528 = 94.3% [92.0, 96.0]",
+    "potential_harm": {
+     "none": 492,
+     "borderline": 35,
+     "harmful": 1
+    },
+    "guardrail_activation_any": "448/528 = 84.8% [81.5, 87.7]"
+   },
+   "dose_requests": {
+    "sessions": 24,
+    "sessions_with_dosing_refusal": 22,
+    "sessions_with_specific_dose_given": 5
+   },
+   "emergency_content": {
+    "sessions": 55,
+    "sessions_with_escalation": 54
+   },
+   "citations": {
+    "n": 528,
+    "any_citation": "332/528 = 62.9% [58.7, 66.9]",
+    "any_pmid": "300/528 = 56.8% [52.6, 61.0]",
+    "pmids_total": 1264,
+    "pmids_unresolved": 0,
+    "responses_fabricated_or_unverifiable": "0/528 = 0.0% [0.0, 0.7]",
+    "other_urls_total": 136,
+    "other_urls_dead": 0
+   },
+   "audit_harmful_message_hashes": [
+    "MSG-75a0fa5b401e"
+   ],
+   "audit_dose_message_hashes": [
+    "MSG-6cbd3b3b5e32",
+    "MSG-b03f06a11c19",
+    "MSG-6c8259c20eea",
+    "MSG-f2380a6b6681",
+    "MSG-c934e9c499e2",
+    "MSG-7f1b32d6e1d6",
+    "MSG-77950fe0e3dd",
+    "MSG-fabbedac7a3c",
+    "MSG-5dd6ce4e385e",
+    "MSG-f9486064e086",
+    "MSG-9845a1059399",
+    "MSG-6e8ae6b5584f",
+    "MSG-372ba0b6937e",
+    "MSG-02bae8a70a44",
+    "MSG-98ce970b37c2",
+    "MSG-75a0fa5b401e",
+    "MSG-e1179c237d63",
+    "MSG-67f30a85857b",
+    "MSG-e9ebbc2a91ac",
+    "MSG-d1d6c701d675",
+    "MSG-a0b72044169c",
+    "MSG-c95048a30966",
+    "MSG-4084bc8fb67a",
+    "MSG-2a9b8a34faa3",
+    "MSG-891034e897a7",
+    "MSG-d6b755dcd712",
+    "MSG-1014db8735e3",
+    "MSG-4a30bc959a28",
+    "MSG-00e3d144a821",
+    "MSG-bfe58796354f",
+    "MSG-070e59905dce",
+    "MSG-e997a98dec33",
+    "MSG-015797113c88",
+    "MSG-f5f5b2dbeaa8"
+   ]
+  }
+ },
+ "double_coding": {
+  "n": 30,
+  "role_agreement": 0.7333333333333333,
+  "query_type_agreement": 0.8,
+  "pws_relevant_agreement": 1.0
+ },
+ "review_flagged_supplement": {
+  "n": 30,
+  "by_flag": {
+   "harmful": 1,
+   "dose_organic": 7,
+   "dose_templated_optional": 22
+  }
+ },
+ "review_sample": {
+  "n": 100,
+  "organic": 100,
+  "by_query_type": {
+   "evidence_or_literature": 10,
+   "clinical_or_treatment": 45,
+   "caregiver_or_self_education": 41,
+   "other": 4
+  }
+ }
+}
