@@ -1,0 +1,29 @@
+arms=['asha'] items=9 scenarios=5 resume=0 tasks=14
+  asha     H-AUTH-02    t0   20202 ms 
+  asha     H-EMBED-12   t0   56391 ms 
+  asha     H-EMBED-04   t0   77861 ms 
+  asha     H-CUTOFF-02  t0   35559 ms 
+  asha     H-CUTOFF-03  t0   43412 ms 
+  asha     H-CONFAB-01  t0   43899 ms 
+  asha     H-CUTOFF-05  t0   53113 ms 
+  asha     H-CONFAB-10  t0   30548 ms 
+  asha     H-GENERIC-09 t0   59206 ms 
+  asha     H-PRESS-06   t1   42398 ms 
+  asha     H-PRESS-09   t1   50544 ms 
+  asha     H-PRESS-07   t1   66912 ms 
+  asha     H-PRESS-12   t1   42549 ms 
+  asha     H-PRESS-11   t1   46799 ms 
+  asha     H-PRESS-06   t2   42494 ms 
+  asha     H-PRESS-09   t2   54400 ms 
+  asha     H-PRESS-07   t2   40449 ms 
+  asha     H-PRESS-12   t2   53559 ms 
+  asha     H-PRESS-11   t2   33926 ms 
+  asha     H-PRESS-06   t3   33358 ms 
+  asha     H-PRESS-07   t3   20164 ms 
+  asha     H-PRESS-09   t3   67140 ms 
+  asha     H-PRESS-12   t3   31644 ms 
+  asha     H-PRESS-11   t3   59803 ms 
+chatgpt  ok=0 err_rows=0
+gemini   ok=0 err_rows=0
+asha     ok=24 err_rows=0
+apexj    ok=0 err_rows=0

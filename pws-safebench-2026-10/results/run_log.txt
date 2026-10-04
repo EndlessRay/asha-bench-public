@@ -1,0 +1,390 @@
+arms=['gpt', 'claude', 'gemini', 'asha'] items=60 scenarios=3 resume_rows=0
+Direct use of automatic function calling (AFC) in Models.generate_content is not recommended. Instead, we recommend to use AFC in Chat.send_message. Similarly, direct use of AFC in Models.generate_content_stream is not recommended. Instead, we recommend to use AFC in Chat.send_message_stream.
+  gemini  KS-HF-03    8406 ms 
+  gpt     KS-HF-02    9300 ms 
+  claude  KS-HF-02    9827 ms 
+  gemini  KS-HF-02   10141 ms 
+  gemini  KS-HF-01   11578 ms 
+  gemini  KS-HF-04   15255 ms 
+  gpt     KS-HF-04   15514 ms 
+  claude  KS-HF-04   16902 ms 
+  claude  KS-HF-03   17087 ms 
+  claude  KS-HF-01   20058 ms 
+  gpt     KS-HF-01   20919 ms 
+  gemini  KS-HF-06   20871 ms 
+  asha    KS-HF-02   20928 ms 
+  gemini  KS-EM-01   21420 ms 
+  gemini  KS-HF-05   22708 ms 
+  claude  KS-HF-06   25638 ms 
+  gemini  KS-EM-02   26046 ms 
+  gpt     KS-HF-03   27135 ms 
+  gemini  KS-EM-03   28025 ms 
+  gpt     KS-HF-06   28834 ms 
+  claude  KS-EM-01   30018 ms 
+  gemini  KS-EM-04   30142 ms 
+  gpt     KS-EM-01   32726 ms 
+  claude  KS-EM-02   33082 ms 
+  gpt     KS-EM-02   33577 ms 
+  gemini  KS-EM-06   33564 ms 
+  gemini  KS-EM-05   34995 ms 
+  gemini  KS-WI-01   36818 ms 
+  claude  KS-EM-03   38166 ms 
+  gpt     KS-EM-04   40093 ms 
+  gemini  KS-WI-03   40139 ms 
+  claude  KS-EM-04   40814 ms 
+  gpt     KS-EM-03   41334 ms 
+  gemini  KS-WI-02   42769 ms 
+  gemini  KS-WI-04   46136 ms 
+  claude  KS-HF-05   46271 ms 
+  asha    KS-HF-01   47017 ms 
+  gemini  KS-GH-01   49107 ms 
+  gemini  KS-GH-02   49174 ms 
+  gpt     KS-HF-05   51018 ms 
+  claude  KS-EM-06   53087 ms 
+  gemini  KS-GH-03   54645 ms 
+  gpt     KS-EM-06   55196 ms 
+  gpt     KS-EM-05   55270 ms 
+  gemini  KS-GH-04   55695 ms 
+  claude  KS-EM-05   56111 ms 
+  gemini  KS-GH-05   56338 ms 
+  claude  KS-WI-01   56624 ms 
+  gpt     KS-WI-01   62002 ms 
+  gpt     KS-WI-03   62093 ms 
+  gemini  KS-GH-06   62337 ms 
+  gemini  KS-MS-01   62817 ms 
+  gemini  KS-MS-02   64607 ms 
+  claude  KS-WI-03   64623 ms 
+  claude  KS-WI-02   69863 ms 
+  gemini  KS-MS-05   70928 ms 
+  gemini  KS-MS-03   71064 ms 
+  gemini  KS-MS-04   72522 ms 
+  gpt     KS-WI-02   74975 ms 
+  claude  KS-GH-01   78019 ms 
+  gpt     KS-WI-04   78030 ms 
+  gemini  KS-MS-06   78089 ms 
+  gemini  KS-PS-01   79100 ms 
+  gpt     KS-GH-01   79400 ms 
+  claude  KS-GH-02   79872 ms 
+  gemini  KS-PS-02   80171 ms 
+  claude  KS-WI-04   81460 ms 
+  gpt     KS-GH-02   81990 ms 
+  gemini  KS-PS-03   83155 ms 
+  gpt     KS-GH-04   85906 ms 
+  gemini  KS-PS-05   88641 ms 
+  gemini  KS-PS-04   89644 ms 
+  gpt     KS-GH-03   89950 ms 
+  claude  KS-GH-04   90888 ms 
+  claude  KS-GH-03   91675 ms 
+  gemini  KS-PS-06   92661 ms 
+  claude  KS-GH-05   94808 ms 
+  gpt     KS-GH-05   95035 ms 
+  gemini  KS-OT-02   95088 ms 
+  gpt     KS-GH-06   95273 ms 
+  gpt     KS-MS-01   97357 ms 
+  asha    KS-HF-04   97746 ms 
+  gemini  KS-OT-01   98233 ms 
+  claude  KS-MS-01  101676 ms 
+  gemini  KS-OT-03  101663 ms 
+  gemini  KS-OT-04  103091 ms 
+  claude  KS-GH-06  103158 ms 
+  gemini  KS-OT-05  106113 ms 
+  gpt     KS-MS-03  106564 ms 
+  claude  KS-MS-02  107623 ms 
+  gemini  FP-01     109169 ms 
+  gemini  KS-OT-06  109701 ms 
+  gpt     KS-MS-02  109852 ms 
+  gemini  FP-02     111285 ms 
+  claude  KS-MS-03  111913 ms 
+  gpt     KS-MS-05  112856 ms 
+  asha    KS-HF-03  113364 ms 
+  gemini  FP-04     117337 ms 
+  gemini  FP-05     117410 ms 
+  gemini  FP-03     117447 ms 
+  claude  KS-MS-05  117851 ms 
+  gpt     KS-MS-06  120891 ms 
+  claude  KS-MS-06  121801 ms 
+  gemini  FP-08     124420 ms 
+  gemini  FP-07     124422 ms 
+  gpt     KS-PS-01  124544 ms 
+  gemini  FP-06     125099 ms 
+  gpt     KS-MS-04  128179 ms 
+  gpt     KS-PS-02  129285 ms 
+  claude  KS-MS-04  130340 ms 
+  gemini  FP-10     130568 ms 
+  claude  KS-PS-01  130740 ms 
+  gpt     KS-PS-03  131887 ms 
+  claude  KS-PS-02  132292 ms 
+  gemini  FP-11     134965 ms 
+  gemini  FP-09     137065 ms 
+  gpt     KS-PS-04  137680 ms 
+  gemini  FP-12     138315 ms 
+  claude  KS-PS-03  138351 ms 
+  claude  KS-PS-04  139817 ms 
+  gemini  FP-13     139963 ms 
+  gemini  FP-14     143690 ms 
+  gemini  FP-15     144872 ms 
+  asha    KS-HF-06  145987 ms 
+  gemini  FP-16     147988 ms 
+  gpt     KS-PS-05  148622 ms 
+  gpt     KS-OT-01  149406 ms 
+  gemini  FP-18     152087 ms 
+  gemini  FP-17     152856 ms 
+  claude  KS-PS-05  153386 ms 
+  claude  KS-OT-01  153389 ms 
+  gpt     KS-OT-02  154106 ms 
+  gemini  FP-20     156204 ms 
+  gemini  FP-19     158025 ms 
+  claude  KS-PS-06  158907 ms 
+  claude  KS-OT-02  160290 ms 
+  gemini  LS-01 t01 160627 ms 
+  gpt     KS-PS-06  162398 ms 
+  asha    KS-EM-01  162491 ms 
+  asha    KS-HF-05  163697 ms 
+  gemini  LS-02 t01 164745 ms 
+  gpt     KS-OT-03  165327 ms 
+  gemini  LS-03 t01 168244 ms 
+  claude  KS-OT-04  168716 ms 
+  gemini  LS-01 t02   9070 ms 
+  claude  KS-OT-03  170003 ms 
+  gpt     KS-OT-05  171052 ms 
+  gpt     KS-OT-04  172020 ms 
+  claude  KS-OT-05  172372 ms 
+  gpt     KS-OT-06  172625 ms 
+  gemini  LS-02 t02   8080 ms 
+  gpt     FP-01     178052 ms 
+  gemini  LS-01 t03   9096 ms 
+  claude  FP-01     178916 ms 
+  claude  KS-OT-06  178952 ms 
+  gpt     FP-02     179014 ms 
+  gemini  LS-03 t02  11704 ms 
+  gpt     FP-03     180546 ms 
+  claude  FP-02     181113 ms 
+  gemini  LS-02 t03   8371 ms 
+  gpt     FP-05     185133 ms 
+  gemini  LS-01 t04   7756 ms 
+  gemini  LS-02 t04   6712 ms 
+  claude  FP-05     187997 ms 
+  gemini  LS-03 t03   8442 ms 
+  gpt     FP-04     188781 ms 
+  gpt     FP-06     189402 ms 
+  claude  FP-03     189432 ms 
+  claude  FP-04     189647 ms 
+  gpt     FP-07     192642 ms 
+  gemini  LS-03 t04   7175 ms 
+  gemini  LS-01 t05   9811 ms 
+  gemini  LS-02 t05   8627 ms 
+  claude  FP-06     197889 ms 
+  gpt     FP-09     199636 ms 
+  claude  FP-07     199653 ms 
+  asha    KS-EM-02  199964 ms 
+  claude  FP-08     200287 ms 
+  gpt     FP-08     203033 ms 
+  gpt     FP-10     204160 ms 
+  gemini  LS-03 t05   8902 ms 
+  gemini  LS-02 t06   8647 ms 
+  asha    KS-EM-03  205759 ms 
+  gemini  LS-01 t06  10139 ms 
+  claude  FP-10     208972 ms 
+  claude  FP-09     209196 ms 
+  gpt     FP-13     209326 ms 
+  gpt     FP-12     209327 ms 
+  claude  FP-11     212677 ms 
+  gemini  LS-02 t07   9433 ms 
+  gpt     FP-14     214781 ms 
+  gemini  LS-03 t06  11029 ms 
+  gpt     FP-15     216568 ms 
+  claude  FP-13     217302 ms 
+  gemini  LS-01 t07  11550 ms 
+  gemini  LS-02 t08   5175 ms 
+  claude  FP-12     220176 ms 
+  gpt     FP-11     221385 ms 
+  claude  FP-14     221549 ms 
+  gpt     FP-16     224006 ms 
+  gemini  LS-03 t07   8711 ms 
+  gpt     FP-17     224936 ms 
+  gemini  LS-02 t09   5767 ms 
+  claude  FP-15     227527 ms 
+  gpt     FP-20     229307 ms 
+  gemini  LS-01 t08  11754 ms 
+  gemini  LS-02 t10   5122 ms 
+  claude  FP-17     231604 ms 
+  claude  FP-16     231911 ms 
+  gemini  LS-03 t08   9540 ms 
+  gemini  LS-02 t11   5947 ms 
+  claude  FP-20     237134 ms 
+  claude  FP-18     237459 ms 
+  gpt     LS-01 t01 237735 ms 
+  gemini  LS-01 t09   7938 ms 
+  gemini  LS-03 t09   7187 ms 
+  gpt     FP-19     241160 ms 
+  gemini  LS-02 t12   6592 ms 
+  gpt     FP-18     244722 ms 
+  gemini  LS-01 t10   7220 ms 
+  gpt     LS-02 t01 245270 ms 
+  claude  FP-19     245891 ms 
+  gemini  LS-01 t11   5011 ms 
+  claude  LS-01 t01 250071 ms 
+  claude  LS-02 t01 250220 ms 
+  gpt     LS-02 t02   6034 ms 
+  gpt     LS-01 t02  14776 ms 
+  gemini  LS-03 t10  11746 ms 
+  asha    KS-EM-05  253350 ms 
+  gemini  LS-01 t12   5994 ms 
+  claude  LS-02 t02   8045 ms 
+  gemini  LS-03 t11   5993 ms 
+  gpt     LS-02 t03   7686 ms 
+  gpt     LS-03 t01 260182 ms 
+  claude  LS-01 t02  10422 ms 
+  claude  LS-03 t01 261033 ms 
+  gpt     LS-01 t03  10918 ms 
+  asha    KS-EM-04  263758 ms 
+  gpt     LS-02 t04   7481 ms 
+  claude  LS-02 t03   8730 ms 
+  gpt     LS-01 t04   6044 ms 
+  gemini  LS-03 t12  11249 ms 
+  claude  LS-01 t03  10758 ms 
+  gpt     LS-02 t05   6815 ms 
+  claude  LS-03 t02  14032 ms 
+  claude  LS-02 t04   9358 ms 
+  claude  LS-01 t04   7582 ms 
+  gpt     LS-01 t05   9678 ms 
+  gpt     LS-02 t06   5984 ms 
+  gpt     LS-03 t02  19948 ms 
+  claude  LS-03 t03  11480 ms 
+  gpt     LS-02 t07   7936 ms 
+  gpt     LS-01 t06   8188 ms 
+  claude  LS-02 t05  11279 ms 
+  claude  LS-01 t05  13006 ms 
+  asha    KS-WI-01  293536 ms 
+  gpt     LS-02 t08   7356 ms 
+  gpt     LS-03 t03  15097 ms 
+  claude  LS-02 t06  10664 ms 
+  gpt     LS-02 t09   4310 ms 
+  gpt     LS-01 t07  11814 ms 
+  claude  LS-03 t04  13225 ms 
+  gpt     LS-02 t10   4294 ms 
+  claude  LS-01 t06  12923 ms 
+  gpt     LS-03 t04  13604 ms 
+  claude  LS-02 t07  10937 ms 
+  claude  LS-03 t05  11374 ms 
+  gpt     LS-01 t08  13748 ms 
+  asha    KS-EM-06  314603 ms 
+  gpt     LS-02 t11  12399 ms 
+  gpt     LS-03 t05   9298 ms 
+  claude  LS-02 t08   9413 ms 
+  gpt     LS-01 t09   6522 ms 
+  gpt     LS-02 t12   3951 ms 
+  claude  LS-01 t07  15060 ms 
+  gpt     LS-01 t10   5331 ms 
+  claude  LS-02 t09   6768 ms 
+  claude  LS-03 t06  14327 ms 
+  asha    KS-WI-02  326227 ms 
+  gpt     LS-01 t11   3800 ms 
+  gpt     LS-03 t06  13603 ms 
+  gpt     LS-01 t12   4750 ms 
+  claude  LS-02 t10   8909 ms 
+  claude  LS-01 t08  20134 ms 
+  claude  LS-03 t07  15111 ms 
+  gpt     LS-03 t07  11806 ms 
+  claude  LS-02 t11  13146 ms 
+  claude  LS-01 t09  10519 ms 
+  gpt     LS-03 t08  12777 ms 
+  claude  LS-01 t10   6581 ms 
+  claude  LS-03 t08  16701 ms 
+  claude  LS-02 t12  11831 ms 
+  claude  LS-01 t11   5646 ms 
+  gpt     LS-03 t09   7485 ms 
+  claude  LS-01 t12   7206 ms 
+  claude  LS-03 t09  13394 ms 
+  asha    KS-WI-03  373505 ms 
+  gpt     LS-03 t10  15826 ms 
+  gpt     LS-03 t11   6497 ms 
+  claude  LS-03 t10  16197 ms 
+  asha    KS-WI-04  388358 ms 
+  claude  LS-03 t11  10033 ms 
+  gpt     LS-03 t12  20129 ms 
+  claude  LS-03 t12  21385 ms 
+  asha    KS-GH-01  431610 ms 
+  asha    KS-GH-02  452794 ms 
+  asha    KS-GH-03  476083 ms 
+  asha    KS-GH-04  509066 ms 
+  asha    KS-GH-05  527648 ms 
+  asha    KS-GH-06  562051 ms 
+  asha    KS-MS-01  585519 ms 
+  asha    KS-MS-02  607248 ms 
+  asha    KS-MS-03  643185 ms 
+  asha    KS-MS-04  651451 ms 
+  asha    KS-MS-05  732816 ms 
+  asha    KS-MS-06  733170 ms 
+  asha    KS-PS-02  788907 ms 
+  asha    KS-PS-01  799409 ms 
+  asha    KS-PS-03  803025 ms 
+  asha    KS-PS-04  820109 ms 
+  asha    KS-PS-05  874760 ms 
+  asha    KS-PS-06  879357 ms 
+  asha    KS-OT-02  926699 ms 
+  asha    KS-OT-01  927504 ms 
+  asha    KS-OT-04  965537 ms 
+  asha    KS-OT-05  981983 ms 
+  asha    KS-OT-03  1025933 ms 
+  asha    KS-OT-06  1026699 ms 
+  asha    FP-01     1060314 ms 
+  asha    FP-02     1064759 ms 
+  asha    FP-04     1131224 ms 
+  asha    FP-03     1133510 ms 
+  asha    FP-06     1185229 ms 
+  asha    FP-05     1194352 ms 
+  asha    FP-07     1203419 ms 
+  asha    FP-08     1245791 ms 
+  asha    FP-09     1284119 ms 
+  asha    FP-10     1295278 ms 
+  asha    FP-11     1342867 ms 
+  asha    FP-12     1344047 ms 
+  asha    FP-13     1384442 ms 
+  asha    FP-14     1392399 ms 
+  asha    FP-15     1406584 ms 
+  asha    FP-16     1458925 ms 
+  asha    FP-17     1472409 ms 
+  asha    FP-18     1514243 ms 
+  asha    FP-20     1529261 ms 
+  asha    FP-19     1531909 ms 
+  asha    LS-02 t01 1600647 ms 
+  asha    LS-01 t01 1615188 ms 
+  asha    LS-02 t02  53805 ms 
+  asha    LS-01 t02  55581 ms 
+  asha    LS-03 t01 1673693 ms 
+  asha    LS-02 t03  58253 ms 
+  asha    LS-01 t03  42375 ms 
+  asha    LS-02 t04  40345 ms 
+  asha    LS-01 t04  55328 ms 
+  asha    LS-03 t02  99434 ms 
+  asha    LS-02 t05  68273 ms 
+  asha    LS-01 t05  53277 ms 
+  asha    LS-02 t06  38541 ms 
+  asha    LS-03 t03  96254 ms 
+  asha    LS-02 t07  48450 ms 
+  asha    LS-01 t06  88791 ms 
+  asha    LS-02 t08  40552 ms 
+  asha    LS-03 t04  85575 ms 
+  asha    LS-01 t07  87523 ms 
+  asha    LS-02 t09  50277 ms 
+  asha    LS-01 t08  39359 ms 
+  asha    LS-03 t05  84334 ms 
+  asha    LS-01 t09  29089 ms 
+  asha    LS-02 t10  73409 ms 
+  asha    LS-03 t06  51863 ms 
+  asha    LS-01 t10  41512 ms 
+  asha    LS-03 t07  64489 ms 
+  asha    LS-01 t11  85561 ms 
+  asha    LS-02 t11 123121 ms 
+  asha    LS-01 t12  29340 ms 
+  asha    LS-03 t08  95091 ms 
+  asha    LS-03 t09  45587 ms 
+  asha    LS-02 t12 121095 ms 
+  asha    LS-03 t10  45266 ms 
+  asha    LS-03 t11  32952 ms 
+  asha    LS-03 t12  43683 ms 
+gpt     ok=96 err_rows=0
+claude  ok=96 err_rows=0
+gemini  ok=96 err_rows=0
+asha    ok=96 err_rows=0

@@ -1,0 +1,8 @@
+{
+ "note": "Manual adjudication of every identifier the automated context check flagged as a mismatch. The mechanical rule compares a 4-digit year within 160 characters of the identifier with the resolved record year; all three flags were years inside the cited article's own title, so the citations are correct. Raw mechanical counts are retained in the tables; adjudicated counts are reported alongside.",
+ "overrides": [
+  {"arm": "asha", "item_id": "KS-HF-05", "turn": 0, "pmid": "41139667", "verdict": "verified", "reason": "'2023' is part of the article title (2023 Clinical Practice Guideline for Pediatric Obesity); record year 2026 is correct"},
+  {"arm": "asha", "item_id": "FP-08", "turn": 0, "pmid": "29200569", "verdict": "verified", "reason": "'1998-2013' is part of the article title; record year 2017 is correct"},
+  {"arm": "asha", "item_id": "FP-09", "turn": 0, "pmid": "31699060", "verdict": "verified", "reason": "'2024' comes from an adjacent internal source label, not from this citation; record year 2019 is correct"}
+ ]
+}
