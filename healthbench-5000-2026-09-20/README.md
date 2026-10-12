@@ -47,4 +47,4 @@ Any item can be re-graded from `completions.jsonl.gz` with the official HealthBe
 
 ## Cite
 
-DNAi Systems, "Asha Apex-J on HealthBench, 5,000 items, frozen 20 September 2026", artifact set of 24 September 2026, github.com/EndlessRay/dnai-models.
+DNAi Systems, "Asha Apex-J on HealthBench, 5,000 items, frozen 20 September 2026", artifact set of 24 September 2026, github.com/EndlessRay/asha-benchmarks.

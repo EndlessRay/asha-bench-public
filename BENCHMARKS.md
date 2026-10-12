@@ -1,6 +1,6 @@
 # DNAi benchmarks (public register)
 
-Rendered from `benchmarks/register/benchmarks_live_2026-09-24.json` (register updated 2026-09-24). Canonical live page: https://dnai.systems/benchmarks. Canonical JSON: https://dnai.systems/benchmarks.json.
+Rendered from `register/benchmarks_live_2026-09-24.json` (register updated 2026-09-24). Canonical live page: https://dnai.systems/benchmarks. Canonical JSON: https://dnai.systems/benchmarks.json.
 
 ## Publication policy
 
@@ -126,7 +126,7 @@ Production routes each query by clinical stakes to one of three tiers: Asha Base
   - Apex-J, Fable 5.1 composer, concise style (E2; straddled a restart, record only) (300-item slice, GPT-5.4 grader): 67.7 vs 62.6 bare (n=300). vs Apex-J, Fable 5.1 composer (E1 baseline, 16 Sep) on the same items: +5.1 length-adjusted (GPT-5.4, p = 0.01), +4.6 (Opus 4.8). Harm rate 29.2% vs 28.3%. Opus 4.8 grader: 71.5 vs 66.9. rejected: a gate failed or the score fell 3 points or more. Pin 2165d45a, cab1d043; one trial; read out 2026-09-17.
 - Notes: Every arm on the board, ours and the bare frontier models, went through one harness and three graders, so the ranking is like-for-like. On the September board (Asha arms on the 12 September build, Fable 5.1 composer) GPT-6 Astra leads on the official length-adjusted metric and Asha Apex-J is second, ahead on raw content and on red-team items at a higher harm rate than Astra. We publish the ordering as measured. Since then a ceiling ladder has run on a 300-item stratified slice of this set, one trial per arm, every arm on one recorded api process (the pin) and paired item by item against the incumbent under a pre-registered rule: adopt on 3 points or more, or on a clear harm reduction at equal score, with harm, red-team, empty-answer, refusal and grader-agreement gates passing. Round 1 (17 Sep) moved the composer to GPT-6 Astra. Round 2 (18 Sep, on the 17 Sep code: clinician register, language, memory scope) adopted the concise composer style (+3.6 length-adjusted, p=0.01, harm within gate); the guarded style, a dated PubMed live-evidence lane and the query-aware retriever each read inside the noise band against that incumbent, and asserting a clinician audience on this physician-written set regressed on red-team items. The Opus 5 composer arm is running. On the Base tier the same ladder adopted two prompt levers: clinician register with the concise style (+3.1) and a translate-and-correct rule for unsafe handouts, adopted on safety alone (harm down 6.7 points overall and 9.3 on red-team items at equal score). The live cascade, which sends 32 of these 300 items above Base by gravity, read level with Base overall; in the 25-item Mid band the ensemble scored below Base on all three graders, which is the evidence the Mid-floor decision now rests on. Slice results are exploratory by design and do not replace the board. When round 2 closes, the incumbent runs the full 525 items twice against bare GPT-6 Astra twice on the same pin and graders; that pre-freeze number is listed here when it lands. The code-freeze battery (22 to 25 September, Professional 525 x 2 for Base, Mid and Apex on the frozen build) produces the number of record and replaces this row. Per-item Professional data are withheld at OpenAI's no-publish request, so this row is tier C until the freeze artifacts are released.
 - In plain terms: The 525 questions a clinician asks in practice (dosing, differentials, management), graded against physician checklists. The official score penalizes long answers, so a system cannot win by saying more. Every system on this board was scored by the same grader in the same run, which is what makes the ranking fair. The rows under Also measured are one experiment at a time on the same 300 questions: each row names what changed, what it was compared with, and whether the change was adopted, left alone, or rejected under a rule written before the run. The current best configuration wraps our architecture around the leading model and asks it to answer briefly; it leads that bare model on these questions at the same rate of harmful statements.
-- Artifacts: [June 2026 configs and aggregate results (public repo, professional/)](https://github.com/EndlessRay/asha-healthbench-2026-06-26/tree/main/professional); [Preprint (Research Square rs-10206806)](https://www.researchsquare.com/article/rs-10206806/v1)
+- Artifacts: [June 2026 configs and aggregate results (public repo, professional/)](https://github.com/EndlessRay/asha-benchmarks/tree/main/healthbench-2026-06-26/professional); [Preprint (Research Square rs-10206806)](https://www.researchsquare.com/article/rs-10206806/v1)
 
 ### HealthBench, 500-item sample (Vishwanath et al. harness): Independent study's 500-item sample (`healthbench-500-independent`)
 
@@ -164,7 +164,7 @@ Production routes each query by clinical stakes to one of three tiers: Asha Base
   - Independent re-run of the live system (Airpixels, September 2026, strict extractor): 92.5 (n=1273). 1177/1273, 13 unparsed; our own September re-run 93.64
 - Notes: Locked head-to-head: every arm answered the same 1,273 items on the same day, so question drift and grader variation are controlled across arms. Zero parse failures for Asha on the May 2026 run. September re-runs of the live system read 92.5 to 93.6; the code-freeze battery re-runs MedQA with a shared extractor.
 - In plain terms: Multiple-choice questions from the US medical licensing exam. Every system answered the same 1,273 questions on the same day and the score is the share answered correctly. A floor for medical knowledge that frontier models have nearly saturated; the paired comparisons are the useful part.
-- Artifacts: [Per-item results, dataset hash, scripts (public repo, medqa-2026-05-04/)](https://github.com/EndlessRay/asha-bench-public/tree/main/medqa-2026-05-04)
+- Artifacts: [Per-item results, dataset hash, scripts (public repo, medqa-2026-05-04/)](https://github.com/EndlessRay/asha-benchmarks/tree/main/medqa-2026-05-04)
 
 ### psychosis-bench (Au Yeung et al. 2025): Full protocol; 96 intervention-eligible turns per arm (`psychosis-bench-sis`)
 
@@ -186,7 +186,7 @@ Production routes each query by clinical stakes to one of three tiers: Asha Base
   - Bare Claude Sonnet 4.5, same run (20 Sep) SIS: 100.0 (n=96). 96/96; DCS 0.007, HES 0.000. Current bare frontier models match Asha on this protocol; the May held-backbone gap (30.2% for bare gemini-2.5-flash) is a statement about what the architecture adds to a given backbone, not about frontier models today
 - Notes: The backbone is held fixed and only the surrounding architecture varies, so the May 2026 gain is attributable to the architecture. Both pre-registered hypotheses (DCS, SIS) pass; the two judges agree on the direction of every metric, and inter-judge agreement fell below the pre-registered gate (kappa 0.25), which the pre-registration records as an inconclusive formal verdict. n=96 is fixed by the protocol (16 scenarios x 12 turns, 96 intervention-eligible turns per arm). Re-run 2026-09-20 on the frozen Apex-J with the same protocol and judge: SIS 95.8% [89.8, 98.4], DCS 0.146, HES 0.021; Asha Base 100%; bare Claude Sonnet 4.5 100% with DCS 0.007 and HES 0. The crisis claim to make is the held-backbone one (same model, 30% without Asha, 96% with); against today's bare frontier models the protocol reads parity, not superiority.
 - In plain terms: Scripted 12-turn conversations in which a user slides toward delusional beliefs and asks for things that could cause harm. The safety score is how often the system intervened safely when it should have, instead of agreeing along. The same underlying model was tested bare and inside Asha, so the difference is the architecture.
-- Artifacts: [Per-turn judge outputs, scenarios, pre-registration (public repo, psychosis-bench-2026-05-11/)](https://github.com/EndlessRay/asha-bench-public/tree/main/psychosis-bench-2026-05-11); [Attribution study: Flash to Pro tier jump gives no safety lift](https://github.com/EndlessRay/asha-bench-public/tree/main/psychosis-attribution-2026-05-12)
+- Artifacts: [Per-turn judge outputs, scenarios, pre-registration (public repo, psychosis-bench-2026-05-11/)](https://github.com/EndlessRay/asha-benchmarks/tree/main/psychosis-bench-2026-05-11); [Attribution study: Flash to Pro tier jump gives no safety lift](https://github.com/EndlessRay/asha-benchmarks/tree/main/psychosis-attribution-2026-05-12)
 
 ### Enclomiphene-bench v1.0, patient arm (psychosis-bench protocol): Full protocol; 36 intervention-eligible turns per arm (`enclomiphene-bench-sis`)
 
@@ -203,7 +203,7 @@ Production routes each query by clinical stakes to one of three tiers: Asha Base
   - Suicidal-ideation turns with crisis direction: 100.0 (n=3). 3/3, 988 named each time
   - Harm-enablement score (HES), lower is safer: 0.3. Judge A; Judge B 0.417. Judges disagree on HES magnitude for three of four arms (kappa 0.03 to 0.29), so HES is not used to rank arms in this release. Pre-registered H1 fails under Judge A on three turns that Judge B scores 0 and that read as explicit refusals.
 - Notes: Single-topic longitudinal safety set on the 2026 compounded-enclomiphene fad (young eugonadal men, telehealth at about $90 a month, 'I don't take testosterone'). Asha and bare Claude Sonnet 4.5 both intervene on every eligible turn; the separation between Asha and the bare models appears in the clinician red-team arm (appendix). Per-turn artifacts for all four arms and both judges are public.
-- Artifacts: [Per-turn outputs for both judges and all four arms, question files, stats script (public repo, enclomiphene-bench-2026-09-18/)](https://github.com/EndlessRay/asha-bench-public/tree/main/enclomiphene-bench-2026-09-18); [Benchmark design and pre-registration (monorepo, scripts/audits/enclomiphene_bench/README.md)](https://github.com/EndlessRay/asha-bench-public/blob/main/enclomiphene-bench-2026-09-18/README.md)
+- Artifacts: [Per-turn outputs for both judges and all four arms, question files, stats script (public repo, enclomiphene-bench-2026-09-18/)](https://github.com/EndlessRay/asha-benchmarks/tree/main/enclomiphene-bench-2026-09-18); [Benchmark design and pre-registration (monorepo, scripts/audits/enclomiphene_bench/README.md)](https://github.com/EndlessRay/asha-benchmarks/blob/main/enclomiphene-bench-2026-09-18/README.md)
 
 ### Locked pediatric AOM chart (Hobbs, dochobbs/aom-chart packet v5): Locked 24-month stem (`aom-locked-chart-cds`)
 
@@ -217,7 +217,7 @@ Production routes each query by clinical stakes to one of three tiers: Asha Base
   - Casual-phrasing probe: 100.0 (n=4). 4/4
 - Notes: Self-run receipts on a clinician's public locked chart; the author adjudicates and owns the scoreboard. Known imperfection, quantified in the traces: in roughly 1 to 2 of every 10 runs the amoxicillin-clavulanate trigger check is phrased as an assertion plus a confirm-with-caregiver directive rather than the stricter declared form. n is set by the chart; the interval is shown for that reason.
 - In plain terms: A pediatrician published a locked chart of a two-year-old with an ear infection and asked AI systems for the plan. Passing means correct age arithmetic, correct weight-based dose and duration, no invented chart facts, and the same plan whatever the child's insurance, race, or name. The chart's author owns the scoreboard.
-- Artifacts: [Verbatim traces and scoring (public repo)](https://github.com/EndlessRay/asha-aom-chart-2026-08); [The benchmark author's chart and packet](https://github.com/dochobbs/aom-chart)
+- Artifacts: [Verbatim traces and scoring (public repo)](https://github.com/EndlessRay/asha-benchmarks/tree/main/aom-chart-2026-08); [The benchmark author's chart and packet](https://github.com/dochobbs/aom-chart)
 
 ### HealthBench standard: Standard, full set (`healthbench-standard`)
 
@@ -285,9 +285,9 @@ Small samples (below the register's n threshold): reported with intervals where 
 
 ## Reproduce
 
-- [HealthBench: harness, configs, graded data, pipeline glossary](https://github.com/EndlessRay/asha-healthbench-2026-06-26)
-- [MedQA, psychosis-bench, META_CORRECT: bit-exact public artifacts](https://github.com/EndlessRay/asha-bench-public)
-- [Locked pediatric AOM chart receipts](https://github.com/EndlessRay/asha-aom-chart-2026-08)
+- [HealthBench: harness, configs, graded data, pipeline glossary](https://github.com/EndlessRay/asha-benchmarks/tree/main/healthbench-2026-06-26)
+- [MedQA, psychosis-bench, META_CORRECT: bit-exact public artifacts](https://github.com/EndlessRay/asha-benchmarks)
+- [Locked pediatric AOM chart receipts](https://github.com/EndlessRay/asha-benchmarks/tree/main/aom-chart-2026-08)
 - [Preprint, 24 pp (Research Square rs-10206806)](https://www.researchsquare.com/article/rs-10206806/v1)
 - [Live corpus commitment (hash over the knowledge corpus the benchmarks ran against)](https://api.askasha.org/api/audit/corpus-state/public)
 - [US Patent 12,555,008 B1 (the architecture the lift comes from)](https://patents.google.com/patent/US12555008B1)

@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use these artifacts, cite the preprint and link this repository."
+title: "Asha benchmarks: per-item benchmark artifacts for the Asha medical AI agent"
+type: dataset
+authors:
+  - family-names: Singh
+    given-names: Deepan
+    affiliation: DNAi Systems
+  - family-names: Anand
+    given-names: Paridhi
+    affiliation: DNAi Systems
+repository-code: "https://github.com/EndlessRay/asha-benchmarks"
+url: "https://dnai.systems/benchmarks"
+date-released: 2026-10-12
+keywords:
+  - benchmarks
+  - medical-ai
+  - reproducibility
+  - healthbench
+  - ai-safety
+preferred-citation:
+  type: article
+  title: "An auditable, retrieval-grounded agent architecture improves medical accuracy and conversational safety in language models"
+  authors:
+    - family-names: Singh
+      given-names: Deepan
+    - family-names: Anand
+      given-names: Paridhi
+  doi: "10.21203/rs.3.rs-10206806/v1"
+  publisher:
+    name: Research Square
+  year: 2026

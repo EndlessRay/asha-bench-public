@@ -48,7 +48,7 @@ Bearer-auth A2A v1.0 endpoints, identical across all DNAi agents — only the `a
 
 ## Connect to Google Gemini Enterprise
 
-Harley registers as a "Custom agent via A2A" inside any Google Gemini Enterprise app. Paste this repo's [`agent-card.json`](agent-card.json) into **Gemini Enterprise → your app → Agents → Add Agents → Custom agent via A2A** and click through. The card is shaped to be maximally compatible: it carries both the A2A v1.0 `supportedInterfaces[]` shape AND top-level `url` / `protocolVersion` / `iconUrl` / `documentationUrl` for the Gemini Enterprise console parser. Full step-by-step (with `curl` automation example) lives in [asha-a2a → Connect to Google Gemini Enterprise](https://github.com/EndlessRay/asha-a2a#connect-to-google-gemini-enterprise) — every DNAi agent uses the identical registration flow.
+Harley registers as a "Custom agent via A2A" inside any Google Gemini Enterprise app. Paste this repo's [`agent-card.json`](agent-card.json) into **Gemini Enterprise → your app → Agents → Add Agents → Custom agent via A2A** and click through. The card is shaped to be maximally compatible: it carries both the A2A v1.0 `supportedInterfaces[]` shape AND top-level `url` / `protocolVersion` / `iconUrl` / `documentationUrl` for the Gemini Enterprise console parser. Full step-by-step (with `curl` automation example) lives in [asha-a2a → Connect to Google Gemini Enterprise](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/asha#connect-to-google-gemini-enterprise) — every DNAi agent uses the identical registration flow.
 
 ## Evaluating Harley against your current fitness AI
 
@@ -59,12 +59,12 @@ ASHA_API_KEY=ak_...        \
 OTHER_API_BASE=https://your-current-api  \
 OTHER_API_KEY=...          \
 EVAL_SET=fitness_eval_set.txt \
-  python evaluation.py  # from github.com/EndlessRay/asha-a2a/examples
+  python evaluation.py  # from github.com/EndlessRay/asha-benchmarks/tree/main/a2a/asha/examples
 ```
 
 Build a representative eval set from your trainer's real queries — programming questions, exercise selection, periodization, nutrition macros, client-progression edge cases. Score on factual accuracy (cross-check against ACSM / NSCA / peer-reviewed exercise science), latency, and whether responses include verifiable provenance.
 
-Full protocol with metrics, FENG falsification step, and migration path: see [asha-a2a/README.md](https://github.com/EndlessRay/asha-a2a#evaluating-asha-against-your-current-medical-ai).
+Full protocol with metrics, FENG falsification step, and migration path: see [asha-a2a/README.md](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/asha#evaluating-asha-against-your-current-medical-ai).
 
 ## Pricing
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render BENCHMARKS.md from the public benchmark register JSON.
 
-The register (benchmarks/register/benchmarks_live_<date>.json) is the same
+The register (register/benchmarks_live_<date>.json) is the same
 document served at https://dnai.systems/benchmarks.json and by the Asha API at
 /api/benchmarks. Nothing in this file is typed by hand: every number comes
 from the register, so the markdown cannot drift from the page.
@@ -31,7 +31,7 @@ def ci(row):
 
 
 def main() -> int:
-    path = sys.argv[1] if len(sys.argv) > 1 else sorted(glob.glob("benchmarks/register/benchmarks_live_*.json"))[-1]
+    path = sys.argv[1] if len(sys.argv) > 1 else sorted(glob.glob("register/benchmarks_live_*.json"))[-1]
     reg = json.load(open(path, encoding="utf-8"))
     out = []
     out.append("# DNAi benchmarks (public register)\n")

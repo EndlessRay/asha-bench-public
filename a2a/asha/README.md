@@ -17,7 +17,7 @@ Asha is a neurosymbolic system. The LLM operates as the verbalization layer; the
 | Epistemic Arena with Neural Darwinism | **31,616 active Competitive Informational Units (CIUs)** currently competing. **12,048 promoted (verified)** into long-term memory. **32,768 quarantined** by the Quality Firewall. Promotion rate 15.8%, quarantine rate 42.9% of evaluated candidates. |
 | META_CORRECT | deterministic post-emission corrector for structured outputs in regulated domains. |
 
-Public falsifiability surface: [`github.com/EndlessRay/asha-bench-public`](https://github.com/EndlessRay/asha-bench-public). Two structural signatures live there today, both bit-exact reproducible from SHA-256 locked inputs.
+Public falsifiability surface: [`github.com/EndlessRay/asha-benchmarks`](https://github.com/EndlessRay/asha-benchmarks). Two structural signatures live there today, both bit-exact reproducible from SHA-256 locked inputs.
 
 - **Same backbone LM, no parse failures.** MedQA (n = 1,273): bare Gemini 3.1 Pro Preview parse-fails on 5.58% of questions. Asha parse-fails on 0/1,273. META_CORRECT accounts for 51 of 66 paired McNemar wins.
 - **Same backbone LM, different safety behavior.** Psychosis-bench (Au Yeung 2025 preprint, 192 turns/arm): bare `gemini-2.5-flash` posts 30.2% safety-intervention rate. Asha's full stack on the same `gemini-2.5-flash`-majority routing posts 95.8%. The +65.6 pp gap is attributable to the surrounding cognition stack.
@@ -121,7 +121,7 @@ Asha returns **structured provenance** with every response. That means you can c
 | Count of evidence items used | Yes (`provenance.evidence_count`) | No |
 | Predicate scope (medical_general, drug, guideline, etc.) | Yes (`provenance.predicate_scope`) | No |
 | Verifiable fiduciary contract hash | Yes (`provenance.contract_hash`) | No |
-| Independent claim falsification | Yes (`POST /api/feng/falsify`, see [feng-a2a](https://github.com/EndlessRay/feng-a2a)) | No |
+| Independent claim falsification | Yes (`POST /api/feng/falsify`, see [a2a/feng](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/feng)) | No |
 
 ### The 5-step protocol
 
@@ -155,7 +155,7 @@ Asha returns **structured provenance** with every response. That means you can c
    | Cost at expected volume | Asha is flat-rate metered ($0 / $49 / $199 / Custom; see Pricing). Compare against per-call or per-token billing on your current provider. |
    | Auditability | Can you re-derive *what knowledge grounded the answer*, weeks later, after the model has updated? Asha: yes (contract hash + sources are stable per response). Most: no. |
 
-5. **Stress-test any specific claim with FENG.** If either provider says something high-stakes (e.g. "Drug X is contraindicated with Drug Y"), run that exact claim through the [FENG](https://github.com/EndlessRay/feng-a2a) endpoint. You'll get a verdict (`FALSIFIED`, `WEAKENED`, `CONDITIONAL`, or `UNFALSIFIED`) with E-value, evidence-for, evidence-against, and the collections searched. This is the deepest single audit step available across any medical AI vendor today.
+5. **Stress-test any specific claim with FENG.** If either provider says something high-stakes (e.g. "Drug X is contraindicated with Drug Y"), run that exact claim through the [FENG](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/feng) endpoint. You'll get a verdict (`FALSIFIED`, `WEAKENED`, `CONDITIONAL`, or `UNFALSIFIED`) with E-value, evidence-for, evidence-against, and the collections searched. This is the deepest single audit step available across any medical AI vendor today.
 
 ### What we tell evaluators honestly
 
@@ -237,7 +237,7 @@ In addition to the A2A protocol surface, Asha exposes operator endpoints for man
 | `GET /api/a2a/portal` | API key | Stripe Customer Portal (billing self-service) |
 | `POST /api/a2a/rotate-key` | API key | Rotate (regenerate) your API key |
 | `GET /api/audit/corpus-state` | JWT | Cryptographic corpus commitment (verifiable knowledge state) |
-| `POST /api/feng/falsify` | JWT | Popperian claim falsification; see [feng-a2a](https://github.com/EndlessRay/feng-a2a) |
+| `POST /api/feng/falsify` | JWT | Popperian claim falsification; see [a2a/feng](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/feng) |
 
 ## Knowledge Coverage (Asha's slice)
 
@@ -276,11 +276,11 @@ Asha is one of 11 public agents in the DNAi fleet. All agents share the same bas
 
 | Agent | Domain | Repo | Agent Card |
 |-------|--------|------|------------|
-| **Asha** | Medical intelligence | [asha-a2a](https://github.com/EndlessRay/asha-a2a) | `?agent_id=asha` |
-| **Harley** | Fitness coaching | [harley-a2a](https://github.com/EndlessRay/harley-a2a) | `?agent_id=harley` |
-| **Artha** | Financial analysis | [artha-a2a](https://github.com/EndlessRay/artha-a2a) | `?agent_id=artha` |
-| **Sage** | Nutrition & wellness | [sage-a2a](https://github.com/EndlessRay/sage-a2a) | `?agent_id=sage` |
-| **Polymath** | Math & science | [polymath-a2a](https://github.com/EndlessRay/polymath-a2a) | `?agent_id=polymath` |
+| **Asha** | Medical intelligence | [a2a/asha](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/asha) | `?agent_id=asha` |
+| **Harley** | Fitness coaching | [a2a/harley](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/harley) | `?agent_id=harley` |
+| **Artha** | Financial analysis | [a2a/artha](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/artha) | `?agent_id=artha` |
+| **Sage** | Nutrition & wellness | [a2a/sage](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/sage) | `?agent_id=sage` |
+| **Polymath** | Math & science | [a2a/polymath](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/polymath) | `?agent_id=polymath` |
 | **Lyra** | Medical research | card only | `?agent_id=lyra` |
 | **Leo** | Legal aid | card only | `?agent_id=leo` |
 | **Mira** | Marketing & growth | card only | `?agent_id=mira` |
@@ -292,7 +292,7 @@ Companion services:
 
 | Service | Repo | Purpose |
 |---------|------|---------|
-| FENG (Falsification Engine) | [feng-a2a](https://github.com/EndlessRay/feng-a2a) | Popperian claim falsification with E-value scoring |
+| FENG (Falsification Engine) | [a2a/feng](https://github.com/EndlessRay/asha-benchmarks/tree/main/a2a/feng) | Popperian claim falsification with E-value scoring |
 
 ## Links
 
@@ -301,7 +301,7 @@ Companion services:
 - **Product**: https://askasha.org
 - **Company**: https://dnai.systems
 - **A2A Protocol**: https://a2aproject.github.io/A2A/
-- **Public benchmarks (architectural evidence)**: https://github.com/EndlessRay/asha-bench-public
+- **Public benchmarks (architectural evidence)**: https://github.com/EndlessRay/asha-benchmarks
 
 ## License
 
