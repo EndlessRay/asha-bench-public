@@ -1,0 +1,36 @@
+{
+ "label_internal": "hb500_current_default",
+ "completions": 500,
+ "graded": {
+  "gpt_4_1": 500,
+  "gpt_5_4": 500,
+  "claude_opus_4_8": 500
+ },
+ "config": {
+  "label": "hb500_current_default",
+  "pipeline": "apexj",
+  "dataset_sha256": "3dac9145bee6031aa39dc096bdea831a63e71f48b752398d532fd8ca9ca49f07",
+  "n_items": 500,
+  "concurrency": 4,
+  "graders": "claude-opus-4-8 gpt-4.1",
+  "started_utc": "2026-09-23T17:46:35Z",
+  "apexj_extra_args": "--compose-model gpt-6-astra --compose-max-tokens 4096 --compose-style default"
+ },
+ "pin": {
+  "pipeline_id": "P6-J",
+  "process_fingerprint": "3809baf1ff0fead4",
+  "process_started_at": "2026-09-23T13:22:43Z",
+  "llm_provider": "anthropic_routed",
+  "routed_low_model": "claude-sonnet-5",
+  "routed_high_model": "claude-opus-5",
+  "compose_max_tokens_default": 4096,
+  "quorum": 7,
+  "culture_charter_version": "0.2.0",
+  "culture_charter_hash": "23292db5b657928066fffdedb51b80b14756b35ad771aa414f5cb52ae042c10e",
+  "kil_fingerprint": {
+   "knowledge_collections": 355,
+   "sha256_16": "a727c73f06eb790a"
+  }
+ },
+ "repo_git_sha": "42988c1d9027857522e9904fbf45f04369f61e1c"
+}

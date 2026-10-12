@@ -1,0 +1,272 @@
+{
+ "run": "healthbench-5000-2026-09-20",
+ "arms": {
+  "asha-apex-j-frozen": {
+   "label_internal": "hb5000_apexj",
+   "completions": 5000,
+   "graded": {
+    "gpt_4_1": 5000,
+    "gpt_5_4": 5000,
+    "claude_opus_4_8": 5000
+   },
+   "config": {
+    "label": "hb5000_apexj",
+    "pipeline": "apexj",
+    "dataset_sha256": "e99dd3c6372c10d6fcc5e385c5fae69d0dd40392dae56836ef9493ae324ecd2f",
+    "n_items": 5000,
+    "concurrency": 4,
+    "graders": "claude-opus-4-8 gpt-4.1",
+    "started_utc": "2026-09-22T22:59:39Z",
+    "apexj_extra_args": "--compose-model gpt-6-astra --compose-max-tokens 4096 --compose-style concise"
+   },
+   "pin": {
+    "pipeline_id": "P6-J",
+    "process_fingerprint": "edd4f69f9a9bd6d2",
+    "process_started_at": "2026-09-20T19:22:21Z",
+    "llm_provider": "anthropic_routed",
+    "routed_low_model": "claude-sonnet-5",
+    "routed_high_model": "claude-opus-5",
+    "compose_max_tokens_default": 4096,
+    "quorum": 7,
+    "culture_charter_version": "0.2.0",
+    "culture_charter_hash": "23292db5b657928066fffdedb51b80b14756b35ad771aa414f5cb52ae042c10e",
+    "kil_fingerprint": {
+     "knowledge_collections": 355,
+     "sha256_16": "a727c73f06eb790a"
+    }
+   },
+   "repo_git_sha": "7adfbebf848daed62c7a68732b440f1ea7f6ba92"
+  },
+  "bare-gpt-6-astra": {
+   "label_internal": "bare_hb5000_astra",
+   "completions": 5000,
+   "graded": {
+    "gpt_4_1": 5000,
+    "gpt_5_4": 5000,
+    "claude_opus_4_8": 5000
+   },
+   "config": {
+    "label": "hb5000_astra",
+    "provider": "openai",
+    "model": "gpt-6-astra",
+    "dataset_sha256": "e99dd3c6372c10d6fcc5e385c5fae69d0dd40392dae56836ef9493ae324ecd2f",
+    "conditions": "no tools from us, no system prompt, highest effort; vendor systems run as shipped",
+    "started_utc": "2026-09-19T19:06:03Z"
+   }
+  },
+  "identity-check-2026-09-23-concise": {
+   "label_internal": "hb500_current_concise",
+   "completions": 500,
+   "graded": {
+    "gpt_4_1": 500,
+    "gpt_5_4": 500,
+    "claude_opus_4_8": 500
+   },
+   "config": {
+    "label": "hb500_current_concise",
+    "pipeline": "apexj",
+    "dataset_sha256": "3dac9145bee6031aa39dc096bdea831a63e71f48b752398d532fd8ca9ca49f07",
+    "n_items": 500,
+    "concurrency": 4,
+    "graders": "claude-opus-4-8 gpt-4.1",
+    "started_utc": "2026-09-23T13:24:05Z",
+    "apexj_extra_args": "--compose-model gpt-6-astra --compose-max-tokens 4096 --compose-style concise"
+   },
+   "pin": {
+    "pipeline_id": "P6-J",
+    "process_fingerprint": "3809baf1ff0fead4",
+    "process_started_at": "2026-09-23T13:22:43Z",
+    "llm_provider": "anthropic_routed",
+    "routed_low_model": "claude-sonnet-5",
+    "routed_high_model": "claude-opus-5",
+    "compose_max_tokens_default": 4096,
+    "quorum": 7,
+    "culture_charter_version": "0.2.0",
+    "culture_charter_hash": "23292db5b657928066fffdedb51b80b14756b35ad771aa414f5cb52ae042c10e",
+    "kil_fingerprint": {
+     "knowledge_collections": 355,
+     "sha256_16": "a727c73f06eb790a"
+    }
+   },
+   "repo_git_sha": "849a0142964b539a46cf0862f386001de78bf9b4"
+  },
+  "style-check-2026-09-23-default": {
+   "label_internal": "hb500_current_default",
+   "completions": 500,
+   "graded": {
+    "gpt_4_1": 500,
+    "gpt_5_4": 500,
+    "claude_opus_4_8": 500
+   },
+   "config": {
+    "label": "hb500_current_default",
+    "pipeline": "apexj",
+    "dataset_sha256": "3dac9145bee6031aa39dc096bdea831a63e71f48b752398d532fd8ca9ca49f07",
+    "n_items": 500,
+    "concurrency": 4,
+    "graders": "claude-opus-4-8 gpt-4.1",
+    "started_utc": "2026-09-23T17:46:35Z",
+    "apexj_extra_args": "--compose-model gpt-6-astra --compose-max-tokens 4096 --compose-style default"
+   },
+   "pin": {
+    "pipeline_id": "P6-J",
+    "process_fingerprint": "3809baf1ff0fead4",
+    "process_started_at": "2026-09-23T13:22:43Z",
+    "llm_provider": "anthropic_routed",
+    "routed_low_model": "claude-sonnet-5",
+    "routed_high_model": "claude-opus-5",
+    "compose_max_tokens_default": 4096,
+    "quorum": 7,
+    "culture_charter_version": "0.2.0",
+    "culture_charter_hash": "23292db5b657928066fffdedb51b80b14756b35ad771aa414f5cb52ae042c10e",
+    "kil_fingerprint": {
+     "knowledge_collections": 355,
+     "sha256_16": "a727c73f06eb790a"
+    }
+   },
+   "repo_git_sha": "42988c1d9027857522e9904fbf45f04369f61e1c"
+  }
+ },
+ "files": {
+  "vishwanath_seed62_500_items.jsonl": {
+   "sha256": "3dac9145bee6031aa39dc096bdea831a63e71f48b752398d532fd8ca9ca49f07",
+   "bytes": 5761925
+  },
+  "identity-check-2026-09-23-concise/graded_gpt_4_1.jsonl.gz": {
+   "sha256": "c69217dd841bf7721d52fe4220652664b6acc438c81b61e3ca0fc55cf1c8cbe2",
+   "bytes": 548124
+  },
+  "identity-check-2026-09-23-concise/graded_gpt_5_4.jsonl.gz": {
+   "sha256": "0927a52f99275426b6a4f4e14d8715a68399c349f605f99d842136cf1598d1b6",
+   "bytes": 568728
+  },
+  "identity-check-2026-09-23-concise/completions.jsonl.gz": {
+   "sha256": "a51947eddd65a054815abf973212cda3a603234606a6b7d6cbdcde933ade5f97",
+   "bytes": 1083177
+  },
+  "identity-check-2026-09-23-concise/graded_claude_opus_4_8.jsonl.gz": {
+   "sha256": "424e8cd4e9a93063eae5b69766f0943b857d2c668d83309db1a9537908d7fba2",
+   "bytes": 579957
+  },
+  "identity-check-2026-09-23-concise/run_manifest.json": {
+   "sha256": "023ad8019e9ac28f1238170441273c73e70347075bba0e9566a6bd7ce1b610de",
+   "bytes": 1122
+  },
+  "asha-apex-j-frozen/graded_gpt_4_1.jsonl.gz": {
+   "sha256": "f76f6dbc4b6b925aafe86e3cb3483504a09af85e5751e1b34740a80793e4f23a",
+   "bytes": 5418055
+  },
+  "asha-apex-j-frozen/graded_gpt_5_4.jsonl.gz": {
+   "sha256": "81783a13b1612c218c9cf31c468ec67b9c40ae443196e5acec98d80f29d3cb83",
+   "bytes": 5644110
+  },
+  "asha-apex-j-frozen/completions.jsonl.gz": {
+   "sha256": "e1dd3cee4ad4a6a95bee48c3958bdfe9faa9a78a5bfb47bd5af6f6266b92c717",
+   "bytes": 12003547
+  },
+  "asha-apex-j-frozen/graded_claude_opus_4_8.jsonl.gz": {
+   "sha256": "250b4f49a400c57757de9f8d88a58723571e205ce691ec5623161124686661a7",
+   "bytes": 5737024
+  },
+  "asha-apex-j-frozen/run_manifest.json": {
+   "sha256": "4e8a0176431a6b6528b89b5f438e7721f093f4da833daebfe92c30de325a34e3",
+   "bytes": 1109
+  },
+  "readouts/decision_readout_hb500_style.json": {
+   "sha256": "b44e62dbf2049a0ba75a79a305902f66ee756afa1d0d8cee1d104a1ca0f8fb35",
+   "bytes": 74386
+  },
+  "readouts/official_readout_hb5000_seed62.json": {
+   "sha256": "6102a6b491cd2a3e2572158a0fbf702334f82b4a9fadb0653bcca0d7417f5912",
+   "bytes": 73413
+  },
+  "readouts/official_readout_hb5000_hard.json": {
+   "sha256": "69b51130f479e49f08a3b1c56a0c388e02ba0ffc7ebe3727961e400ca4799510",
+   "bytes": 73873
+  },
+  "readouts/decision_readout_hb500_default_vs_concise.json": {
+   "sha256": "50445c760a53f2409dde85a044d44185e901f6902f53319b5695ab7a1287d688",
+   "bytes": 74584
+  },
+  "readouts/hb500_panel_summary.json": {
+   "sha256": "d50fca30e59f28b365f73aab12ad5cbb1141073a73430c2ce59cee15c3016bbc",
+   "bytes": 1413
+  },
+  "readouts/decision_readout_hb500_current_vs_frozen.json": {
+   "sha256": "655a887bb236be56f41bb74adb76bbd5e01bf137773def4e185d4f830fbdb3c4",
+   "bytes": 74312
+  },
+  "readouts/decision_readout_hb500_default_vs_bare.json": {
+   "sha256": "b516226342464651bfad15f21c5a0edd500e0650a01aab455ab896f34da27768",
+   "bytes": 73327
+  },
+  "readouts/june_p6_hard_regraded_gpt41_2026-09-22.jsonl.gz": {
+   "sha256": "7403f437c8a64a58b1b336f9f68f404bcb0764788e11a5173319d0c5b1c136b8",
+   "bytes": 1156101
+  },
+  "readouts/official_readout_hb5000_standard.json": {
+   "sha256": "f5fb8d392339ecf94bf3b924c2c8605a5570e31911fed2a4e261d21ce3a3b579",
+   "bytes": 74559
+  },
+  "style-check-2026-09-23-default/graded_gpt_4_1.jsonl.gz": {
+   "sha256": "7ff6265e0b28f8b968a4b1e4b234eeb4ae475d75f55c4d1d967a0f748c371118",
+   "bytes": 543839
+  },
+  "style-check-2026-09-23-default/graded_gpt_5_4.jsonl.gz": {
+   "sha256": "f19c1f8b74b1eca535219b57169588ce3d6bf9428d5e5d05911f84ad9df9d7eb",
+   "bytes": 564786
+  },
+  "style-check-2026-09-23-default/completions.jsonl.gz": {
+   "sha256": "ba2dbe06b5288d0e3f2a012ee19ec06bf2367457d57f2f15ee952057767fb0bf",
+   "bytes": 1109394
+  },
+  "style-check-2026-09-23-default/graded_claude_opus_4_8.jsonl.gz": {
+   "sha256": "d455df26743bbf61343a1bd8197d31fbabf856991885399e092f6b539bbc2fc7",
+   "bytes": 574543
+  },
+  "style-check-2026-09-23-default/run_manifest.json": {
+   "sha256": "a5eff33600632f5407dd6ffce6d42482d9fa6a9f54d1d295b88e972a1c47a7d0",
+   "bytes": 1122
+  },
+  "vishwanath-500-panel/panel_style-check-2026-09-23-default.json.gz": {
+   "sha256": "5f02bda41033bde29608552ee3401f2d56a4cfee59c28c651539df38c0ce19ea",
+   "bytes": 3648236
+  },
+  "vishwanath-500-panel/panel_identity-check-2026-09-23-concise.json.gz": {
+   "sha256": "53b5dc05330948c59b58638542a825821e89680973c337aa75f2b6250b5ab377",
+   "bytes": 3681434
+  },
+  "vishwanath-500-panel/panel_asha-apex-j-frozen.json.gz": {
+   "sha256": "b5f464668efa27c47ef4b05d014be0e6e506add7dd006acda78555703f0a07bc",
+   "bytes": 3654058
+  },
+  "vishwanath-500-panel/panel_bare-gpt-6-astra.json.gz": {
+   "sha256": "d20c5ae3582950ca7214bf44bb303e903fe55a48c1c997c88df7a393cef00543",
+   "bytes": 3306283
+  },
+  "vishwanath-500-panel/panel_asha-apex-p6-june-2026.json.gz": {
+   "sha256": "3aad6333f76b9daed0bef136b0dcc18141b3252f92237b7e46ce8bb1d068a8dd",
+   "bytes": 4337222
+  },
+  "bare-gpt-6-astra/graded_gpt_4_1.jsonl.gz": {
+   "sha256": "093d4430de990b9977474d4e0958ee24054e430049b00661f18e13cf8ddbb951",
+   "bytes": 5312174
+  },
+  "bare-gpt-6-astra/graded_gpt_5_4.jsonl.gz": {
+   "sha256": "22c9d1bbd77f50ef5a8c6adc43bdd877ee61ef3e7d1b19001d3d36b7d2337bed",
+   "bytes": 5545404
+  },
+  "bare-gpt-6-astra/completions.jsonl.gz": {
+   "sha256": "d7105c4dde4e2b6f3608eedbd5be264e938a8566d91009b253b32411bb003656",
+   "bytes": 9993630
+  },
+  "bare-gpt-6-astra/graded_claude_opus_4_8.jsonl.gz": {
+   "sha256": "4a29dbf8eb6dea08dd2f394527c92efa4cf3c28fee6a969637d6d5395e9d9d1e",
+   "bytes": 5604501
+  },
+  "bare-gpt-6-astra/run_manifest.json": {
+   "sha256": "c4dad42641ee2422194de285863b2558bc053fdd1b6968775e9c2207e22344b3",
+   "bytes": 468
+  }
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "judges": [
+  "anthropic-claude-4-6-opus",
+  "google-gemini-3-1-pro-preview",
+  "openai-gpt-5-2"
+ ],
+ "graded_on": "2026-09-23",
+ "pipeline": "nyuolab/clinical-llm-benchmarks evaluation_pipeline.py healthbench --panel-models (majority per criterion)",
+ "metric": "points achieved / points possible, pooled over all criteria (the study's final_score)",
+ "arms": {
+  "hb5000_apexj": {
+   "n": 500,
+   "points_total": 17021.0,
+   "points_possible": 26690.0,
+   "score": 63.77294866991382,
+   "criteria": 5782,
+   "criteria_without_three_clean_votes": 0,
+   "judge_call_failures": 0,
+   "per_example_mean_clipped": 64.28602285521981,
+   "empty_answers": 0,
+   "source": "hb500_panel_hb5000_apexj.json"
+  },
+  "bare_hb5000_astra": {
+   "n": 500,
+   "points_total": 14652.0,
+   "points_possible": 26690.0,
+   "score": 54.89696515548895,
+   "criteria": 5782,
+   "criteria_without_three_clean_votes": 0,
+   "judge_call_failures": 0,
+   "per_example_mean_clipped": 56.2084116576623,
+   "empty_answers": 0,
+   "source": "hb500_panel_bare_hb5000_astra.json"
+  },
+  "hb500_apexj_default": {
+   "n": 500,
+   "points_total": 16385.0,
+   "points_possible": 26690.0,
+   "score": 61.390033720494564,
+   "criteria": 5782,
+   "criteria_without_three_clean_votes": 0,
+   "judge_call_failures": 0,
+   "per_example_mean_clipped": 61.92034042849506,
+   "empty_answers": 0,
+   "source": "hb500_panel_hb500_apexj_default.json"
+  }
+ }
+}
