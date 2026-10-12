@@ -1,0 +1,13 @@
+{
+    "name": "FENG Falsification Engine",
+    "description": "Popperian claim falsification service. Submit any natural language claim, receive a structured verdict (FALSIFIED, WEAKENED, CONDITIONAL, UNFALSIFIED) with evidence from 121M knowledge vectors.",
+    "version": "1.0.0",
+    "supportedInterfaces": [{"url": "https://api.askasha.org/api/feng", "protocolBinding": "HTTP+JSON", "protocolVersion": "1.0"}],
+    "provider": {"organization": "DNAi Systems", "url": "https://dnai.systems"},
+    "capabilities": {"streaming": false, "pushNotifications": false},
+    "defaultInputModes": ["text/plain", "application/json"],
+    "defaultOutputModes": ["application/json"],
+    "securitySchemes": {"bearer": {"httpAuthSecurityScheme": {"scheme": "Bearer", "bearerFormat": "JWT"}}},
+    "securityRequirements": [{"bearer": []}],
+    "skills": [{"id": "falsify", "name": "Claim Falsification", "description": "Popperian falsification via vector negation, semantic negation, and E-value statistical scoring.", "tags": ["falsification", "verification", "epistemics"], "examples": ["Metformin is first-line for type 2 diabetes", "Vitamin D prevents COVID-19"]}]
+}
