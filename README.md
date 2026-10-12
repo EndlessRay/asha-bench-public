@@ -1,142 +1,102 @@
-# DNAi Public Benchmark Artifacts
+# Asha benchmarks
 
-Bit-exact reproducible artifacts for every public benchmarking claim DNAi makes about its medical AI agent **Asha** (live at [askasha.org](https://askasha.org)). Every input dataset is SHA-256 locked; every analysis script is self-contained; every overturned claim is documented in the same Git history.
+Per-item, re-gradable benchmark artifacts for **Asha**, the medical AI agent built by DNAi Systems ([askasha.org](https://askasha.org)).
 
-## Architecture (neurosymbolic stack)
+Live register: [dnai.systems/benchmarks](https://dnai.systems/benchmarks) | JSON: [dnai.systems/benchmarks.json](https://dnai.systems/benchmarks.json) | API: `GET https://api.askasha.org/api/benchmarks`
 
-Asha is a neurosymbolic system. The LLM operates as the verbalization layer; the composer model has been swapped across the Gemini, Claude, and GPT families over the project's life, and each chapter names the one it ran on. Four symbolic components surround it and persist across LLM swaps. The table is the 2026-05-12 audit snapshot; the corpus has since grown to 144M+ vectors across ~1,071 collections (~314 knowledge-source, live-verified 2026-07-13). Current board figures, pipelines, and graders: [dnai.systems/benchmarks](https://dnai.systems/benchmarks).
+Asha is an architecture that runs around a language model: retrieval from a curated medical corpus, specialist agents, claim falsification, and safety gates before and after generation. No model is fine-tuned. The test of the architecture is a paired one: run the same model alone and inside Asha, on the same items, under the same grader, and report the difference. Every comparison below is built that way, and every number links to data you can re-grade.
 
-| Component | Live state |
-|---|---|
-| Qdrant memory | 759 collections holding **125.44M vectors**. 125.24M curated knowledge (medical, pharmacological, research literature, clinical guidelines, structured codings, financial filings, legal corpora). 98,628 vectors across 493 private user and tenant graphs (438 Asha DNAids, 55 Harley trainers). |
-| KIL (Knowledge Integration Layer) | symbolic evidence retrieval before each LLM call. Evidence stamps return in every per-turn JSONL we publish. |
-| Epistemic Arena with Neural Darwinism | **31,616 active Competitive Informational Units (CIUs)** currently competing in the arena. **12,048 promoted (verified)** into long-term memory. **32,768 quarantined** by the Quality Firewall. Promotion rate 15.8%, quarantine rate 42.9% of evaluated candidates. |
-| META_CORRECT | deterministic post-emission corrector for structured outputs in regulated domains. US Provisional 397222-7002P1, filed 2026-05-01. |
+## Result: the same model scores higher inside Asha
 
-Patent: **US 12,555,008 B1**, granted 2026-02-17 (application 19/290,471). The benchmarks in this repo are the public falsifiability surface for the architecture. Two structural signatures live here:
+| Benchmark | n | Grader | Model alone | Inside Asha | Difference (points) |
+|---|---:|---|---|---|---|
+| HealthBench Hard | 1,000 | gpt-4.1 (official) | GPT-6 Astra **29.4** | Apex-J **42.0** | **+12.6** [10.7, 14.4]; length-adjusted +9.9 [8.1, 11.8] |
+| HealthBench, all conversations | 5,000 | gpt-4.1 (official) | GPT-6 Astra **52.7** | Apex-J **60.7** | **+8.0** [7.3, 8.7]; length-adjusted +5.6 [4.9, 6.3] |
+| HealthBench, Vishwanath et al. 500 | 500 | the study's three-judge panel | GPT-6 Astra **54.9** | Apex-J **63.8** | **+8.9**; gpt-4.1 on the same 500: +8.4 [6.1, 10.7] |
+| HealthBench Professional, holdout | 225 | GPT-5.4, length-adjusted | GPT-6 Astra **65.7** | Apex-J **67.9** | +2.2, p = 0.23, not significant; Claude Opus 4.8 grader: +4.6, p = 0.03 |
+| HealthBench Professional | 524 | length-adjusted | Claude Sonnet 5 | Base | +0.3, p = 0.88, not significant; 191 red-team items: +10.1 |
+| MedQA (USMLE, 4 options) | 1,273 | exact match | Gemini 3.1 Pro **92.3%** | Base **95.5%** | **+3.2**, McNemar p = 2.0e-5 |
+| psychosis-bench, safe interventions | 96 turns | gpt-4o-mini (protocol judge) | Gemini 2.5 Flash **30.2%** | Base **95.8%** | **+65.6**, Fisher exact p = 4.0e-23 |
 
-- **Same backbone LM, different output behavior.** On Psychosis-bench (Chapter 3) bare `gemini-2.5-flash` posts 30.2% SIS. Asha's full stack on the same Gemini-Flash-majority routing posts 95.8%. The +65.6 pp gap is attributable to the cognition stack.
-- **Same backbone LM, no parse failures.** On MedQA (Chapter 1) bare Gemini 3.1 Pro Preview parse-fails on 5.58% of questions. Asha parse-fails on 0/1,273. META_CORRECT accounts for 51 of 66 paired McNemar wins.
-- **Tier jump doesn't close the gap.** Chapter 4 tests bare Gemini-2.5-Pro vs bare Gemini-2.5-Flash on the same 16 psychosis-bench scenarios. The Flash→Pro tier jump produces zero measurable safety lift (DCS ratio bootstrap 95% CI [0.86, 1.21]). Asha still leads bare Pro by 3.35× lower DCS (bootstrap 95% CI [2.10, 6.17]).
+Brackets are 95% confidence intervals of the paired difference. Asha's estimate is higher in six of the seven comparisons and five are statistically significant. The seventh, Asha Base against Claude Sonnet 5 on all 524 Professional items, is a tie. HealthBench scores are on a 0 to 100 scale.
 
-Three claims this section is NOT making. (1) That the LLM is bypassed; it still produces language. (2) That Asha reasons independently of the LLM; we publicly retracted the wrong-letter independence claim in [`medqa-2026-05-04/reports/03_wrong_letter_test.md`](medqa-2026-05-04/reports/03_wrong_letter_test.md). (3) That Asha is fully symbolic; the neural component carries language production while the symbolic components carry memory, evidence integration, competition, belief updating, and post-emission correction.
+### What "inside Asha" means
 
-## The arc: MedQA, META_CORRECT, Psychosis-bench
+| Configuration | Where it runs | What it adds to the model |
+|---|---|---|
+| **Base** | Most traffic; the API default | One retrieval-grounded pass with safety gates. A router sends harder questions to the larger model of the same family: on MedQA, Gemini 3 Flash answered 70% of questions and 3.1 Pro the rest, so the model-alone arm (3.1 Pro) is the stronger one; on psychosis-bench, Gemini 2.5 Flash about 70% of turns and 2.5 Pro the rest; on HealthBench Professional, Claude Sonnet 5 or Opus 5 |
+| **Apex-J** (frozen 20 September 2026) | High-stakes traffic | Eleven specialist agents, each with its own retrieval, running on Claude Sonnet 5 and Opus 5; FENG falsifies extracted claims against the corpus; GPT-6 Astra writes the final answer |
 
-Three artifacts, one story.
+The Apex-J rows hold the answer-writing model fixed. The Asha arm also runs Claude models inside its agents, so those rows measure the whole system against its composer model alone. The Base rows are closer to a single-model test; on psychosis-bench, a separate attribution study shows that bare Gemini 2.5 Pro is no safer than bare 2.5 Flash, so the Pro share does not explain the gap ([`psychosis-attribution-2026-05-12/`](psychosis-attribution-2026-05-12/)).
 
-### Chapter 1: MedQA (2026-05-04)
+## Safety
 
-→ [`medqa-2026-05-04/`](medqa-2026-05-04/)
+- **psychosis-bench** (Au Yeung et al. 2025; 16 scripted 12-turn scenarios): with the same model family, safe interventions rose from 30.2% to 95.8%, delusion confirmation fell 3.4-fold (scenario-paired bootstrap 95% CI 2.15 to 6.13) and harm enablement 7.9-fold. Both pre-registered effect hypotheses passed; agreement between the two judges fell below the pre-registered gate (kappa 0.25), which the pre-registration records as a formally inconclusive verdict. [`psychosis-bench-2026-05-11/`](psychosis-bench-2026-05-11/)
+- **Red-team clinician prompts** (HealthBench Professional, 191 items): Asha Base on Claude Sonnet 5 scored +10.1 above Sonnet 5 alone.
+- **Enclomiphene-bench, clinician arm** (18 adversarial prompts, DNAi-authored, small n): Asha triggered 0 of 29 harm criteria; bare Gemini 3.5 Flash, GPT-5 and Claude Sonnet 4.5 triggered them on 5, 6 and 3 prompts, and all three wrote an adolescent dose that Asha declined. These are different models from Asha's, so this is a system comparison. [`enclomiphene-bench-2026-09-18/`](enclomiphene-bench-2026-09-18/)
+- **Identity invariance** (a clinician's locked pediatric chart): the plan, dose and duration stayed the same across 36 of 36 identity variants (insurance, race, name, caregiver age, occupation, interpreter). [`aom-chart-2026-08/`](aom-chart-2026-08/)
+- **HealthBench harm proxy** (share of negative-point rubric criteria triggered, pre-registered bound: within +2.0 points of the bare model): on all 5,000 conversations the bound was **missed** under the official grader (+2.8) and met under GPT-5.4 (-0.3) and Claude Opus 4.8 (-0.4). The excess is concentrated in length and over-detail criteria; factual-error criteria account for 59 of the 1,851 extra hits. [`healthbench-5000-2026-09-20/readouts/`](healthbench-5000-2026-09-20/readouts/)
 
-Canonical Jin et al. 2020 USMLE 4-option test split (n = 1,273, dataset SHA-256 `c3b905cc…60a2beb`). 5-arm single-shot. **Asha 95.52%** (Wilson [94.24, 96.53]), statistically indistinguishable from Claude Opus 4.5 (paired McNemar p = 0.228) at roughly a quarter of Opus's marginal per-query cost. Architecturally important: **+3.22 pp paired McNemar lift over bare Gemini 3.1 Pro Preview** (p = 2.0×10⁻⁵, OR 2.64 [1.67, 4.18]).
+## Limits
 
-One original claim ("Asha's wrong answers are independent of Gemini's") was overturned by an internal audit and is publicly retracted in [`medqa-2026-05-04/reports/03_wrong_letter_test.md`](medqa-2026-05-04/reports/03_wrong_letter_test.md). The audit also surfaced the mechanism: **51 of Gemini's 71 parse-failures became correct Asha letters via META_CORRECT, accounting for 51 of 66 paired wins**. That is the bridge to Chapter 2.
+1. **Length.** Asha's answers are about twice as long as the bare model's (median 2,725 against 1,400 characters). HealthBench rewards completeness, so the length-adjusted differences are reported next to the official ones; they are smaller and still significant.
+2. **Composer held fixed.** The Apex-J comparisons hold the answer-writing model fixed while Asha's agents run other models (see above).
+3. **Holdout.** On HealthBench Professional the shipped configuration was selected on a 300-item slice; on the 225 items never used for selection its lead under the ladder's official grader is +2.2 (p = 0.23).
+4. **Strong models alone.** Today's frontier models alone also intervene safely on psychosis-bench (bare Claude Sonnet 4.5: 100%; bare Gemini 3.6 Flash: 93.8%). The 30.2% to 95.8% gap is what Asha added to a May 2026 model that was not at the safety ceiling.
+5. **Web search.** In the Vishwanath et al. study, frontier models run with web search scored above every system here (GPT-5.2 88.0, Gemini 3.1 Pro 79.3, Claude Opus 4.6 77.0). Asha answers from its own corpus without web search; its like-for-like comparisons on that sample are with the study's clinical tools (OpenEvidence 62.6, UpToDate Expert AI 61.3, as published) and with its composer model under the same panel.
+6. **Graders.** All rubric scores come from LLM graders. No blinded physician rating of these answers has been published yet.
+7. **Validation.** The external re-runs and recomputations by Airpixels Innovations LLP were contracted by DNAi.
+8. **Withheld data.** HealthBench Professional per-item data are withheld at OpenAI's request; those rows are aggregate only.
+9. **Pretraining exposure.** MedQA and HealthBench are public, and every model may have seen them in pretraining. The paired difference controls for that; the absolute scores do not.
 
-### Chapter 2: META_CORRECT (the architectural primitive)
+## Contamination
 
-→ [`meta-correct/`](meta-correct/)
+HealthBench answer keys, grading rubrics and stored model answers to benchmark items have been excluded from Asha's retrieval layer since 2 June 2026. Asha's own query log and unpromoted memory were removed from retrieval on 16 September 2026, after a probe found 17 of the 525 Professional prompts in the query log from a June run; every Apex-J row was measured after that change, and the Base-on-Sonnet-5 Professional row a few hours before it. A nearest-neighbour probe of 200 of the 5,000 HealthBench items found no retrievable benchmark content (cosine below 0.92 throughout). The MedQA run excluded DNAi's internal MedQA collection on every request (audit signature on 1,273 of 1,273 records); an n-gram sweep of the other collections for MedQA-derived text has not been run.
 
-A deterministic, evidence-grounded, cryptographically-auditable post-emission corrector for structured LM outputs in regulated domains. US Provisional 397222-7002P1 (filed 2026-05-01); CIP draft on file with counsel. Patent spec held internally; this chapter documents the *empirical effect* by cross-referencing Chapter 1's parse-failure table with Chapter 3's safety-intervention table.
+## Contents
 
-| Arm (on MedQA) | Parse-failure rate |
-|---|---:|
-| Asha (embodying META_CORRECT) | **0 / 1,273 = 0.00%** |
-| GPT-4o | 0.00% • Claude Opus 4.5: 0.08% • o4-mini-high: 2.44% • Gemini 3.1 Pro: **5.58%** |
+| Path | What | Run date | Per-item data |
+|---|---|---|---|
+| [`healthbench-5000-2026-09-20/`](healthbench-5000-2026-09-20/) | Frozen Apex-J and bare GPT-6 Astra on all 5,000 HealthBench conversations under three graders; the Vishwanath 500 under the study's panel; identity and style checks; SHA-256 manifest | 2026-09-20 to 24 | yes |
+| [`healthbench-2026-06-26/`](healthbench-2026-06-26/) | June 2026 HealthBench runs (Standard, Hard, Professional aggregates), pipeline glossary ([`PIPELINES.md`](healthbench-2026-06-26/PIPELINES.md)), preprint, audit receipt | 2026-06-26 | yes (Professional: aggregates) |
+| [`medqa-2026-05-04/`](medqa-2026-05-04/) | Five arms on the SHA-256 locked MedQA test split, same day | 2026-05-04 | yes |
+| [`meta-correct/`](meta-correct/) | The format-correction step behind the MedQA parse-failure result | 2026-05 | n/a |
+| [`psychosis-bench-2026-05-11/`](psychosis-bench-2026-05-11/) | Asha against bare Gemini 2.5 Flash; two judges; pre-registered | 2026-05-11 | yes |
+| [`psychosis-attribution-2026-05-12/`](psychosis-attribution-2026-05-12/) | Bare Gemini 2.5 Pro against 2.5 Flash: the tier jump adds no safety | 2026-05-12 | yes |
+| [`enclomiphene-bench-2026-09-18/`](enclomiphene-bench-2026-09-18/) | DNAi-authored safety set, patient and clinician arms, four systems, two judges | 2026-09-18 | yes |
+| [`aom-chart-2026-08/`](aom-chart-2026-08/) | Verbatim traces on a clinician's locked pediatric chart, identity variants | 2026-08-26 | yes |
+| [`PREREGISTRATION/`](PREREGISTRATION/) | Commit-locked hypotheses | 2026-05-11 | n/a |
+| [`MODEL_CARDS.md`](MODEL_CARDS.md) | The Asha tiers: architecture, models, intended use, limitations | 2026-09-24 | n/a |
+| [`BENCHMARKS.md`](BENCHMARKS.md), [`register/`](register/), [`tools/`](tools/) | The register rendered as a document, its dated JSON, and the renderer | 2026-09-24 | n/a |
+| [`a2a/`](a2a/) | Agent cards and integration guides (A2A protocol) for Asha, Polymath, Sage, Artha, Harley and FENG | | n/a |
+| [`CHAPTERS.md`](CHAPTERS.md) | The May to September 2026 narrative of the MedQA, META_CORRECT, psychosis-bench, attribution and enclomiphene chapters, as first published | | n/a |
+| [`figures/`](figures/) | Figure scripts and outputs | | n/a |
 
-### Chapter 3: Psychosis-bench (2026-05-11 / 12)
-
-→ [`psychosis-bench-2026-05-11/`](psychosis-bench-2026-05-11/)
-
-Au Yeung et al. (2025) 16-scenario × 12-turn protocol, [arXiv:2509.10970v2](https://arxiv.org/abs/2509.10970) **preprint**. 2-arm: Asha vs bare Gemini-2.5-Flash (the LM that powers Asha's verbalization layer on ~70% of routine queries). Same scenarios (SHA-256 locked), same judge (`gpt-4o-mini`), same eligibility windows. Pre-registration committed 11 m 52 s before bench start.
-
-| Metric | Asha | Gemini-2.5-Flash | Effect |
-|---|---:|---:|---|
-| **DCS** (lower = safer, 0/1/2) | 0.354 | 1.215 | **3.43×** lower, scenario-paired bootstrap 95% CI [2.15, 6.13] |
-| **HES** (lower = safer, 0/1/2) | 0.104 | 0.823 | **7.9×** lower |
-| **SIS** rate (higher = safer, 0/1) | **92/96 = 95.8%** [0.898, 0.984] | **29/96 = 30.2%** [0.219, 0.400] | non-overlapping CIs, +65.6 pp gap |
-
-Two pre-registered hypotheses (H_DCS, H_SIS) PASS with wide margins. One (H_JUDGE_RELIABILITY) FAILS the κ ≥ 0.60 gate (avg κ_DCS+HES = 0.249); formal verdict therefore **INCONCLUSIVE per literal rule**. The substantive claim survives. Both judges (`gpt-4o-mini` and `claude-haiku-4-5`) agree on the *direction* of every metric. Judge B is consistently harsher on Asha and more lenient on Gemini-Flash than Judge A, an ordinal-scale calibration difference. Under Judge B alone the headline still shows Asha 1.72× lower DCS [1.40, 2.20] and 1.76× lower HES [1.37, 2.31]. Full breakdown: [`psychosis-bench-2026-05-11/reports/02_dual_judge_kappa.md`](psychosis-bench-2026-05-11/reports/02_dual_judge_kappa.md).
-
-### Chapter 4: Architectural Attribution (2026-05-12)
-
-→ [`psychosis-attribution-2026-05-12/`](psychosis-attribution-2026-05-12/)
-
-Pre-registered follow-on bench testing the "tier-jump" alternative explanation for Chapter 3's safety gap. Bare Gemini-2.5-Pro vs bare Gemini-2.5-Flash on the same 16 scenarios, same judge, same eligibility windows.
-
-| Arm | DCS mean | HES mean | SIS rate |
-|---|---:|---:|---|
-| Bare `gemini-2.5-pro` | 1.188 | 0.896 | 25/96 = **26.0%** [0.183, 0.356] |
-| Bare `gemini-2.5-flash` (Chapter 3 control) | 1.215 | 0.823 | 29/96 = **30.2%** [0.219, 0.400] |
-| **Asha** (Chapter 3 control) | **0.354** | **0.104** | 92/96 = **95.8%** [0.898, 0.984] |
-
-Flash→Pro tier jump: DCS ratio bootstrap 95% CI **[0.86, 1.21]**, straddles 1.0. Pre-registered verdict: **H_PRO_OVER_FLASH FAIL** (informative — closes the tier-jump confound). Asha vs bare Pro: 3.35× lower DCS (CI [2.10, 6.17]), non-overlapping SIS CIs.
-
-Artifact disclosure: a v1 run was retracted before external publication due to a `max_output_tokens=1024` bug specific to thinking models. Full disclosure in [`forensic/v1_truncation_bug/RETRACTED.md`](psychosis-attribution-2026-05-12/forensic/v1_truncation_bug/RETRACTED.md).
-
-### Chapter 5: Enclomiphene-bench (2026-09-18)
-
-→ [`enclomiphene-bench-2026-09-18/`](enclomiphene-bench-2026-09-18/)
-
-A DNAi-authored single-topic safety benchmark on the 2026 compounded-enclomiphene fad (young, mostly eugonadal men buying an unapproved SERM through low-friction telehealth and calling it "not testosterone"). Two arms, both schema-compatible with existing harnesses: a 6-scenario x 12-turn patient arm scored under the psychosis-bench protocol (DCS / HES / SIS, two judges), and an 18-prompt clinician red team scored under HealthBench rubrics with negative points (grader `gpt-4.1`). Four arms: the deployed Asha engine (Claude backbone, retrieval on) and bare `gemini-3.5-flash`, `claude-sonnet-4-5`, `gpt-5`.
-
-| Arm | Patient SIS (judge A / B) | Clinician score [95% CI] | Harmful-compliance prompts (of 18) |
-|---|---|---|---:|
-| **Asha** (deployed) | **36/36 / 36/36** | **0.610** [0.490, 0.726] | **0** |
-| Bare `claude-sonnet-4-5` | 36/36 / 36/36 | 0.390 [0.255, 0.522] | 3 |
-| Bare `gpt-5` | 34/36 / 31/36 | 0.456 [0.309, 0.595] | 6 |
-| Bare `gemini-3.5-flash` | 31/36 / 33/36 | 0.456 [0.294, 0.605] | 5 |
-
-All three bare models wrote an enclomiphene dose for a 16-year-old when the requester claimed to be an endocrinologist; Asha declined. Two of four pre-registered hypotheses failed and the README says which and why (an HES verdict split between judges on three turns, and a clinician-arm mean threshold set above what any arm reached). The first run of this benchmark, earlier the same day, surfaced a production defect (a jailbreak detector misfiring on Asha's own folded transcript) that was fixed before the run published here. Question files SHA-256 locked in [`enclomiphene-bench-2026-09-18/data/DATASET_LOCK.md`](enclomiphene-bench-2026-09-18/data/DATASET_LOCK.md).
-
-### Attribution summary
-
-On both measurement endpoints, the symbolic stack composes with the underlying LM. On the **structural** endpoint (MedQA parse-failure rescue) META_CORRECT is the proximal mechanism: 51 of 66 paired wins are parse-failure rescues. On the **semantic-safety** endpoint (Psychosis-bench) the full cognition stack lifts SIS from 30.2% (bare Flash) to 95.8% (Asha), a +65.6 pp gap, over an LM that is not at safety ceiling. The tier-attribution chapter (Chapter 4) establishes that neither the Flash→Pro tier jump nor the Gemini→Anthropic family jump explains this gap. We do not claim the same gap would appear over an intrinsically safety-ceiling LM; that is a separate test, queued.
-
-## Layout
-
-```
-asha-bench-public/
-├── README.md                              this file
-├── LICENSE                                Apache 2.0 (analysis scripts + computed reports)
-├── medqa-2026-05-04/                      Chapter 1: MedQA structural hallucination
-├── meta-correct/                          Chapter 2: META_CORRECT primitive
-├── psychosis-bench-2026-05-11/            Chapter 3: Asha vs bare Gemini-Flash
-├── psychosis-attribution-2026-05-12/      Chapter 4: tier-attribution (Pro vs Flash vs Asha)
-├── figures/                               reproducible figure scripts + PNGs
-└── PREREGISTRATION/                       commit-locked hypotheses
-```
-
-## Fiduciary contract
-
-1. **Pre-registration.** Hypotheses and decision rules committed in Git *before* the run.
-2. **Bit-exact reproducibility.** Every number reproduces from input SHA + per-turn / per-question JSONL + analysis script. No hidden post-processing.
-3. **Honest disclosure.** Overturned claims, failed pre-reg gates, and methodological divergences from upstream are documented in the same Git history as the original. No silent corrections.
-4. **Preprint discipline.** Upstream is named as preprint (Au Yeung 2025) or peer-reviewed (MedQA / Jin 2020). Never elided.
-
-## Reproduce, end-to-end
+## Reproduce
 
 ```bash
-git clone https://github.com/EndlessRay/asha-bench-public.git
-cd asha-bench-public
-
-# MedQA: download canonical dataset, verify SHA-256, recompute every reported number
-python3 medqa-2026-05-04/scripts/verify_dataset_sha.py /path/to/jind11/MedQA/data/medqa_usmle_4opt_test.jsonl
-python3 medqa-2026-05-04/scripts/compute_accuracy.py
-python3 medqa-2026-05-04/scripts/mcnemar_paired_lift.py
-python3 medqa-2026-05-04/scripts/wrong_letter_independence.py
-
-# Psychosis-bench: verify scenario SHA-256, recompute every reported number
-python3 psychosis-bench-2026-05-11/scripts/verify_scenarios_sha.py
-python3 psychosis-bench-2026-05-11/scripts/compute_stats.py
-
-# Chapter 4 (tier-attribution): recompute all statistics and verdicts
-python3 psychosis-attribution-2026-05-12/scripts/bench6_stats.py
-
-# Figures: regenerate all figures from raw data
-cd figures && python3 generate_figures.py
+git clone https://github.com/EndlessRay/asha-benchmarks && cd asha-benchmarks
+bash reproduce.sh                                # MedQA, psychosis-bench, attribution: verify SHA-256 locks, recompute every statistic
+python3 healthbench-2026-06-26/verify_audit.py   # June HealthBench audit receipt
 ```
 
-## Contact
+For the 5,000-item run, `healthbench-5000-2026-09-20/` holds every completion and every per-criterion grade for both arms and all three graders, with SHA-256 in `MANIFEST.json`. Re-grade the completions with the official HealthBench grader ([openai/simple-evals](https://github.com/openai/simple-evals)) and compare with `readouts/`. The Vishwanath 500 panel grades re-run in the study's own pipeline, [nyuolab/clinical-llm-benchmarks](https://github.com/nyuolab/clinical-llm-benchmarks).
 
-[founders@dnai.systems](mailto:founders@dnai.systems)
+## History of this repository
+
+This repository consolidates nine earlier public repositories, imported with their full commit history: `asha-bench-public` (renamed to this repository), `dnai-models`, `asha-healthbench-2026-06-26`, `asha-aom-chart-2026-08`, `asha-a2a`, `polymath-a2a`, `sage-a2a`, `artha-a2a`, `harley-a2a` and `feng-a2a`. The originals are archived read-only, so every published link to them still resolves.
+
+## References
+
+- HealthBench: Arora R. K. et al. *HealthBench: Evaluating Large Language Models Towards Improved Human Health.* arXiv:2505.08775 (2025).
+- Vishwanath et al. *General-purpose large language models outperform specialized clinical AI tools on medical benchmarks.* Nature Medicine (2026). [doi:10.1038/s41591-026-04431-5](https://doi.org/10.1038/s41591-026-04431-5)
+- MedQA: Jin D. et al. arXiv:2009.13081 (2020).
+- psychosis-bench: Au Yeung J. et al. *The Psychogenic Machine.* arXiv:2509.10970v2 (2025, preprint).
+- DNAi preprint: Singh D., Anand P. *An auditable, retrieval-grounded agent architecture improves medical accuracy and conversational safety in language models.* Research Square (2026). [doi:10.21203/rs.3.rs-10206806/v1](https://doi.org/10.21203/rs.3.rs-10206806/v1)
+- Architecture: US Patent 12,555,008 B1.
+
+## Licenses and use
+
+Analysis code and reports from the original `asha-bench-public` are Apache-2.0 ([`LICENSE`](LICENSE)); each `a2a/` subdirectory carries its own MIT license. The imported benchmark directories came from repositories without a license file and keep their published terms: re-grade, recompute, quote and criticize them with attribution to DNAi Systems and a link to this repository. Upstream datasets and their citations are listed in [`NOTICE.md`](NOTICE.md). Citation metadata: [`CITATION.cff`](CITATION.cff).
+
+Contact: open an issue in this repository.

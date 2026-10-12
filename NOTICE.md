@@ -45,3 +45,16 @@ specification is not part of this repository.
 ## Contact
 
 [founders@dnai.systems](mailto:founders@dnai.systems)
+
+## Directories imported in October 2026
+
+These came from separate public repositories, imported with full history. The originals are archived read-only.
+
+| Directory | Source repository | Terms |
+|---|---|---|
+| `healthbench-5000-2026-09-20/`, `register/`, `tools/`, `MODEL_CARDS.md`, `BENCHMARKS.md` | `EndlessRay/dnai-models` | no license file in the source; re-grade, recompute, quote and criticize with attribution to DNAi Systems |
+| `healthbench-2026-06-26/` | `EndlessRay/asha-healthbench-2026-06-26` | same as above |
+| `aom-chart-2026-08/` | `EndlessRay/asha-aom-chart-2026-08` | same as above; the chart and packet belong to their author, [dochobbs/aom-chart](https://github.com/dochobbs/aom-chart) |
+| `a2a/asha/`, `a2a/polymath/`, `a2a/sage/`, `a2a/artha/`, `a2a/harley/`, `a2a/feng/` | `EndlessRay/<agent>-a2a` | MIT, see each `LICENSE` |
+
+HealthBench conversations and rubrics inside the completion and grade files are OpenAI's ([openai/simple-evals](https://github.com/openai/simple-evals)); HealthBench Professional items are not redistributed, at OpenAI's request. The Vishwanath et al. 500-item sample and its scoring pipeline are the study authors' ([nyuolab/clinical-llm-benchmarks](https://github.com/nyuolab/clinical-llm-benchmarks)).
