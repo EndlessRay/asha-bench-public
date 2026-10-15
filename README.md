@@ -4,9 +4,9 @@ Per-item, re-gradable benchmark artifacts for **Asha**, the medical AI agent bui
 
 Live register: [dnai.systems/benchmarks](https://dnai.systems/benchmarks) | JSON: [dnai.systems/benchmarks.json](https://dnai.systems/benchmarks.json) | API: `GET https://api.askasha.org/api/benchmarks`
 
-Asha is an architecture that runs around a language model: retrieval from a curated medical corpus, specialist agents, claim falsification, and safety gates before and after generation. No model is fine-tuned. The test of the architecture is a paired one: run the same model alone and inside Asha, on the same items, under the same grader, and report the difference. Every comparison below is built that way, and every number links to data you can re-grade.
+Asha is an architecture that runs around a language model: retrieval from a curated medical corpus, specialist agents, claim falsification, and safety gates before and after generation. No model is fine-tuned. The test of the architecture is a paired one: run a language model alone and as the answer writer inside Asha, on the same items, under the same grader, and report the difference. Every comparison below holds at least the answer-writing model fixed; where Asha's other agents use different models, the row says so. Every number links to data you can re-grade.
 
-## Result: the same model scores higher inside Asha
+## Result: the same answer-writing model scores higher inside Asha
 
 | Benchmark | n | Grader | Model alone | Inside Asha | Difference (points) |
 |---|---:|---|---|---|---|
@@ -31,7 +31,7 @@ The Apex-J rows hold the answer-writing model fixed. The Asha arm also runs Clau
 
 ## Safety
 
-- **psychosis-bench** (Au Yeung et al. 2025; 16 scripted 12-turn scenarios): with the same model family, safe interventions rose from 30.2% to 95.8%, delusion confirmation fell 3.4-fold (scenario-paired bootstrap 95% CI 2.15 to 6.13) and harm enablement 7.9-fold. Both pre-registered effect hypotheses passed; agreement between the two judges fell below the pre-registered gate (kappa 0.25), which the pre-registration records as a formally inconclusive verdict. [`psychosis-bench-2026-05-11/`](psychosis-bench-2026-05-11/)
+- **psychosis-bench** (Au Yeung et al. 2025; 16 scripted 12-turn scenarios): with the same model family (Asha routed about 30% of turns to Gemini 2.5 Pro), safe interventions rose from 30.2% to 95.8%, delusion confirmation fell 3.4-fold (scenario-paired bootstrap 95% CI 2.15 to 6.13) and harm enablement 7.9-fold. Both pre-registered effect hypotheses passed; agreement between the two judges fell below the pre-registered gate (kappa 0.25), which the pre-registration records as a formally inconclusive verdict. [`psychosis-bench-2026-05-11/`](psychosis-bench-2026-05-11/)
 - **Red-team clinician prompts** (HealthBench Professional, 191 items): Asha Base on Claude Sonnet 5 scored +10.1 above Sonnet 5 alone.
 - **Enclomiphene-bench, clinician arm** (18 adversarial prompts, DNAi-authored, small n): Asha triggered 0 of 29 harm criteria; bare Gemini 3.5 Flash, GPT-5 and Claude Sonnet 4.5 triggered them on 5, 6 and 3 prompts, and all three wrote an adolescent dose that Asha declined. These are different models from Asha's, so this is a system comparison. [`enclomiphene-bench-2026-09-18/`](enclomiphene-bench-2026-09-18/)
 - **Identity invariance** (a clinician's locked pediatric chart): the plan, dose and duration stayed the same across 36 of 36 identity variants (insurance, race, name, caregiver age, occupation, interpreter). [`aom-chart-2026-08/`](aom-chart-2026-08/)
@@ -60,7 +60,6 @@ HealthBench answer keys, grading rubrics and stored model answers to benchmark i
 | [`healthbench-5000-2026-09-20/`](healthbench-5000-2026-09-20/) | Frozen Apex-J and bare GPT-6 Astra on all 5,000 HealthBench conversations under three graders; the Vishwanath 500 under the study's panel; identity and style checks; SHA-256 manifest | 2026-09-20 to 24 | yes |
 | [`healthbench-2026-06-26/`](healthbench-2026-06-26/) | June 2026 HealthBench runs (Standard, Hard, Professional aggregates), pipeline glossary ([`PIPELINES.md`](healthbench-2026-06-26/PIPELINES.md)), preprint, audit receipt | 2026-06-26 | yes (Professional: aggregates) |
 | [`medqa-2026-05-04/`](medqa-2026-05-04/) | Five arms on the SHA-256 locked MedQA test split, same day | 2026-05-04 | yes |
-| [`meta-correct/`](meta-correct/) | The format-correction step behind the MedQA parse-failure result | 2026-05 | n/a |
 | [`psychosis-bench-2026-05-11/`](psychosis-bench-2026-05-11/) | Asha against bare Gemini 2.5 Flash; two judges; pre-registered | 2026-05-11 | yes |
 | [`psychosis-attribution-2026-05-12/`](psychosis-attribution-2026-05-12/) | Bare Gemini 2.5 Pro against 2.5 Flash: the tier jump adds no safety | 2026-05-12 | yes |
 | [`enclomiphene-bench-2026-09-18/`](enclomiphene-bench-2026-09-18/) | DNAi-authored safety set, patient and clinician arms, four systems, two judges | 2026-09-18 | yes |
@@ -69,7 +68,7 @@ HealthBench answer keys, grading rubrics and stored model answers to benchmark i
 | [`MODEL_CARDS.md`](MODEL_CARDS.md) | The Asha tiers: architecture, models, intended use, limitations | 2026-09-24 | n/a |
 | [`BENCHMARKS.md`](BENCHMARKS.md), [`register/`](register/), [`tools/`](tools/) | The register rendered as a document, its dated JSON, and the renderer | 2026-09-24 | n/a |
 | [`a2a/`](a2a/) | Agent cards and integration guides (A2A protocol) for Asha, Polymath, Sage, Artha, Harley and FENG | | n/a |
-| [`CHAPTERS.md`](CHAPTERS.md) | The May to September 2026 narrative of the MedQA, META_CORRECT, psychosis-bench, attribution and enclomiphene chapters, as first published | | n/a |
+| [`CHAPTERS.md`](CHAPTERS.md) | The May to September 2026 narrative of the MedQA, psychosis-bench, attribution and enclomiphene chapters, as first published | | n/a |
 | [`figures/`](figures/) | Figure scripts and outputs | | n/a |
 
 ## Reproduce

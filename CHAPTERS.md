@@ -13,19 +13,16 @@ Asha is a neurosymbolic system. The LLM operates as the verbalization layer; the
 | Qdrant memory | 759 collections holding **125.44M vectors**. 125.24M curated knowledge (medical, pharmacological, research literature, clinical guidelines, structured codings, financial filings, legal corpora). 98,628 vectors across 493 private user and tenant graphs (438 Asha DNAids, 55 Harley trainers). |
 | KIL (Knowledge Integration Layer) | symbolic evidence retrieval before each LLM call. Evidence stamps return in every per-turn JSONL we publish. |
 | Epistemic Arena with Neural Darwinism | **31,616 active Competitive Informational Units (CIUs)** currently competing in the arena. **12,048 promoted (verified)** into long-term memory. **32,768 quarantined** by the Quality Firewall. Promotion rate 15.8%, quarantine rate 42.9% of evaluated candidates. |
-| META_CORRECT | deterministic post-emission corrector for structured outputs in regulated domains. US Provisional 397222-7002P1, filed 2026-05-01. |
 
 Patent: **US 12,555,008 B1**, granted 2026-02-17 (application 19/290,471). The benchmarks in this repo are the public falsifiability surface for the architecture. Two structural signatures live here:
 
-- **Same backbone LM, different output behavior.** On Psychosis-bench (Chapter 3) bare `gemini-2.5-flash` posts 30.2% SIS. Asha's full stack on the same Gemini-Flash-majority routing posts 95.8%. The +65.6 pp gap is attributable to the cognition stack.
-- **Same backbone LM, no parse failures.** On MedQA (Chapter 1) bare Gemini 3.1 Pro Preview parse-fails on 5.58% of questions. Asha parse-fails on 0/1,273. META_CORRECT accounts for 51 of 66 paired McNemar wins.
+- **Same model family, different output behavior.** On Psychosis-bench (Chapter 3) bare `gemini-2.5-flash` posts 30.2% SIS. Asha on Gemini-Flash-majority routing (about 30% of turns to Gemini 2.5 Pro) posts 95.8%. Moving to the larger model alone does not explain the gap (Chapter 4).
+- **Same model family, no parse failures.** On MedQA (Chapter 1) bare Gemini 3.1 Pro Preview parse-fails on 5.58% of questions. Asha parse-fails on 0/1,273. Answer-format compliance accounts for 51 of 66 paired McNemar wins; on the 1,202 questions both arms answered in a parseable format, bare Gemini 3.1 Pro was slightly ahead (97.75% vs 96.92%, p = 0.15).
 - **Tier jump doesn't close the gap.** Chapter 4 tests bare Gemini-2.5-Pro vs bare Gemini-2.5-Flash on the same 16 psychosis-bench scenarios. The Flash→Pro tier jump produces zero measurable safety lift (DCS ratio bootstrap 95% CI [0.86, 1.21]). Asha still leads bare Pro by 3.35× lower DCS (bootstrap 95% CI [2.10, 6.17]).
 
 Three claims this section is NOT making. (1) That the LLM is bypassed; it still produces language. (2) That Asha reasons independently of the LLM; we publicly retracted the wrong-letter independence claim in [`medqa-2026-05-04/reports/03_wrong_letter_test.md`](medqa-2026-05-04/reports/03_wrong_letter_test.md). (3) That Asha is fully symbolic; the neural component carries language production while the symbolic components carry memory, evidence integration, competition, belief updating, and post-emission correction.
 
-## The arc: MedQA, META_CORRECT, Psychosis-bench
-
-Three artifacts, one story.
+## The arc: MedQA, Psychosis-bench
 
 ### Chapter 1: MedQA (2026-05-04)
 
@@ -33,18 +30,7 @@ Three artifacts, one story.
 
 Canonical Jin et al. 2020 USMLE 4-option test split (n = 1,273, dataset SHA-256 `c3b905cc…60a2beb`). 5-arm single-shot. **Asha 95.52%** (Wilson [94.24, 96.53]), statistically indistinguishable from Claude Opus 4.5 (paired McNemar p = 0.228) at roughly a quarter of Opus's marginal per-query cost. Architecturally important: **+3.22 pp paired McNemar lift over bare Gemini 3.1 Pro Preview** (p = 2.0×10⁻⁵, OR 2.64 [1.67, 4.18]).
 
-One original claim ("Asha's wrong answers are independent of Gemini's") was overturned by an internal audit and is publicly retracted in [`medqa-2026-05-04/reports/03_wrong_letter_test.md`](medqa-2026-05-04/reports/03_wrong_letter_test.md). The audit also surfaced the mechanism: **51 of Gemini's 71 parse-failures became correct Asha letters via META_CORRECT, accounting for 51 of 66 paired wins**. That is the bridge to Chapter 2.
-
-### Chapter 2: META_CORRECT (the architectural primitive)
-
-→ [`meta-correct/`](meta-correct/)
-
-A deterministic, evidence-grounded, cryptographically-auditable post-emission corrector for structured LM outputs in regulated domains. US Provisional 397222-7002P1 (filed 2026-05-01); CIP draft on file with counsel. Patent spec held internally; this chapter documents the *empirical effect* by cross-referencing Chapter 1's parse-failure table with Chapter 3's safety-intervention table.
-
-| Arm (on MedQA) | Parse-failure rate |
-|---|---:|
-| Asha (embodying META_CORRECT) | **0 / 1,273 = 0.00%** |
-| GPT-4o | 0.00% • Claude Opus 4.5: 0.08% • o4-mini-high: 2.44% • Gemini 3.1 Pro: **5.58%** |
+One original claim ("Asha's wrong answers are independent of Gemini's") was overturned by an internal audit and is publicly retracted in [`medqa-2026-05-04/reports/03_wrong_letter_test.md`](medqa-2026-05-04/reports/03_wrong_letter_test.md). The audit also surfaced the mechanism: **51 of Gemini's 71 parse-failures became correct Asha letters via answer-format normalization, accounting for 51 of 66 paired wins**.
 
 ### Chapter 3: Psychosis-bench (2026-05-11 / 12)
 
@@ -93,7 +79,7 @@ All three bare models wrote an enclomiphene dose for a 16-year-old when the requ
 
 ### Attribution summary
 
-On both measurement endpoints, the symbolic stack composes with the underlying LM. On the **structural** endpoint (MedQA parse-failure rescue) META_CORRECT is the proximal mechanism: 51 of 66 paired wins are parse-failure rescues. On the **semantic-safety** endpoint (Psychosis-bench) the full cognition stack lifts SIS from 30.2% (bare Flash) to 95.8% (Asha), a +65.6 pp gap, over an LM that is not at safety ceiling. The tier-attribution chapter (Chapter 4) establishes that neither the Flash→Pro tier jump nor the Gemini→Anthropic family jump explains this gap. We do not claim the same gap would appear over an intrinsically safety-ceiling LM; that is a separate test, queued.
+On both measurement endpoints, the symbolic stack composes with the underlying LM. On the **structural** endpoint (MedQA parse-failure rescue) answer-format normalization is the proximal mechanism: 51 of 66 paired wins are parse-failure rescues. On the **semantic-safety** endpoint (Psychosis-bench) the full cognition stack lifts SIS from 30.2% (bare Flash) to 95.8% (Asha), a +65.6 pp gap, over an LM that is not at safety ceiling. The tier-attribution chapter (Chapter 4) establishes that neither the Flash→Pro tier jump nor the Gemini→Anthropic family jump explains this gap. We do not claim the same gap would appear over an intrinsically safety-ceiling LM; that is a separate test, queued.
 
 ## Layout
 
@@ -102,7 +88,6 @@ asha-bench-public/
 ├── README.md                              this file
 ├── LICENSE                                Apache 2.0 (analysis scripts + computed reports)
 ├── medqa-2026-05-04/                      Chapter 1: MedQA structural hallucination
-├── meta-correct/                          Chapter 2: META_CORRECT primitive
 ├── psychosis-bench-2026-05-11/            Chapter 3: Asha vs bare Gemini-Flash
 ├── psychosis-attribution-2026-05-12/      Chapter 4: tier-attribution (Pro vs Flash vs Asha)
 ├── figures/                               reproducible figure scripts + PNGs

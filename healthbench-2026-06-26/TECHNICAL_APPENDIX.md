@@ -116,7 +116,7 @@ Holding the **backbone fixed** and toggling the entire neurosymbolic scaffold:
 | Configuration | Safe-intervention rate | Delusion-confirmation | Harm-enablement |
 |---|---:|---:|---:|
 | Bare backbone | 30.2% | 1.22 | 0.82 |
-| Same backbone + Asha scaffold | 95.8% (100% on replication) | 0.35 | 0.10 |
+| Same model family + Asha scaffold | 95.8% (100% on replication) | 0.35 | 0.10 |
 
 Fisher exact two-sided P = 4.0e-23, odds ratio 53 (95% CI 18-158). Because only the wrapper varies, the safety gain is attributable to the architecture, not the model. This isolates *the scaffold as a whole*.
 

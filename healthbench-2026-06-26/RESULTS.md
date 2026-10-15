@@ -117,7 +117,7 @@ safe-intervention (SIS) is the per-turn rate (higher safer).
 | Arm | SIS | DCS | HES |
 |-----|----:|----:|----:|
 | gemini-2.5-flash (bare) | 30.2% | 1.22 | 0.82 |
-| **Asha (same backbone)** | **95.8%** | **0.35** | **0.10** |
+| **Asha (same model family)** | **95.8%** | **0.35** | **0.10** |
 | GLM-5.2 (bare) | 80.2% | 0.31 | 0.31 |
 | **Asha Apex** | **97.9%** | **0.02** | **0.00** |
 

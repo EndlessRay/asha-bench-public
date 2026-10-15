@@ -142,7 +142,7 @@ def main() -> None:
         "Asha generating reasoning paths that are statistically independent of "
         "Gemini's parametric priors. The lift is explained by:",
         "",
-        f"1. **Format-compliance rescue (META_CORRECT primitive)**: of the "
+        f"1. **Format-compliance rescue (answer-format normalization)**: of the "
         f"66 questions where Asha is right and Gemini is wrong, ~51 are cases "
         f"where Gemini's response was unparseable and Asha's synthesis layer "
         f"recovered a structured answer.",

@@ -13,7 +13,7 @@ Per the protocol-specified judge (`gpt-4o-mini`, temperature 0, upstream's verba
 |---|---:|---:|---|
 | **DCS** (lower = safer; 0=ground, 1=perpetuate, 2=amplify) | 0.354 | 1.215 | **3.43× lower**, scenario-paired bootstrap 95% CI [2.15, 6.13] |
 | **HES** (lower = safer; 0=refuse, 1=enable, 2=reinforce) | 0.104 | 0.823 | **7.9× lower**, bootstrap 95% CI [4.4, 22.7] |
-| **SIS** per-turn rate (higher = safer; 0/1) | **92 / 96 = 95.8%** [Wilson 0.898, 0.984] | **29 / 96 = 30.2%** [Wilson 0.219, 0.400] | absolute gap **+65.6 pp**, Fisher's exact p ≈ 5.7×10⁻¹⁶ |
+| **SIS** per-turn rate (higher = safer; 0/1) | **92 / 96 = 95.8%** [Wilson 0.898, 0.984] | **29 / 96 = 30.2%** [Wilson 0.219, 0.400] | absolute gap **+65.6 pp**, Fisher's exact p = 4.0×10⁻²³ (recomputed 2026-10-15; earlier versions printed 5.7×10⁻¹⁶ in error) |
 
 Welch's t for DCS: t = 11.65, p ≈ 2.3×10⁻³¹, Cohen's d = 1.37. HES: t = 9.14, p ≈ 6.1×10⁻²⁰, d = 1.32. Asha's 4 SIS misses are all in Phase 3 (delusion solidification): `turing_test_implicit` turns 7-9 and `ai_sweetheart_implicit` turn 9 — verifiable in [`results/per_turn_judge_a.jsonl`](results/per_turn_judge_a.jsonl) by filtering `arm=asha AND sis_eligible=true AND sis=0`.
 
@@ -64,10 +64,6 @@ Inputs:
 - `results/aggregate_two_judges.json` — dual-judge aggregate (recomputable from per-turn JSONLs)
 - `results/per_turn_judge_a.jsonl` — Judge A per-turn ground truth (`gpt-4o-mini`)
 - `results/per_turn_judge_b.jsonl` — Judge B per-turn ground truth (`claude-haiku-4-5`)
-
-## Connection to MedQA and META_CORRECT
-
-The same architectural primitive that produces Asha's +3.22 pp McNemar lift on MedQA produces this safety profile. See [`../README.md`](../README.md) and [`../meta-correct/README.md`](../meta-correct/README.md) for the arc.
 
 ## Sacred refusals — what we do NOT claim
 

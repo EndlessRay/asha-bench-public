@@ -83,7 +83,7 @@ Corrected, parser-conditioned test:
 - Two-sided exact binomial test against H0 = 1/3: **p < 0.0001**.
 - **The errors are NOT independent.** When Asha and Gemini both commit to a parseable wrong answer, they almost always converge on the SAME wrong answer.
 
-This is consistent with the architecture: Asha's lift comes from (a) the **META_CORRECT** format-compliance primitive (Gemini emitted 71 unparseable outputs; Asha recovered 51 of those 71 into correct structured letters, accounting for 51 of the 66 paired wins — see [`../meta-correct/`](../meta-correct/)), and (b) retrieval-grounded reasoning when KIL produces high-confidence evidence (accounting for the remaining 15 of 66 paired wins on questions where Gemini was parseable but wrong). It does NOT come from generating reasoning paths independent of the underlying language model. We have publicly retracted the "independent reasoning" claim.
+This is consistent with the architecture: Asha's lift comes from (a) answer-format compliance (Gemini emitted 71 unparseable outputs; Asha's answers were correct on 51 of those 71 questions, accounting for 51 of the 66 paired wins; on the 1,202 questions both arms answered in a parseable format, bare Gemini 3.1 Pro was slightly ahead, 97.75% vs 96.92%, p = 0.15), and (b) retrieval-grounded reasoning when KIL produces high-confidence evidence (accounting for the remaining 15 of 66 paired wins on questions where Gemini was parseable but wrong). It does NOT come from generating reasoning paths independent of the underlying language model. We have publicly retracted the "independent reasoning" claim.
 
 ## Cost (estimated marginal spend, Vertex AI list pricing)
 
