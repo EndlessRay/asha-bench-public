@@ -22,7 +22,7 @@ Outputs land in `figures/output/` as 200-DPI PNGs at the dimensions below.
 | 1 | `01_deaths_timeline.png` | The "why this matters" anchor. Vertical roster of named chatbot-attributed deaths and civil filings, March 2023 to May 2026. Gold stars mark court milestones (Sewell Setzer settlement Jan 2026, Lyons MTD denied Apr 2026). | Inline roster in `generate_figures.py`, verified against `DRAFT_v1.md` Section 1 and Appendix B plus 2026-05-12 web verification pass. |
 | 2 | `02_architecture_stack.png` | Explains "what is Asha." Block diagram of the four symbolic components around the LLM. | `../README.md` architecture section (Qdrant 759 collections / 125.44M vectors, CIU counts, patent numbers). |
 | 3 | `03_medqa_accuracy.png` | MedQA headline. Five-arm accuracy with Wilson 95% CI and parse-failure annotations. | `../medqa-2026-05-04/results/*.jsonl` (computed values match `../medqa-2026-05-04/reports/01_accuracy_table.md`). |
-| 4 | `04_medqa_mechanism.png` | Two-panel: paired McNemar contingency + META_CORRECT rescue waterfall. Connects the +3.22 pp lift to the patented primitive. | `../medqa-2026-05-04/reports/02_paired_asha_vs_gemini.md`. |
+| 4 | `04_medqa_mechanism.png` | Two-panel: paired McNemar contingency + answer-format normalization rescue waterfall. Connects the +3.22 pp lift to the format-normalization step. | `../medqa-2026-05-04/reports/02_paired_asha_vs_gemini.md`. |
 | 5 | `05_psychosis_metrics.png` | Psychosis-bench headline, Judge A only. Three panels: DCS, HES, SIS. Asha vs bare Gemini 2.5 Flash. | `../psychosis-bench-2026-05-11/results/aggregate_two_judges.json` (read at runtime). |
 | 6 | `06_prereg_scoreboard.png` | The κ-failure-as-a-feature visual. Three pre-registered hypotheses, two PASS, one FAIL, formal verdict INCONCLUSIVE. | `../PREREGISTRATION/2026-05-11_PSYCHOSIS_BENCH.md` and `../psychosis-bench-2026-05-11/reports/02_dual_judge_kappa.md`. |
 | 7 | `07_implicit_explicit.png` | Psychosis-bench stratified by scenario condition. Three panels: DCS / HES / SIS by Implicit vs Explicit. Shows whether Asha's lift holds on the harder half (it does on SIS; magnitude shrinks on DCS/HES). | Computed by `analyze_implicit_explicit.py` from `../psychosis-bench-2026-05-11/results/per_turn_judge_a.jsonl`. |
@@ -42,7 +42,7 @@ public per-turn / per-question JSONLs and emit markdown to stdout.
   was wrong and bare Gemini was right on MedQA. Reports the McNemar 2×2
   with parseability conditioning. Surfaces the parseable-only subset finding
   (Asha −0.83 pp on the fair-fight subset; the entire +3.22 pp paired lift
-  is attributable to META_CORRECT envelope rescue on bare Gemini's parse
+  is attributable to answer-format normalization on bare Gemini's parse
   failures).
 
 ## Alt-text (for Substack, LinkedIn, X, accessibility)
@@ -60,7 +60,7 @@ verbalization layer sits at the center (Gemini family in production, Anthropic
 in research swap-tests). Four symbolic components surround it: Memory (Qdrant,
 759 collections, 125.44 million vectors), Knowledge Integration Layer (symbolic
 retrieval before every LLM call), Epistemic Arena (31,616 active Competitive
-Informational Units), and META_CORRECT (deterministic post-emission corrector,
+Informational Units), and answer-format normalization (deterministic post-emission corrector,
 US Provisional 397222-7002P1). Arrows show the four-stage data flow: retrieve,
 synthesize, compete, correct. Parent application US 19/290,471 (allowed).*
 
@@ -77,7 +77,7 @@ right, 66 Asha right and Gemini wrong, 25 Asha wrong and Gemini right, 32 both
 wrong. Lift +3.22 percentage points, odds ratio 2.64 with 95% confidence
 interval 1.67 to 4.18, McNemar exact p equals 2.0 times 10 to the minus 5.
 Right panel: three-stage waterfall showing 71 Gemini parse failures rescued by
-META_CORRECT into 51 correct answer letters, accounting for 51 of the 66
+answer-format normalization into 51 correct answer letters, accounting for 51 of the 66
 paired McNemar wins. The remaining 15 paired wins come from KIL evidence
 substitution on parseable-but-incorrect Gemini answers.*
 
@@ -116,7 +116,7 @@ column to the right: Asha zero, Opus one, o4-mini-high thirty-one, Gemini
 seventy-one, GPT-4o zero. Bottom callout: Asha matches Claude Opus 4.5 to
 statistical parity (paired McNemar exact p equals 0.228) at roughly one-quarter
 the marginal per-query cost; zero parse failures across 1,273 questions; bare
-Gemini 3.1 Pro Preview seventy-one parse failures (5.58 percent); META_CORRECT
+Gemini 3.1 Pro Preview seventy-one parse failures (5.58 percent); answer-format normalization
 envelope rescue accounts for the entire 3.22 percentage-point paired McNemar
 advantage.*
 
@@ -140,7 +140,7 @@ INCONCLUSIVE.*
 
 - Palette is consistent across all six figures. Asha teal `#1F6F52`, neutral
   gray `#9CA3AF` for baselines, muted red `#B8423A` for failures, gold
-  `#C8975B` for the patented primitive callout.
+  `#C8975B` for the format-normalization step callout.
 - Fonts default to DejaVu Sans (matplotlib default; renders cleanly across
   Linux, macOS, and Windows without external font files).
 - All figures render at 200 DPI as PNG, sized for both Substack inline and

@@ -34,7 +34,7 @@ On the original n=d=32 denominator (which includes Gemini-unparseable cases that
 
 Asha's +3.22 pp paired lift over bare Gemini is **not** explained by Asha generating reasoning paths that are statistically independent of Gemini's parametric priors. The lift is explained by:
 
-1. **Format-compliance rescue (META_CORRECT primitive)**: of the 66 questions where Asha is right and Gemini is wrong, ~51 are cases where Gemini's response was unparseable and Asha's synthesis layer recovered a structured answer.
+1. **Format-compliance rescue (answer-format normalization)**: of the 66 questions where Asha is right and Gemini is wrong, ~51 are cases where Gemini's response was unparseable and Asha's synthesis layer recovered a structured answer.
 2. **Retrieval-grounded substitution**: on the remaining questions, KIL evidence steers Asha toward the correct letter even when bare Gemini would have picked a wrong one.
 
 When Asha CANNOT rescue and both arms commit to a parseable wrong letter, the synthesis layer almost always inherits Gemini's parametric prior (same wrong letter 11/12). This is honest, useful information about how the architecture works.

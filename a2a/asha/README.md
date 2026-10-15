@@ -4,7 +4,7 @@
 
 Asha is a fiduciary medical AI agent backed by a curated slice of the larger Citadel corpus (144M+ vectors across ~1,071 Qdrant collections, ~314 of them knowledge-source, covering medicine, pharmacology, research literature, clinical guidelines, and structured codings; live-verified 2026-07-13). Every response includes structured provenance (source collections, evidence count, and predicate classification) so you can verify what grounded the answer.
 
-Built by physician co-founders. Patent: **US 12,555,008 B1**, granted 2026-02-17 (application 19/290,471). META_CORRECT: US Provisional 397222-7002P1 (filed 2026-05-01).
+Built by physician co-founders. Patent: **US 12,555,008 B1**, granted 2026-02-17 (application 19/290,471).
 
 ## Architecture (neurosymbolic stack)
 
@@ -15,12 +15,11 @@ Asha is a neurosymbolic system. The LLM operates as the verbalization layer; the
 | Qdrant memory | 759 collections holding **125.44M vectors**. 125.24M curated knowledge (medical, pharmacological, research literature, clinical guidelines, structured codings, financial filings, legal corpora). 98,628 vectors across 493 private user and tenant graphs (438 Asha DNAids, 55 Harley trainers). |
 | KIL (Knowledge Integration Layer) | symbolic evidence retrieval before each LLM call. Evidence stamps return in every response's `provenance` artifact. |
 | Epistemic Arena with Neural Darwinism | **31,616 active Competitive Informational Units (CIUs)** currently competing. **12,048 promoted (verified)** into long-term memory. **32,768 quarantined** by the Quality Firewall. Promotion rate 15.8%, quarantine rate 42.9% of evaluated candidates. |
-| META_CORRECT | deterministic post-emission corrector for structured outputs in regulated domains. |
 
 Public falsifiability surface: [`github.com/EndlessRay/asha-benchmarks`](https://github.com/EndlessRay/asha-benchmarks). Two structural signatures live there today, both bit-exact reproducible from SHA-256 locked inputs.
 
-- **Same backbone LM, no parse failures.** MedQA (n = 1,273): bare Gemini 3.1 Pro Preview parse-fails on 5.58% of questions. Asha parse-fails on 0/1,273. META_CORRECT accounts for 51 of 66 paired McNemar wins.
-- **Same backbone LM, different safety behavior.** Psychosis-bench (Au Yeung 2025 preprint, 192 turns/arm): bare `gemini-2.5-flash` posts 30.2% safety-intervention rate. Asha's full stack on the same `gemini-2.5-flash`-majority routing posts 95.8%. The +65.6 pp gap is attributable to the surrounding cognition stack.
+- **Same model family, no parse failures.** MedQA (n = 1,273): bare Gemini 3.1 Pro Preview parse-fails on 5.58% of questions. Asha parse-fails on 0/1,273. Answer-format compliance accounts for 51 of 66 paired McNemar wins; excluding parse failures, the bare model was slightly ahead.
+- **Same model family, different safety behavior.** Psychosis-bench (Au Yeung 2025 preprint, 192 turns/arm): bare `gemini-2.5-flash` posts 30.2% safety-intervention rate. Asha's full stack on the same `gemini-2.5-flash`-majority routing posts 95.8%. Moving to the larger Gemini 2.5 Pro alone does not explain the +65.6 pp gap.
 
 Three claims this section is NOT making. (1) That the LLM is bypassed; it still produces language. (2) That Asha reasons independently of the LLM; we publicly retracted the wrong-letter independence claim in the bench repo. (3) That Asha is fully symbolic; the neural component carries language production while the symbolic components carry memory, evidence integration, competition, belief updating, and post-emission correction.
 

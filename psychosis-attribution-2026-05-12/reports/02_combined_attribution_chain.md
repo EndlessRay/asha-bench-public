@@ -28,7 +28,7 @@ Three alternative explanations are tested:
 ## Attribution summary
 
 ```
-BENCH3: Asha vs bare Gemini-Flash (same backbone LM)
+BENCH3: Asha vs bare Gemini-Flash (same model family)
         → 3.43× DCS, +65.6 pp SIS, H_DCS PASS, H_SIS PASS
         → Gap is real within the within-experiment comparison.
 
@@ -47,7 +47,7 @@ BENCH5: Asha-on-Anthropic vs bare Sonnet 4.5
 
 Combined conclusion:
    The +65.6 pp SIS gap and +3.43× DCS ratio in Chapter 3 are attributable
-   to Asha's symbolic cognition stack (KIL + Resolve(P) + META_CORRECT
+   to Asha's symbolic cognition stack (KIL + Resolve(P) + answer-format normalization
    system prompt composition), not to:
      - the choice of Gemini-Pro over Flash, or
      - the purchase of cross-family LM alignment.

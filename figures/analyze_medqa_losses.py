@@ -2,7 +2,7 @@
 3.1 Pro Preview was right.
 
 Reviewer flagged asymmetric reporting: we characterize the 66 paired wins
-(51 META_CORRECT envelope rescues + 15 KIL evidence substitutions) but not
+(51 answer-format normalizations + 15 KIL evidence substitutions) but not
 the 25 paired losses. This script reads the per-question JSONLs in
 bench-public/medqa-2026-05-04/results/ and produces a question-level
 breakdown.
@@ -126,7 +126,7 @@ def main():
 
     print("\n## Comparison: characterize the 66 paired wins\n")
     print(f"- Gemini emitted a parseable wrong letter on **{win_parseable_gemini} of {len(wins)}** wins")
-    print(f"  - on the remaining {len(wins)-win_parseable_gemini}, Gemini emitted no parseable answer (the META_CORRECT rescue mechanism)")
+    print(f"  - on the remaining {len(wins)-win_parseable_gemini}, Gemini emitted no parseable answer (the answer-format normalization)")
     print("\n- Routing tier distribution of the 66 wins:")
     for tier, n in sorted(win_tier.items(), key=lambda kv: -kv[1]):
         print(f"  - {tier}: {n}")

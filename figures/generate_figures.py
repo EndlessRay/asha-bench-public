@@ -271,7 +271,7 @@ def fig2_architecture():
                  "31,616 active · 12,048 promoted\n32,768 quarantined",
                  color="#E8F0EC", fontsize=13, sublabel_size=9)
 
-    # Row 2: Symbolic Containment Layer | META_CORRECT | Language layer
+    # Row 2: Symbolic Containment Layer | answer-format normalization | Language layer
     _rounded_box(ax, x0, y_bot, box_w, box_h,
                  "Symbolic Containment",
                  "Kaṇṭhastha-injected refusals,\n"
@@ -281,7 +281,7 @@ def fig2_architecture():
                  "Lambda Predicates Λ1–Λ5",
                  color="#E8F0EC", fontsize=13, sublabel_size=8.5)
     _rounded_box(ax, x0 + (box_w + gap_x), y_bot, box_w, box_h,
-                 "META_CORRECT",
+                 "answer-format normalization",
                  "deterministic post-emission\ncorrector for regulated\n"
                  "structured outputs\nUS Prov. 397222-7002P1",
                  color="#FAF3E7", fontsize=13, sublabel_size=9)
@@ -312,7 +312,7 @@ def fig2_architecture():
                                  (cx(2) - box_w / 2 + 0.05, cy_top()),
                                  **arrow_kwargs))
 
-    # Vertical: KIL down to Containment; Arena down to META_CORRECT
+    # Vertical: KIL down to Containment; Arena down to answer-format normalization
     ax.add_patch(FancyArrowPatch((cx(1), y_top - 0.05),
                                  (cx(0), y_bot + box_h + 0.05),
                                  arrowstyle="-|>,head_length=0.32,head_width=0.20",
@@ -322,7 +322,7 @@ def fig2_architecture():
                                  (cx(2), y_bot + box_h + 0.05),
                                  **arrow_kwargs))
 
-    # Horizontal flow along row 2: Containment -> Language layer -> META_CORRECT
+    # Horizontal flow along row 2: Containment -> Language layer -> answer-format normalization
     ax.add_patch(FancyArrowPatch((cx(0) + box_w / 2 - 0.05, cy_bot()),
                                  (cx(2) - box_w / 2 + 0.05, cy_bot()),
                                  arrowstyle="-|>,head_length=0.32,head_width=0.20",
@@ -438,7 +438,7 @@ def fig3_medqa_accuracy():
 
 
 # ----------------------------------------------------------------------------
-# Figure 4: MedQA paired McNemar + META_CORRECT mechanism
+# Figure 4: MedQA paired McNemar + answer-format normalization mechanism
 # ----------------------------------------------------------------------------
 
 def fig4_medqa_mechanism():
@@ -488,7 +488,7 @@ def fig4_medqa_mechanism():
             "McNemar exact p = 2.0 × 10⁻⁵",
             ha="center", fontsize=10.5, color=COL_BASELINE_DARK)
 
-    # ---- Panel B: META_CORRECT rescue waterfall
+    # ---- Panel B: answer-format normalization rescue waterfall
     ax = axes[1]
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 6)
@@ -500,9 +500,9 @@ def fig4_medqa_mechanism():
                  "Gemini 3.1 Pro\nparse failures",
                  color=COL_FAIL, text_color="white", fontsize=24)
 
-    # Stage 2: META_CORRECT
+    # Stage 2: answer-format normalization
     _rounded_box(ax, 3.6, 3.5, 2.8, 1.6,
-                 "META_CORRECT",
+                 "answer-format normalization",
                  "envelope rescue +\nKIL evidence substitution",
                  color=COL_GOLD, text_color="white", fontsize=13)
 
@@ -531,7 +531,7 @@ def fig4_medqa_mechanism():
                                  arrowstyle="-|>,head_length=0.35,head_width=0.22",
                                  color=COL_INK, linewidth=1.6))
 
-    ax.set_title("META_CORRECT: where the +3.22 pp lift comes from",
+    ax.set_title("answer-format normalization: where the +3.22 pp lift comes from",
                  fontsize=12.5, fontweight="bold", color=COL_INK, pad=12)
 
     fig.suptitle("Asha vs bare Gemini 3.1 Pro Preview on MedQA",
@@ -622,7 +622,7 @@ def fig5_psychosis_metrics():
     ax.grid(axis="y", color=COL_GRID, linewidth=0.8, zorder=1)
     ax.set_axisbelow(True)
     ax.text(0.5, 108,
-            "+65.6 pp gap  ·  Fisher's exact p ≈ 5.7 × 10⁻¹⁶",
+            "+65.6 pp gap  ·  Fisher's exact p = 4.0 × 10⁻²³",
             ha="center", fontsize=10, color=COL_ASHA, fontweight="bold",
             transform=ax.transData)
 
@@ -934,7 +934,7 @@ def fig8_medqa_headline():
     fig.text(0.06, 0.045,
              "0 parse failures across 1,273 questions.   "
              "Bare Gemini 3.1 Pro Preview: 71 parse failures (5.58%).   "
-             "META_CORRECT envelope rescue accounts for the entire "
+             "answer-format normalization accounts for the entire "
              "+3.22 pp paired McNemar advantage.",
              fontsize=10, color=COL_BASELINE_DARK)
     fig.text(0.06, 0.013,
@@ -1059,7 +1059,7 @@ def fig9_medqa_parseable_fight():
         Asha wrong, Gemini right:  25
         both wrong:  12
     Net delta: -10 (-0.83 pp), Asha behind on the head-to-head subset.
-    The +3.22 pp full-bench lift is therefore attributable to META_CORRECT
+    The +3.22 pp full-bench lift is therefore attributable to answer-format normalization
     rescue on Gemini's 71 parse failures, not to retrieval-or-arena reasoning.
     """
     fig, axes = plt.subplots(1, 2, figsize=(14, 6.2),
@@ -1132,8 +1132,8 @@ def fig9_medqa_parseable_fight():
             color=COL_BASELINE_DARK, style="italic")
 
     _rounded_box(ax, 1.0, 0.4, 8.0, 1.9,
-                 "The lift is META_CORRECT envelope rescue",
-                 "The full-bench +3.22 pp advantage is attributable to META_CORRECT recovering\n"
+                 "The lift is answer-format normalization",
+                 "The full-bench +3.22 pp advantage is attributable to answer-format normalization recovering\n"
                  "51 correct answer letters from bare Gemini's 71 parse failures.\n"
                  "On the head-to-head parseable subset, retrieval and arena components\n"
                  "do not produce a statistically meaningful lift over the bare backbone LM.",
@@ -1243,7 +1243,7 @@ def fig10_psychosis_headline():
     ax.grid(axis="y", color=COL_GRID, linewidth=0.8, zorder=1)
     ax.set_axisbelow(True)
     ax.text(0.5, 111,
-            "+65.6 pp gap\nFisher's exact p ≈ 5.7 × 10⁻¹⁶",
+            "+65.6 pp gap\nFisher's exact p = 4.0 × 10⁻²³",
             ha="center", fontsize=11, color=COL_ASHA, fontweight="bold",
             transform=ax.transData, linespacing=1.3)
 

@@ -37,10 +37,7 @@ enclomiphene-bench arms (Asha, `gemini-3.5-flash` via Vertex AI,
 
 ## Patent
 
-The **META_CORRECT** architectural primitive referenced in Chapter 2 is
-covered by US Provisional 397222-7002P1 (filed 2026-05-01); a continuation-in-part
-draft is on file with counsel of record (Saul Ewing). The patent
-specification is not part of this repository.
+Asha AI is covered by U.S. Patent No. 12,555,008 and patent-pending applications.
 
 ## Contact
 

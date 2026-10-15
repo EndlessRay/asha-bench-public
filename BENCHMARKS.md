@@ -83,12 +83,12 @@ Production routes each query by clinical stakes to one of three tiers: Asha Base
   - Glass Health 5.5 (vendor system, agentic search): 46.1 (n=522), basis `same_grader_self_run`
   - Claude Sonnet 4.6 (bare): 43.5 (n=525), basis `same_grader_self_run`
 - Paired statistics:
-  - Apex-J Fable composer vs bare Fable 5.1 (same backbone as composer), full set: +5.5 pp, n=525, paired t (paper SE), p=0.003
+  - Apex-J Fable composer vs bare Fable 5.1 (same answer-writing model), full set: +5.5 pp, n=525, paired t (paper SE), p=0.003
   - Apex-J Fable composer vs Apex-J Opus 4.8 composer, full set: +3.4 pp, n=525, paired t (paper SE), p=0.02
-  - Apex-J Astra composer vs bare GPT-6 Astra, same 300 items, GPT-5.4 grader (architecture held to the same model): +3.6 pp, n=300, paired t, length-adjusted, p=0.03
+  - Apex-J Astra composer vs bare GPT-6 Astra, same 300 items, GPT-5.4 grader (answer-writing model held fixed): +3.6 pp, n=300, paired t, length-adjusted, p=0.03
   - Same pair, red-team items only, length-adjusted: +6.6 pp, n=109, paired t, p=see artifact
-  - Asha Base vs bare Claude Sonnet 5 (same backbone), red-team items, length-adjusted: +10.1 pp, n=191, paired t, p=see artifact
-  - Asha Base vs bare Claude Sonnet 5 (same backbone), all items, length-adjusted: +0.3 pp, n=524, paired t, p=0.88
+  - Asha Base vs bare Claude Sonnet 5 (same model family), red-team items, length-adjusted: +10.1 pp, n=191, paired t, p=see artifact
+  - Asha Base vs bare Claude Sonnet 5 (same model family), all items, length-adjusted: +0.3 pp, n=524, paired t, p=0.88
 - Also measured:
   - full L9 concise (full set, 525 items, GPT-5.4 grader): 68.8 vs 44.6 bare (n=525). vs bare gemini31pro on the same items: +24.2 length-adjusted (GPT-5.4, p = 0.00), +25.5 (Opus 4.8). Harm rate 17.7% vs 39.4%. Opus 4.8 grader: 72.7 vs 47.2. adopted as incumbent under the pre-registered rule. Pin cfa13318; 3 trials pooled; read out 2026-09-21.
   - slice freeze concise identity (300-item slice, GPT-5.4 grader): 67.4 vs 69.0 bare (n=300). vs Ladder L9: concise composer style on the same items: -1.6 length-adjusted (GPT-5.4, p = 0.21), -0.8 (Opus 4.8). Harm rate 20.8% vs 19.6%. Opus 4.8 grader: 71.2 vs 72.0. not adopted: inside the 3-point band, gates pass. Pin 1c489dac; one trial; read out 2026-09-20.
@@ -169,11 +169,11 @@ Production routes each query by clinical stakes to one of three tiers: Asha Base
 ### psychosis-bench (Au Yeung et al. 2025): Full protocol; 96 intervention-eligible turns per arm (`psychosis-bench-sis`)
 
 - Pipeline / configuration: P2; Deployed engine, backbone gemini-2.5-flash
-- Deployed tier: Base tier (the live engine), same backbone as the bare arm
+- Deployed tier: Base tier (the live engine), same model family as the bare arm
 - Result: **95.8** [89.8, 98.4] (Safe-intervention rate (SIS), higher is safer; CI method wilson); n = 96; run date 2026-05-11
 - Grader: gpt-4o-mini (the benchmark's protocol judge); Claude Haiku 4.5 as second judge
 - Comparators:
-  - Bare gemini-2.5-flash (the May 2026 backbone, no architecture): 30.2 (n=96), basis `same_grader_self_run`: Fisher exact two-sided P = 4.0e-23, odds ratio 53 [18, 158]. Same backbone as the Asha arm, so the gap is the architecture.
+  - Bare gemini-2.5-flash (the May 2026 backbone, no architecture): 30.2 (n=96), basis `same_grader_self_run`: Fisher exact two-sided P = 4.0e-23, odds ratio 53 [18, 158]. Same model family as the Asha arm (Asha routed about 30% of turns to Gemini 2.5 Pro); bare Gemini 2.5 Pro scored 26.0%, so the larger model alone does not explain the gap.
   - Bare Gemini 3.6 Flash (a current bare model, independent run, September 2026): 93.8 (n=96), basis `independent_validator`: Current bare frontier models score far higher on this protocol than the May 2026 backbone did; the 30.2 to 95.8 gap is a same-backbone measurement from May.
   - Bare GLM-5.2 (open weights): 80.2 (n=96), basis `same_grader_self_run`: DCS 0.31 / HES 0.31
 - Also measured:
@@ -184,7 +184,7 @@ Production routes each query by clinical stakes to one of three tiers: Asha Base
   - Frozen Apex-J (freeze-2026-09-20: Astra composer, concise, FENG) SIS: 95.8 (n=96). 92/96; DCS 0.146, HES 0.021; the four misses are one scenario (secret_project_implicit, turns 7-9 and 12) where the answer refused the harmful instructions but did not redirect; protocol judge gpt-4o-mini; run 2026-09-20 on the lane
   - Asha Base, same run (20 Sep) SIS: 100.0 (n=96). 96/96; DCS 0.118, HES 0.135
   - Bare Claude Sonnet 4.5, same run (20 Sep) SIS: 100.0 (n=96). 96/96; DCS 0.007, HES 0.000. Current bare frontier models match Asha on this protocol; the May held-backbone gap (30.2% for bare gemini-2.5-flash) is a statement about what the architecture adds to a given backbone, not about frontier models today
-- Notes: The backbone is held fixed and only the surrounding architecture varies, so the May 2026 gain is attributable to the architecture. Both pre-registered hypotheses (DCS, SIS) pass; the two judges agree on the direction of every metric, and inter-judge agreement fell below the pre-registered gate (kappa 0.25), which the pre-registration records as an inconclusive formal verdict. n=96 is fixed by the protocol (16 scenarios x 12 turns, 96 intervention-eligible turns per arm). Re-run 2026-09-20 on the frozen Apex-J with the same protocol and judge: SIS 95.8% [89.8, 98.4], DCS 0.146, HES 0.021; Asha Base 100%; bare Claude Sonnet 4.5 100% with DCS 0.007 and HES 0. The crisis claim to make is the held-backbone one (same model, 30% without Asha, 96% with); against today's bare frontier models the protocol reads parity, not superiority.
+- Notes: The model family is held fixed and the surrounding architecture varies; the attribution control shows the larger model alone does not explain the May 2026 gain. Both pre-registered hypotheses (DCS, SIS) pass; the two judges agree on the direction of every metric, and inter-judge agreement fell below the pre-registered gate (kappa 0.25), which the pre-registration records as an inconclusive formal verdict. n=96 is fixed by the protocol (16 scenarios x 12 turns, 96 intervention-eligible turns per arm). Re-run 2026-09-20 on the frozen Apex-J with the same protocol and judge: SIS 95.8% [89.8, 98.4], DCS 0.146, HES 0.021; Asha Base 100%; bare Claude Sonnet 4.5 100% with DCS 0.007 and HES 0. The crisis claim to make is the held-backbone one (same model family, 30% without Asha, 96% with); against today's bare frontier models the protocol reads parity, not superiority.
 - In plain terms: Scripted 12-turn conversations in which a user slides toward delusional beliefs and asks for things that could cause harm. The safety score is how often the system intervened safely when it should have, instead of agreeing along. The same underlying model was tested bare and inside Asha, so the difference is the architecture.
 - Artifacts: [Per-turn judge outputs, scenarios, pre-registration (public repo, psychosis-bench-2026-05-11/)](https://github.com/EndlessRay/asha-benchmarks/tree/main/psychosis-bench-2026-05-11); [Attribution study: Flash to Pro tier jump gives no safety lift](https://github.com/EndlessRay/asha-benchmarks/tree/main/psychosis-attribution-2026-05-12)
 
@@ -286,7 +286,7 @@ Small samples (below the register's n threshold): reported with intervals where 
 ## Reproduce
 
 - [HealthBench: harness, configs, graded data, pipeline glossary](https://github.com/EndlessRay/asha-benchmarks/tree/main/healthbench-2026-06-26)
-- [MedQA, psychosis-bench, META_CORRECT: bit-exact public artifacts](https://github.com/EndlessRay/asha-benchmarks)
+- [MedQA and psychosis-bench: bit-exact public artifacts](https://github.com/EndlessRay/asha-benchmarks)
 - [Locked pediatric AOM chart receipts](https://github.com/EndlessRay/asha-benchmarks/tree/main/aom-chart-2026-08)
 - [Preprint, 24 pp (Research Square rs-10206806)](https://www.researchsquare.com/article/rs-10206806/v1)
 - [Live corpus commitment (hash over the knowledge corpus the benchmarks ran against)](https://api.askasha.org/api/audit/corpus-state/public)
