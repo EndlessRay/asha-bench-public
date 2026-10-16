@@ -14,7 +14,6 @@
   "config": {
    "label": "hb5000_apexj",
    "pipeline": "apexj",
-   "route": "bench lane, eval route",
    "dataset": "healthbench_data/2025-05-07-06-14-12_oss_eval.jsonl",
    "dataset_sha256": "e99dd3c6372c10d6fcc5e385c5fae69d0dd40392dae56836ef9493ae324ecd2f",
    "n_items": 5000,
@@ -28,14 +27,6 @@
    "process_started_at": "2026-09-20T19:22:21Z",
    "git_sha": "d796407d0cab",
    "pipeline_id": "P6-J",
-   "llm_provider": "anthropic_routed",
-   "routed_low_model": "claude-sonnet-5",
-   "routed_high_model": "claude-opus-5",
-   "kil_fingerprint": {
-    "knowledge_collections": 355,
-    "sha256_16": "a727c73f06eb790a"
-   },
-   "culture_charter_version": "0.2.0",
    "disk_drift": true
   },
   "pin_end": {
@@ -43,14 +34,6 @@
    "process_started_at": "2026-09-20T19:22:21Z",
    "git_sha": "d796407d0cab",
    "pipeline_id": "P6-J",
-   "llm_provider": "anthropic_routed",
-   "routed_low_model": "claude-sonnet-5",
-   "routed_high_model": "claude-opus-5",
-   "kil_fingerprint": {
-    "knowledge_collections": 355,
-    "sha256_16": "a727c73f06eb790a"
-   },
-   "culture_charter_version": "0.2.0",
    "disk_drift": true
   },
   "repo_git_sha": "7adfbebf848daed62c7a68732b440f1ea7f6ba92",

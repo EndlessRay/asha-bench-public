@@ -1,11 +1,11 @@
-# HealthBench, 5,000 items: the frozen Asha Apex-J vs its bare backbone
+# HealthBench, 5,000 items: the frozen Asha Apex-J vs its bare answer-writing model
 
 Per-item artifacts for the launch measurement of Asha Apex-J (frozen 20 September 2026) on the full OpenAI HealthBench set (5,000 conversations; Hard 1,000 and the Vishwanath et al. 500-item sample are exact subsets), plus the study-pipeline panel grades of the 500, the deployed-code identity checks and the composer-style check. Everything the register rows `healthbench-standard`, `healthbench-hard-apex` and `healthbench-500-independent` at [dnai.systems/benchmarks](https://dnai.systems/benchmarks) cite is here, with SHA-256 in `MANIFEST.json`.
 
 ## Method
 
 - **Dataset.** OpenAI HealthBench `2025-05-07-06-14-12_oss_eval.jsonl` (5,000 items, SHA-256 `e99dd3c6372c10d6fcc5e385c5fae69d0dd40392dae56836ef9493ae324ecd2f`), unmodified. Hard: `hard_2025-05-08-21-00-10.jsonl` (1,000 items, an exact subset). The Vishwanath 500: the study's seed-62 sample, `vishwanath_seed62_500_items.jsonl` in this folder (500 of the 5,000, matched by text and id).
-- **Arms.** `asha-apex-j-frozen`: the served Apex tier, one trial, every item answered with the full conversation, on the bench lane pinned to process fingerprint `edd4f69f9a9bd6d2` for the whole run. `bare-gpt-6-astra`: GPT-6 Astra through the vendor API, no system prompt, no tools, no retrieval, highest effort, the same 5,000 items. The bare arm is the composer backbone without the Asha layer; the paired difference is the architecture.
+- **Arms.** `asha-apex-j-frozen`: the served Apex tier, one trial, every item answered with the full conversation, on the bench lane pinned to process fingerprint `edd4f69f9a9bd6d2` for the whole run. `bare-gpt-6-astra`: GPT-6 Astra through the vendor API, no system prompt, no tools, no retrieval, highest effort, the same 5,000 items. The bare arm is the bare answer-writing model (the Apex-J composer model) without the Asha layer. The paired difference is the effect of the whole Asha system around that model and cannot be attributed to any single component.
 - **Grading.** Three graders, each scoring every rubric criterion of every item for both arms: gpt-4.1 (the official HealthBench grader), GPT-5.4 at low reasoning, Claude Opus 4.8. The score of record is gpt-4.1. Grader calls that failed (vendor errors, parse failures) are stored with an `Error`/`Parse failed` explanation and are excluded from scoring, never counted as unmet; the counts are in the readouts. The grading was interrupted by a vendor credit outage on 22 September and resumed; rows that carried error codes were discarded and re-graded, so no partial row is counted.
 - **Score.** HealthBench convention: per item, points earned divided by positive points possible (negative-point criteria subtract when triggered); the benchmark score is the mean over items clipped to [0, 1]; theme, axis and physician-category scores are the per-item tag scores averaged the same way. Bootstrap 95% intervals (4,000 resamples). Paired differences on shared items with a two-sided t-test and an exact sign test.
 - **Harm proxy.** Share of negative-point criteria triggered, per grader. The pre-registered test (within +2.0 points of the bare arm on the 5,000) is reported per grader in the readouts and on the register rows, pass or miss.
@@ -16,10 +16,10 @@ Per-item artifacts for the launch measurement of Asha Apex-J (frozen 20 Septembe
 
 | Path | Contents |
 |---|---|
-| `asha-apex-j-frozen/completions.jsonl.gz` | 5,000 rows: `prompt_id`, `prompt` (the conversation), `completion`, `rubrics`, `example_tags`, `draft_count`, `contributing_agents`, and a reduced `endlessray_metadata` (pipeline id, process fingerprint, composer and agent model names, latency). Internal instrumentation fields are removed |
+| `asha-apex-j-frozen/completions.jsonl.gz` | 5,000 rows: `prompt_id`, `prompt` (the conversation), `completion`, `rubrics`, `example_tags`, and a reduced `endlessray_metadata` (pipeline id, process fingerprint, composer model and settings, conversation turns, latency). Internal orchestration metadata is removed |
 | `asha-apex-j-frozen/graded_{gpt_4_1,gpt_5_4,claude_opus_4_8}.jsonl.gz` | per-item grades: `score`, `metrics` (per-tag scores), `rubric_grades` (criterion, points, met, grader explanation) |
-| `asha-apex-j-frozen/run_manifest.json` | dataset SHA-256, item count, graders, composer arguments, the pin (fingerprint, provider routing, quorum, culture charter hash, KIL fingerprint), repository commit |
-| `bare-gpt-6-astra/` | the same layout for the bare backbone arm |
+| `asha-apex-j-frozen/run_manifest.json` | dataset SHA-256, item count, graders, composer arguments, the pin (pipeline id, process fingerprint, composer token default), repository commit |
+| `bare-gpt-6-astra/` | the same layout for the bare answer-writing model arm |
 | `identity-check-2026-09-23-concise/`, `style-check-2026-09-23-default/` | the same layout for the two 500-item checks |
 | `readouts/official_readout_hb5000_{standard,hard,seed62}.json` | the full readout per set: per grader, both arms, bootstrap intervals, paired tests, harm proxy, refusals, per-tag tables, provenance |
 | `readouts/decision_readout_hb500_*.json` | identity and style readouts (same schema) |
@@ -28,6 +28,10 @@ Per-item artifacts for the launch measurement of Asha Apex-J (frozen 20 Septembe
 | `vishwanath-500-panel/panel_*.json.gz` | study-pipeline outputs with every judge's vote per criterion: frozen Apex-J, bare GPT-6 Astra, the June 2026 Apex (P6) answers, the identity check, the style check |
 | `vishwanath_seed62_500_items.jsonl` | the 500 items |
 | `MANIFEST.json` | SHA-256 and size of every file above |
+
+## Metadata removal, 16 October 2026
+
+Internal orchestration metadata was removed from this folder on 2026-10-16: per-item agent and draft fields in the Apex-J completions files, and orchestration, routing and corpus fields in the run manifests and readout provenance blocks. Grades, completions, prompts, rubrics, scores and every readout number are unchanged; `MANIFEST.json` carries the new SHA-256 of each rewritten file.
 
 ## Headline numbers (gpt-4.1 unless stated)
 

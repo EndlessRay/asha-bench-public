@@ -2,19 +2,19 @@
 
 DNAi Systems. Revision of 24 September 2026, the launch revision for 1 October 2026. Supersedes the internal card of 14 September.
 
-Asha is an AI system in the HealthBench Professional paper's sense: a model plus a harness. Every tier below is the same neurosymbolic stack (retrieval, falsification, safety gating, composition) wrapped around vendor language models. No tier uses a fine-tuned model. Every gain over a bare backbone reported here is architectural and is measured against that backbone on the same items, under the same grader.
+Asha is an AI system in the HealthBench Professional paper's sense: a model plus a harness. Every tier below is the same neurosymbolic stack (retrieval, falsification, safety gating, composition) wrapped around vendor language models. No tier uses a fine-tuned model. Every gain over a bare model reported here is measured against that model on the same items, under the same grader. For Apex-J the comparator is the bare answer-writing model (the composer model); the agents inside Apex-J run other vendor models, so the paired difference is the effect of the whole system and cannot be attributed to any single component.
 
 Numbers carry their source, set size and grader. Where a number is not on the public register at [dnai.systems/benchmarks](https://dnai.systems/benchmarks) it is marked as such. The register is canonical; if this card and the register ever disagree, the register is right and this card is stale.
 
 ## 1. What every tier shares
 
-**Knowledge.** One curated corpus, retrieved through the Knowledge Integration Layer (KIL): about 350 knowledge collections holding 144M+ vectors (audit of 11 September 2026): PubMed and PMC full text, OpenAlex, drug labels (DailyMed, FDA, FAERS), clinical references and guidelines, medical coding, textbooks, and domain corpora for finance, law, nutrition and fitness, with recency lanes refreshed on schedule. Per-user memory is stored separately and is never a knowledge source. A contamination probe on 200 of the 5,000 HealthBench items found no retrievable benchmark content in the collections Asha searches (nearest-neighbour cosine below 0.92 throughout).
+**Knowledge.** One curated corpus, retrieved through the Knowledge Integration Layer (KIL): PubMed and PMC full text, OpenAlex, drug labels (DailyMed, FDA, FAERS), clinical references and guidelines, medical coding, textbooks, and domain corpora for finance, law, nutrition and fitness, refreshed on schedule. Per-user memory is stored separately and is never a knowledge source. A contamination probe on 200 of the 5,000 HealthBench items found no retrievable benchmark content in the collections Asha searches (nearest-neighbour cosine below 0.92 throughout).
 
-**Backbone models (frozen 20 September 2026).** Panel agents run on Claude Sonnet 5 (task gravity below 0.8) and Claude Opus 5 (0.8 and above). The Apex-J composer is GPT-6 Astra with a 4,096-token budget and the concise style. Gemini serves PHI-adjacent pipelines under the Vertex AI BAA.
+**Backbone models (frozen 20 September 2026).** Panel agents run on Claude Sonnet 5 and Claude Opus 5, selected per query by task gravity. The Apex-J composer is GPT-6 Astra with a 4,096-token budget and the concise style. Gemini serves PHI-adjacent pipelines under the Vertex AI BAA.
 
 **Safety, all tiers.** Jailbreak detection; a contract validator on every agent output; a capitulation detector with one restraint regeneration; crisis resources surfaced whenever risk language appears (988 in the US), bypassing quotas; an evidence gate; every answer written to a ledger and every API call to an audit log. Refusals are rare by design: Asha answers with safety framing rather than declining. Across the 5,000-item HealthBench run, 525 clinician prompts, and 500 study-sample items reported below, the refusal count is zero.
 
-**Routing.** Task gravity, a stakes score computed per query, chooses the tier on the consumer surfaces: Base below 0.70, Mid from 0.70 to 0.88, Apex at 0.88 and above with a daily cap. API customer keys run Base by default; Apex is an explicit, asynchronous, per-answer product.
+**Routing.** Task gravity, a stakes score computed per query, chooses the tier on the consumer surfaces: Base for most queries, Mid for higher-stakes queries, Apex for the highest-stakes queries with a daily cap. API customer keys run Base by default; Apex is an explicit, asynchronous, per-answer product.
 
 **Shared limitations.** Deep paths take 40 to 150 seconds. There is no automatic provider failover today (a provider outage on 22 September 2026 was handled by a manual switch to the Vertex path). Knowledge recency depends on the refresh lanes. Rubric-graded benchmarks move several points between graders, so every headline number is reported with its grader and, where measured, two sensitivity graders.
 
@@ -24,8 +24,8 @@ Numbers carry their source, set size and grader. Where a number is not on the pu
 |---|---|
 | Pipeline id | P2 |
 | Architecture | One KIL-grounded pass: retrieval across the admitted collections, evidence assembled into the prompt, one backbone call, safety gates, ledger write |
-| Backbone | Claude Sonnet 5 (gravity < 0.8) or Claude Opus 5 (gravity >= 0.8) |
-| Where it runs | Every consumer query below gravity 0.70; the API default for customer keys; the panel members inside Apex-J |
+| Backbone | Claude Sonnet 5 or Claude Opus 5, selected by task gravity |
+| Where it runs | Consumer queries in the low gravity band; the API default for customer keys; the panel members inside Apex-J |
 | Intended use | Everyday health questions, medication facts, triage guidance, documentation help; high volume, low latency |
 | Not for | Complex multi-morbidity consults (the cascade escalates); research syntheses that need the panel |
 | Latency | about 20 to 30 s typical on the API; seconds to first token on the stream path |
@@ -40,8 +40,8 @@ Numbers carry their source, set size and grader. Where a number is not on the pu
 | Field | Value |
 |---|---|
 | Pipeline id | P5 (deep-mode ensemble) |
-| Architecture | Three KIL-grounded drafts in parallel from different model families, quorum of two, then a composer merges under a union-of-correct, falsify-before-include discipline; degrades to the best single draft if the merge times out |
-| Where it runs | Consumer stream path, gravity 0.70 to 0.88 |
+| Architecture | Three KIL-grounded drafts in parallel from different model families, then a composer merges under a union-of-correct, falsify-before-include discipline |
+| Where it runs | Consumer stream path, middle gravity band |
 | Intended use | Higher-stakes single-question consults where a second model family adds a check without the panel's cost |
 | Latency | roughly 40 to 50 s design envelope |
 | HealthBench Standard (5,000, gpt-4.1) | 60.6 (June 2026 build; recomputed 60.59). Kept as lineage on the register |
@@ -53,7 +53,7 @@ Numbers carry their source, set size and grader. Where a number is not on the pu
 | Field | Value |
 |---|---|
 | Pipeline id | P6, composer Claude Opus 4.8, FENG on |
-| Architecture | Eleven specialist agents (medicine, research, science, finance, law, nutrition, fitness, practice management, growth, support, platform), each drafting with its own retrieval; FENG falsifies extracted claims against the corpus; a domain-expert composer merges; waits for all agents |
+| Architecture | A panel of specialist agents, each drafting with its own retrieval; FENG falsifies extracted claims against the corpus; a domain-expert composer merges; waits for all agents |
 | Status | Replaced as the served Apex tier by Apex-J on 20 September 2026. Its June numbers stay on the register as lineage comparators |
 | HealthBench Hard (1,000, gpt-4.1) | 44.8 [43.0, 46.6] (June 2026); re-graded with today's gpt-4.1 on the identical June answers on 22 Sep 2026: 44.8 (grader stable) |
 | HealthBench, Vishwanath 500 | 68.4 under the study's published three-judge panel (Claude Opus 4.6, Gemini 3.1 Pro Preview, GPT-5.2; graded 23 Sep 2026 in the study's own pipeline on the June answers). Earlier figures quoted for this set (72.6 under gpt-4.1 single) were a different grader from the published tools' and are retired |
@@ -66,7 +66,7 @@ Numbers carry their source, set size and grader. Where a number is not on the pu
 | Field | Value |
 |---|---|
 | Pipeline id | P6-J. Freeze tag `freeze-2026-09-20`. Process fingerprint of the measured build `edd4f69f9a9bd6d2` |
-| Architecture | The Apex panel rebuilt as jiva agents: quorum kickoff (7 of 11 with a straggler grace) and retries; the clinician agent's draft always carried into composition with its safety check-in; conversation-carried domain guardianship; a grounding check on the composed answer; a composer budget. Composer GPT-6 Astra, 4,096 tokens, concise style. FENG on, KIL on |
+| Architecture | The Apex panel rebuilt as jiva agents, each drafting with its own retrieval; a grounding check on the composed answer. Composer GPT-6 Astra, 4,096 tokens, concise style. FENG on, KIL on |
 | Where it runs | The Apex tier of the production cascade since 20 September 2026 (web stream path, non-stream `/api/query`, A2A `message:send` at depth auto, and the OpenAI-compatible model `asha-apex`) |
 | Intended use | Clinician-facing consults, documentation, research synthesis: the tier DNAi publishes |
 | Not for | Real-time use: 60 to 150 s deep path |
@@ -82,14 +82,14 @@ Numbers carry their source, set size and grader. Where a number is not on the pu
 | Deployed-code identity checks | The served code was re-run on the 500 twice after the freeze because other changes landed on the shared engine: 23 Sep, panel 63.7 vs the frozen run's 63.8, gpt-4.1 61.4 vs 61.6 (p = 0.83); 24 Sep, in progress at this revision. Both are on the register as "Also measured" |
 | Style check | The default composer style on the same code and items scored lower than concise on every grader (panel 62.2 vs 63.7; gpt-4.1 58.3 vs 61.4, p = 0.0009) and produced shorter answers. Concise stays |
 | Lineage, stated plainly | On raw rubric scoring the frozen build is below the June P6 build: 42.0 vs 44.8 on Hard under the same grader, 63.8 vs 68.4 on the 500 under the same panel. The June build's fuller answers (about 4,600 vs 2,700 characters) earn completeness points that the concise style gives up. That gap is the post-launch target |
-| Known limitations | Communication-quality axis below the bare backbone; the gpt-4.1 harm-proxy miss above; deep-path latency; the corpus recency lanes |
+| Known limitations | Communication-quality axis below the bare answer-writing model; the gpt-4.1 harm-proxy miss above; deep-path latency; the corpus recency lanes |
 | External validation | The June builds were validated by Airpixels Innovations LLP (Package 1, signed 10 Sep 2026). The frozen Apex-J's own external validation is scheduled after launch; every per-item artifact needed for it is in this repository |
 
 ## 6. Comparison chart (launch revision)
 
 | Dimension | Base | Mid | Apex (P6, June) | Apex-J (frozen, served) |
 |---|---|---|---|---|
-| Model families per answer | 1 | 3 + composer | 11 agents + composer | 11 agents + composer |
+| Model families per answer | 1 | 3 + composer | agent panel + composer | agent panel + composer |
 | Retrieval | KIL, 1 pass | KIL, 3 grounded drafts | KIL per agent + FENG | KIL per agent + FENG |
 | Typical / p90 latency | ~25 s / ~30 s | ~45 s / ~50 s | 81 s / 124 s | ~80 s / ~110 s |
 | HealthBench Standard 5,000 (gpt-4.1) | 44.1 (June) | 60.6 (June) | not run on 5,000 | **60.7** |
@@ -103,7 +103,7 @@ Numbers carry their source, set size and grader. Where a number is not on the pu
 | API name | Tier | Notes |
 |---|---|---|
 | `asha-base` | Base | default for customer keys |
-| `asha-mid` | Mid | cascade band 0.70 to 0.88 |
+| `asha-mid` | Mid | cascade middle band |
 | `asha-apex` | Apex-J | asynchronous; explicit per-answer product |
 
 The other DNAi agents (Harley, Artha, Sage, Polymath, Lyra, Leo, Mira, Ren, Arohi, Ray) are reachable over the A2A protocol and documented in their own public repositories under [github.com/EndlessRay](https://github.com/EndlessRay).
