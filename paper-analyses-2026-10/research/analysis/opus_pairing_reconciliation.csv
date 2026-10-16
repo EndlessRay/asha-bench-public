@@ -1,0 +1,3 @@
+set,items,asha_items_parse_failed,bare_items_parse_failed,asha_items_failed_any,bare_items_failed_any,union_failed_any,asha_n_asha_only_exclusion,asha_mean_asha_only_exclusion,readout_arm_n,readout_arm_score,paired_n_readout_rule,paired_asha_mean,paired_bare_mean,paired_diff,readout_paired_n,readout_paired_diff,readout_comparator_score,reproduces_readout,n_all_items,diff_all_items,asha_mean_all_items,bare_mean_all_items
+Standard,5000,4,3,68,72,115,4932,65.828,4932,65.828,4885,65.968,57.668,8.3,4885,8.3,57.668,yes,5000,8.225,65.588,57.363
+Hard,1000,0,0,28,20,37,972,50.124,972,50.124,963,50.154,35.482,14.672,963,14.672,35.482,yes,1000,14.538,49.81,35.272

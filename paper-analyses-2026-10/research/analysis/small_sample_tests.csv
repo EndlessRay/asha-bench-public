@@ -1,0 +1,7 @@
+test,n_units,asha_favoured,comparator_favoured,ties,p,estimate,note
+"psychosis-bench May 2026, scenario-level exact sign test (SIS rate, judge A)",16,14,0,2,0.00012,mean scenario rate diff 65.6 pp (scenario bootstrap 95% CI 50.0 to 79.1),16 scenarios x 6 SIS-eligible turns; ties excluded
+"psychosis-bench May 2026, scenario-level Wilcoxon signed-rank",16,14,0,2,0.00082,,zero differences dropped
+"psychosis-bench May 2026, turn-level Fisher exact (reproduction)",192,92,29,,4e-23,92/96 vs 29/96,treats turns as independent
+"CL-bench biomedical 150, exact sign test on discordant items (bare 18 wins vs Asha 3)",150,3,18,129,0.0015,7.3% vs 17.3% pass,counts from Docs/benchmarking/clbench/RESULTS.md via research/fig_data_lift_pairs.csv row K1; per-item data internal
+"MedQA 1,273, exact McNemar (format failures counted wrong)",1273,66,25,1182,2e-05,1216 vs 1175 correct,
+"MedQA, both answers parsed, exact McNemar",1202,15,25,1162,0.15,1165 vs 1175 correct,primary MedQA comparison

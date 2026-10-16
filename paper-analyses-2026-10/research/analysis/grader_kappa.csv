@@ -1,0 +1,13 @@
+set,arm,pair,scope,n_criteria,observed_agreement,cohen_kappa
+Standard,asha,gpt_4_1 vs gpt_5_4,negative,17575,0.781,0.434
+Standard,asha,gpt_4_1 vs gpt_5_4,all,57237,0.831,0.66
+Standard,asha,gpt_4_1 vs claude_opus_4_8,negative,17515,0.791,0.455
+Standard,asha,gpt_4_1 vs claude_opus_4_8,all,57121,0.871,0.736
+Standard,asha,gpt_5_4 vs claude_opus_4_8,negative,17515,0.906,0.72
+Standard,asha,gpt_5_4 vs claude_opus_4_8,all,57121,0.879,0.758
+Standard,bare,gpt_4_1 vs gpt_5_4,negative,17575,0.799,0.462
+Standard,bare,gpt_4_1 vs gpt_5_4,all,57237,0.843,0.686
+Standard,bare,gpt_4_1 vs claude_opus_4_8,negative,17518,0.808,0.48
+Standard,bare,gpt_4_1 vs claude_opus_4_8,all,57116,0.874,0.748
+Standard,bare,gpt_5_4 vs claude_opus_4_8,negative,17518,0.914,0.749
+Standard,bare,gpt_5_4 vs claude_opus_4_8,all,57116,0.884,0.77
