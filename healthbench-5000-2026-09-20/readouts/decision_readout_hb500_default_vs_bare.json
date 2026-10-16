@@ -14,7 +14,6 @@
   "config": {
    "label": "hb500_apexj_default",
    "pipeline": "apexj",
-   "route": "bench lane, eval route",
    "dataset": "healthbench_results/hbp_20260911/hb500_seed62.jsonl",
    "dataset_sha256": "3dac9145bee6031aa39dc096bdea831a63e71f48b752398d532fd8ca9ca49f07",
    "n_items": 500,
@@ -28,14 +27,6 @@
    "process_started_at": "2026-09-23T00:27:50Z",
    "git_sha": "d796407d0cab",
    "pipeline_id": "P6-J",
-   "llm_provider": "anthropic_routed",
-   "routed_low_model": "claude-sonnet-5",
-   "routed_high_model": "claude-opus-5",
-   "kil_fingerprint": {
-    "knowledge_collections": 355,
-    "sha256_16": "a727c73f06eb790a"
-   },
-   "culture_charter_version": "0.2.0",
    "disk_drift": false
   },
   "pin_end": {
@@ -43,14 +34,6 @@
    "process_started_at": "2026-09-23T00:27:50Z",
    "git_sha": "d796407d0cab",
    "pipeline_id": "P6-J",
-   "llm_provider": "anthropic_routed",
-   "routed_low_model": "claude-sonnet-5",
-   "routed_high_model": "claude-opus-5",
-   "kil_fingerprint": {
-    "knowledge_collections": 355,
-    "sha256_16": "a727c73f06eb790a"
-   },
-   "culture_charter_version": "0.2.0",
    "disk_drift": false
   },
   "repo_git_sha": "7a8c8e8eebcb65e0154f746015674180a21fd098",

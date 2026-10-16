@@ -61,7 +61,7 @@
           "score": 29.4,
           "n": 1000,
           "basis": "same_grader_self_run",
-          "source": "same harness, same items, same grader; the composer backbone of Apex-J without the Asha layer; run 19 Sep 2026"
+          "source": "same harness, same items, same grader; the bare answer-writing model of Apex-J without the Asha layer; run 19 Sep 2026"
         },
         {
           "system": "Asha Apex (P6, June 2026 build)",
@@ -148,7 +148,7 @@
           "p": "1.0e-19"
         }
       ],
-      "notes": "The served configuration (frozen Apex-J) on the full Hard 1,000, restricted from the same 5,000-item run (Hard is an exact subset of Standard), graded by gpt-4.1. Harm proxy 34.0%, 0 empty answers. Bare GPT-6 Astra is the composer backbone without the Asha layer on the same items, retrieval off. June 2026 bare frontier baselines and the June P6 build stay as lineage under the same grader; the June-vs-today grader-stability entry says how much of any P6-to-Apex-J difference is the grader. Scores independently recomputed from the June graded artifacts by Airpixels Innovations LLP (September 2026): Apex 44.82, Mid 37.94, Base 28.35. Pre-registered harm test: negative-point criteria met 34.0% vs 32.4% for bare Astra (+1.6 points, within the +2.0 bound).",
+      "notes": "The served configuration (frozen Apex-J) on the full Hard 1,000, restricted from the same 5,000-item run (Hard is an exact subset of Standard), graded by gpt-4.1. Harm proxy 34.0%, 0 empty answers. Bare GPT-6 Astra is the bare answer-writing model without the Asha layer on the same items, retrieval off; the paired difference cannot be attributed to any single component. June 2026 bare frontier baselines and the June P6 build stay as lineage under the same grader; the June-vs-today grader-stability entry says how much of any P6-to-Apex-J difference is the grader. Scores independently recomputed from the June graded artifacts by Airpixels Innovations LLP (September 2026): Apex 44.82, Mid 37.94, Base 28.35. Pre-registered harm test: negative-point criteria met 34.0% vs 32.4% for bare Astra (+1.6 points, within the +2.0 bound).",
       "artifacts": [
         {
           "label": "Per-item completions and graded JSONLs on the bench host (public mirror pending)",
@@ -471,7 +471,7 @@
           "source_artifact": "ceiling_readout_slice_L5_recruiter_on_vs_slice_L9_concise.json"
         },
         {
-          "metric": "Ladder L4: dated PubMed live-evidence lane (300-item slice, GPT-5.4 grader)",
+          "metric": "Ladder L4: dated PubMed evidence variant (300-item slice, GPT-5.4 grader)",
           "score": 69.2,
           "comparator_score": 69.4,
           "n": 300,
@@ -690,7 +690,7 @@
       ],
       "paired_statistics": [
         {
-          "comparison": "Apex-J Fable composer vs bare Fable 5.1 (same backbone as composer), full set",
+          "comparison": "Apex-J Fable composer vs bare Fable 5.1 (same answer-writing model), full set",
           "n": 525,
           "delta_pp": 5.5,
           "test": "paired t (paper SE)",
@@ -704,7 +704,7 @@
           "p": "0.02"
         },
         {
-          "comparison": "Apex-J Astra composer vs bare GPT-6 Astra, same 300 items, GPT-5.4 grader (architecture held to the same model)",
+          "comparison": "Apex-J Astra composer vs bare GPT-6 Astra, same 300 items, GPT-5.4 grader (answer-writing model held fixed)",
           "n": 300,
           "delta_pp": 3.6,
           "test": "paired t, length-adjusted",
@@ -718,21 +718,21 @@
           "p": "see artifact"
         },
         {
-          "comparison": "Asha Base vs bare Claude Sonnet 5 (same backbone), red-team items, length-adjusted",
+          "comparison": "Asha Base vs bare Claude Sonnet 5 (same model family), red-team items, length-adjusted",
           "n": 191,
           "delta_pp": 10.1,
           "test": "paired t",
           "p": "see artifact"
         },
         {
-          "comparison": "Asha Base vs bare Claude Sonnet 5 (same backbone), all items, length-adjusted",
+          "comparison": "Asha Base vs bare Claude Sonnet 5 (same model family), all items, length-adjusted",
           "n": 524,
           "delta_pp": 0.3,
           "test": "paired t",
           "p": "0.88"
         }
       ],
-      "notes": "Every arm on the board, ours and the bare frontier models, went through one harness and three graders, so the ranking is like-for-like. On the September board (Asha arms on the 12 September build, Fable 5.1 composer) GPT-6 Astra leads on the official length-adjusted metric and Asha Apex-J is second, ahead on raw content and on red-team items at a higher harm rate than Astra. We publish the ordering as measured. Since then a ceiling ladder has run on a 300-item stratified slice of this set, one trial per arm, every arm on one recorded api process (the pin) and paired item by item against the incumbent under a pre-registered rule: adopt on 3 points or more, or on a clear harm reduction at equal score, with harm, red-team, empty-answer, refusal and grader-agreement gates passing. Round 1 (17 Sep) moved the composer to GPT-6 Astra. Round 2 (18 Sep, on the 17 Sep code: clinician register, language, memory scope) adopted the concise composer style (+3.6 length-adjusted, p=0.01, harm within gate); the guarded style, a dated PubMed live-evidence lane and the query-aware retriever each read inside the noise band against that incumbent, and asserting a clinician audience on this physician-written set regressed on red-team items. The Opus 5 composer arm is running. On the Base tier the same ladder adopted two prompt levers: clinician register with the concise style (+3.1) and a translate-and-correct rule for unsafe handouts, adopted on safety alone (harm down 6.7 points overall and 9.3 on red-team items at equal score). The live cascade, which sends 32 of these 300 items above Base by gravity, read level with Base overall; in the 25-item Mid band the ensemble scored below Base on all three graders, which is the evidence the Mid-floor decision now rests on. Slice results are exploratory by design and do not replace the board. When round 2 closes, the incumbent runs the full 525 items twice against bare GPT-6 Astra twice on the same pin and graders; that pre-freeze number is listed here when it lands. The code-freeze battery (22 to 25 September, Professional 525 x 2 for Base, Mid and Apex on the frozen build) produces the number of record and replaces this row. Per-item Professional data are withheld at OpenAI's no-publish request, so this row is tier C until the freeze artifacts are released.",
+      "notes": "Every arm on the board, ours and the bare frontier models, went through one harness and three graders, so the ranking is like-for-like. On the September board (Asha arms on the 12 September build, Fable 5.1 composer) GPT-6 Astra leads on the official length-adjusted metric and Asha Apex-J is second, ahead on raw content and on red-team items at a higher harm rate than Astra. We publish the ordering as measured. Since then a ceiling ladder has run on a 300-item stratified slice of this set, one trial per arm, every arm on one recorded api process (the pin) and paired item by item against the incumbent under a pre-registered rule: adopt on 3 points or more, or on a clear harm reduction at equal score, with harm, red-team, empty-answer, refusal and grader-agreement gates passing. Round 1 (17 Sep) moved the composer to GPT-6 Astra. Round 2 (18 Sep, on the 17 Sep code: clinician register, language, memory scope) adopted the concise composer style (+3.6 length-adjusted, p=0.01, harm within gate); the guarded style, a dated PubMed evidence variant and the query-aware retriever each read inside the noise band against that incumbent, and asserting a clinician audience on this physician-written set regressed on red-team items. The Opus 5 composer arm is running. On the Base tier the same ladder adopted two prompt levers: clinician register with the concise style (+3.1) and a translate-and-correct rule for unsafe handouts, adopted on safety alone (harm down 6.7 points overall and 9.3 on red-team items at equal score). The live cascade, which sends 32 of these 300 items above Base by gravity, read level with Base overall; in the 25-item Mid band the ensemble scored below Base on all three graders, which is the evidence the Mid-floor decision now rests on. Slice results are exploratory by design and do not replace the board. When round 2 closes, the incumbent runs the full 525 items twice against bare GPT-6 Astra twice on the same pin and graders; that pre-freeze number is listed here when it lands. The code-freeze battery (22 to 25 September, Professional 525 x 2 for Base, Mid and Apex on the frozen build) produces the number of record and replaces this row. Per-item Professional data are withheld at OpenAI's no-publish request, so this row is tier C until the freeze artifacts are released.",
       "artifacts": [
         {
           "label": "June 2026 configs and aggregate results (public repo, professional/)",
@@ -807,7 +807,7 @@
           "score": 54.9,
           "n": 500,
           "basis": "same_grader_self_run",
-          "source": "same 500 answers graded by the same panel in the same pipeline; the composer backbone without the Asha layer"
+          "source": "same 500 answers graded by the same panel in the same pipeline; the bare answer-writing model without the Asha layer"
         },
         {
           "system": "Asha Apex (P6, June 2026 build)",
@@ -1191,7 +1191,7 @@
           "score": 52.7,
           "n": 5000,
           "basis": "same_grader_self_run",
-          "source": "same harness, same items, same grader; the composer backbone of Apex-J without the Asha layer; run 19 Sep 2026"
+          "source": "same harness, same items, same grader; the bare answer-writing model of Apex-J without the Asha layer; run 19 Sep 2026"
         },
         {
           "system": "Asha Mid (P5, June 2026 build)",
@@ -1208,14 +1208,14 @@
           "source": "June 2026 run in the same harness (lineage; a different build, no longer served)"
         }
       ],
-      "notes": "The served configuration (frozen Apex-J) on the full 5,000-item Standard set, graded by gpt-4.1. Harm proxy (negative-point criteria met) 29.8%, 0 empty answers. Bare GPT-6 Astra is the composer backbone without the Asha layer, run on the same items with retrieval off; the paired difference is the architecture. The June 2026 Mid and Base rows stay as lineage: different builds, not the served tier. Standard and Hard are different benchmarks; never compare across sets. Grading paused during the 22 Sep vendor credit outage; rows that carried 429 errors were discarded and re-graded, no partial rows are counted. Per-theme and per-axis scores are in the register (breakdown). Pre-registered harm test NOT met: negative-point criteria met 29.8% vs 27.0% for bare Astra (+2.8 points, bound +2.0). Fuller answers trip more negative-point criteria while scoring higher on every theme; per the gate document the number ships with this caveat and the freeze is under review before any launch claim.",
+      "notes": "The served configuration (frozen Apex-J) on the full 5,000-item Standard set, graded by gpt-4.1. Harm proxy (negative-point criteria met) 29.8%, 0 empty answers. Bare GPT-6 Astra is the bare answer-writing model without the Asha layer, run on the same items with retrieval off; the paired difference is the effect of the whole system and cannot be attributed to any single component. The June 2026 Mid and Base rows stay as lineage: different builds, not the served tier. Standard and Hard are different benchmarks; never compare across sets. Grading paused during the 22 Sep vendor credit outage; rows that carried 429 errors were discarded and re-graded, no partial rows are counted. Per-theme and per-axis scores are in the register (breakdown). Pre-registered harm test NOT met: negative-point criteria met 29.8% vs 27.0% for bare Astra (+2.8 points, bound +2.0). Fuller answers trip more negative-point criteria while scoring higher on every theme; per the gate document the number ships with this caveat and the freeze is under review before any launch claim.",
       "artifacts": [
         {
           "label": "Per-item completions and graded JSONLs on the bench host (public mirror pending)",
           "url": "https://dnai.systems/benchmarks"
         }
       ],
-      "lay_summary": "The full 5,000-conversation HealthBench set, easier on average than the Hard subset. Same physician checklists, same official grader. This is the model that ships on 1 October, measured once, frozen, against its own bare backbone on the same questions. Standard and Hard scores are never compared with each other.",
+      "lay_summary": "The full 5,000-conversation HealthBench set, easier on average than the Hard subset. Same physician checklists, same official grader. This is the model that ships on 1 October, measured once, frozen, against its own bare answer-writing model on the same questions. Standard and Hard scores are never compared with each other.",
       "harm_proxy_pct": 29.8,
       "refusals": 0,
       "median_chars": 2725.0,

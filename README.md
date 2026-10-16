@@ -25,9 +25,9 @@ Brackets are 95% confidence intervals of the paired difference. Asha's estimate 
 | Configuration | Where it runs | What it adds to the model |
 |---|---|---|
 | **Base** | Most traffic; the API default | One retrieval-grounded pass with safety gates. A router sends harder questions to the larger model of the same family: on MedQA, Gemini 3 Flash answered 70% of questions and 3.1 Pro the rest, so the model-alone arm (3.1 Pro) is the stronger one; on psychosis-bench, Gemini 2.5 Flash about 70% of turns and 2.5 Pro the rest; on HealthBench Professional, Claude Sonnet 5 or Opus 5 |
-| **Apex-J** (frozen 20 September 2026) | High-stakes traffic | Eleven specialist agents, each with its own retrieval, running on Claude Sonnet 5 and Opus 5; FENG falsifies extracted claims against the corpus; GPT-6 Astra writes the final answer |
+| **Apex-J** (frozen 20 September 2026) | High-stakes traffic | A panel of specialist agents, each with its own retrieval, running on Claude Sonnet 5 and Opus 5; FENG falsifies extracted claims against the corpus; GPT-6 Astra writes the final answer |
 
-The Apex-J rows hold the answer-writing model fixed. The Asha arm also runs Claude models inside its agents, so those rows measure the whole system against its composer model alone. The Base rows are closer to a single-model test; on psychosis-bench, a separate attribution study shows that bare Gemini 2.5 Pro is no safer than bare 2.5 Flash, so the Pro share does not explain the gap ([`psychosis-attribution-2026-05-12/`](psychosis-attribution-2026-05-12/)).
+The Apex-J rows hold the answer-writing model fixed. The Asha arm also runs Claude models inside its agents, so those rows measure the whole system against its bare answer-writing model, and the difference cannot be attributed to any single component. The Base rows are closer to a single-model test; on psychosis-bench, a separate attribution study shows that bare Gemini 2.5 Pro is no safer than bare 2.5 Flash, so the Pro share does not explain the gap ([`psychosis-attribution-2026-05-12/`](psychosis-attribution-2026-05-12/)).
 
 ## Safety
 

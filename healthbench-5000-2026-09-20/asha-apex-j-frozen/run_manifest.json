@@ -20,17 +20,7 @@
   "pipeline_id": "P6-J",
   "process_fingerprint": "edd4f69f9a9bd6d2",
   "process_started_at": "2026-09-20T19:22:21Z",
-  "llm_provider": "anthropic_routed",
-  "routed_low_model": "claude-sonnet-5",
-  "routed_high_model": "claude-opus-5",
-  "compose_max_tokens_default": 4096,
-  "quorum": 7,
-  "culture_charter_version": "0.2.0",
-  "culture_charter_hash": "23292db5b657928066fffdedb51b80b14756b35ad771aa414f5cb52ae042c10e",
-  "kil_fingerprint": {
-   "knowledge_collections": 355,
-   "sha256_16": "a727c73f06eb790a"
-  }
+  "compose_max_tokens_default": 4096
  },
  "repo_git_sha": "7adfbebf848daed62c7a68732b440f1ea7f6ba92"
 }
