@@ -1,0 +1,7 @@
+grader,set,n_paired,asha_pct,bare_pct,diff_pp,ci95_low,ci95_high
+gpt_4_1,Standard,4681,29.83,26.98,2.84,2.21,3.49
+gpt_4_1,Hard,997,34.02,32.37,1.65,0.26,3.02
+gpt_5_4,Standard,4681,22.04,22.33,-0.29,-0.86,0.28
+gpt_5_4,Hard,997,25.91,29.11,-3.19,-4.48,-1.90
+claude_opus_4_8,Standard,4681,20.92,21.41,-0.49,-1.05,0.05
+claude_opus_4_8,Hard,997,23.88,28.09,-4.21,-5.46,-2.96

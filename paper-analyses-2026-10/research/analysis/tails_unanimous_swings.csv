@@ -1,0 +1,5 @@
+set,n_items,threshold_points,unanimous_asha_worse,unanimous_asha_better,p_binom
+Standard,4885,25,43,341,1.1e-58
+Standard,4885,50,11,59,4.5e-09
+Hard,963,25,18,130,4e-22
+Hard,963,50,6,24,0.0014

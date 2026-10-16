@@ -1,0 +1,9 @@
+set,pair,n_items,same_nonzero_sign_pct,all_three_asha_better,all_three_asha_worse,opposite_sign_pct,pearson_r
+Standard,all three,4885,37.4,1482,343,,
+Standard,gpt_4_1 vs gpt_5_4,4885,47.2,,,15.5,0.397
+Standard,gpt_4_1 vs claude_opus_4_8,4885,48.4,,,14.7,0.455
+Standard,gpt_5_4 vs claude_opus_4_8,4885,48.6,,,13.1,0.615
+Hard,all three,963,43.9,368,55,,
+Hard,gpt_4_1 vs gpt_5_4,963,53.1,,,16.3,0.482
+Hard,gpt_4_1 vs claude_opus_4_8,963,56.1,,,14.8,0.519
+Hard,gpt_5_4 vs claude_opus_4_8,963,55.9,,,13.8,0.608
